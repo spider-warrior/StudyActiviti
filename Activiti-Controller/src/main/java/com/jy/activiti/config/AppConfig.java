@@ -1,6 +1,9 @@
 package com.jy.activiti.config;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import org.activiti.engine.*;
+import org.activiti.spring.ProcessEngineFactoryBean;
+import org.activiti.spring.SpringProcessEngineConfiguration;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -8,6 +11,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -35,6 +40,8 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 
     @Autowired
     private Environment environment;
+    @Autowired
+    private ProcessEngine processEngine;
 
     /* 数据模型package */
     private static String[] MODEL_PACKAGES = {
@@ -120,6 +127,51 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         HibernateTransactionManager txManager = new HibernateTransactionManager();
         txManager.setSessionFactory(sessionFactory);
         return txManager;
+    }
+
+    @Bean
+    @Autowired
+    public SpringProcessEngineConfiguration springProcessEngineConfiguration(DataSource dataSource, HibernateTransactionManager transactionManager) {
+        SpringProcessEngineConfiguration springProcessEngineConfiguration = new SpringProcessEngineConfiguration();
+        springProcessEngineConfiguration.setDataSource(dataSource);
+        springProcessEngineConfiguration.setTransactionManager(transactionManager);
+        springProcessEngineConfiguration.setDatabaseSchemaUpdate("true");
+        springProcessEngineConfiguration.setJobExecutorActivate(Boolean.FALSE);
+        springProcessEngineConfiguration.setDeploymentResources(new Resource[]{new ClassPathResource("bpmn/hello.bpmn20.xml")});
+        return springProcessEngineConfiguration;
+    }
+
+    @Bean
+    @Autowired
+    public ProcessEngineFactoryBean processEngineFactoryBean(SpringProcessEngineConfiguration processEngineConfiguration) {
+        ProcessEngineFactoryBean processEngineFactoryBean = new ProcessEngineFactoryBean();
+        processEngineFactoryBean.setProcessEngineConfiguration(processEngineConfiguration);
+        return processEngineFactoryBean;
+    }
+
+    @Bean
+    public RepositoryService repositoryService() {
+        return processEngine.getRepositoryService();
+    }
+    @Bean
+    public RuntimeService RuntimeService() {
+        return processEngine.getRuntimeService();
+    }
+    @Bean
+    public TaskService taskService() {
+        return processEngine.getTaskService();
+    }
+    @Bean
+    public HistoryService historyService() {
+        return processEngine.getHistoryService();
+    }
+    @Bean
+    public ManagementService managementService() {
+        return processEngine.getManagementService();
+    }
+    @Bean
+    public IdentityService identityService() {
+        return processEngine.getIdentityService();
     }
 
 }

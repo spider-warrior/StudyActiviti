@@ -12,4 +12,12 @@
     <artifactId>activiti.service</artifactId>
     <packaging>jar</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>study</groupId>
+            <artifactId>activiti.dao</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 </project>

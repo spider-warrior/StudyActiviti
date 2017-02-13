@@ -1,6 +1,7 @@
 package com.jy.activiti.init;
 
 import com.jy.activiti.config.AppConfig;
+import com.jy.activiti.listener.AppStartupListener;
 import com.jy.activiti.websocket.ServletWebsocketEndPoint;
 import org.springframework.orm.hibernate4.support.OpenSessionInViewFilter;
 import org.springframework.web.WebApplicationInitializer;
@@ -30,6 +31,7 @@ public class AppInit implements WebApplicationInitializer,ServerApplicationConfi
 
         AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
         ctx.register(AppConfig.class);
+        ctx.addApplicationListener(new AppStartupListener());
         servletContext.addListener(new ContextLoaderListener(ctx));
 
         /* Dispatcher Servlet */
