@@ -1,13 +1,13 @@
-package init;
+package com.jy.activiti.init;
 
-import config.AppConfig;
+import com.jy.activiti.config.AppConfig;
+import com.jy.activiti.websocket.ServletWebsocketEndPoint;
 import org.springframework.orm.hibernate4.support.OpenSessionInViewFilter;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
-import websocket.ServletWebsocketEndPoint;
 
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;

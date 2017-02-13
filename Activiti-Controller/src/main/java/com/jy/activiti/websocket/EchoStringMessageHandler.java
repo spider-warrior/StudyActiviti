@@ -1,4 +1,4 @@
-package websocket;
+package com.jy.activiti.websocket;
 
 import javax.websocket.MessageHandler;
 import javax.websocket.Session;

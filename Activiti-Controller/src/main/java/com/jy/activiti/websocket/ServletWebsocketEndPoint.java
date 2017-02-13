@@ -1,4 +1,4 @@
-package websocket;
+package com.jy.activiti.websocket;
 
 import javax.websocket.CloseReason;
 import javax.websocket.Endpoint;
