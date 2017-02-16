@@ -9,7 +9,7 @@ import javax.persistence.*;
  * 用户
  */
 @Entity
-@Table(name = "blog_user")
+@Table(name = "activiti_user")
 public class User extends BaseEntity {
 
     /**

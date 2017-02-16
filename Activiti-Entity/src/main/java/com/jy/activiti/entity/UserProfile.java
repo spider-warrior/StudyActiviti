@@ -6,7 +6,7 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name = "blog_user_profile")
+@Table(name = "activiti_user_profile")
 public class UserProfile extends BaseEntity {
 
     @Column(name = "owner_id", unique = true)
