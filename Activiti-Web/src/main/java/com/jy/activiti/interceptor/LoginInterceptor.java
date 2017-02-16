@@ -1,6 +1,6 @@
 package com.jy.activiti.interceptor;
 
-import activiti.entity.User;
+import com.jy.activiti.entity.User;
 import com.jy.activiti.common.annotation.RequiredLogin;
 import com.jy.activiti.helper.ContextHelper;
 import com.jy.activiti.helper.LoginHelper;

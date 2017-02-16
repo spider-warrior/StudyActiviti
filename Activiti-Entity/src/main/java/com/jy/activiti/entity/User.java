@@ -1,7 +1,7 @@
-package activiti.entity;
+package com.jy.activiti.entity;
 
 
-import activiti.enums.Sex;
+import com.jy.activiti.enums.Sex;
 
 import javax.persistence.*;
 

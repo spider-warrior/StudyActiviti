@@ -1,6 +1,6 @@
 package com.jy.activiti.controller;
 
-import activiti.entity.User;
+import com.jy.activiti.entity.User;
 import com.jy.activiti.common.annotation.RequiredLogin;
 import com.jy.activiti.common.enums.ResponseCode;
 import com.jy.activiti.helper.ContextHelper;

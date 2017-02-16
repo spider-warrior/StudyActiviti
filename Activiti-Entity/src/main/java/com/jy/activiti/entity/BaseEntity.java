@@ -1,4 +1,4 @@
-package activiti.entity;
+package com.jy.activiti.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;

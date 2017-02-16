@@ -1,6 +1,6 @@
 package com.jy.activiti.helper;
 
-import activiti.entity.User;
+import com.jy.activiti.entity.User;
 import com.jy.activiti.common.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package activiti.enums;
+package com.jy.activiti.enums;
 
 /**
  * 性别
