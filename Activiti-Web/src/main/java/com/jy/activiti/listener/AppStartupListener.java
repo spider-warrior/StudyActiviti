@@ -1,12 +1,11 @@
 package com.jy.activiti.listener;
 
-import com.jy.activiti.ContextHelper;
+import com.jy.activiti.helper.ContextHelper;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 
