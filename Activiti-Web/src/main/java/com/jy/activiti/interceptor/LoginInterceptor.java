@@ -30,7 +30,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
-            Annotation controllerRequireLogin = handlerMethod.getClass().getAnnotation(RequiredLogin.class);
+            Annotation controllerRequireLogin = handlerMethod.getBeanType().getAnnotation(RequiredLogin.class);
             boolean needLogincheck = true;
             if (controllerRequireLogin == null) {
                 Annotation methodRequireLogin = handlerMethod.getMethodAnnotation(RequiredLogin.class);
@@ -41,6 +41,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             if (needLogincheck) {
                 User user = loginHelper.getSessionCacheUser(request);
                 if (user == null) {
+                    response.sendRedirect("/");
                     return false;
                 }
                 contextHelper.setCurrentUser(user);

@@ -35,6 +35,13 @@ public class AskForLeaveController extends BaseController{
     @Autowired
     private ContextHelper contextHelper;
 
+    /**
+     * {
+     *     time: xxx, (时间，单位： 天)
+     *     reason: xxx（请假事由）
+     * }
+     *
+     * */
     @RequestMapping(method = RequestMethod.POST)
     public Object add(@RequestBody Map<String, Object> param) {
 

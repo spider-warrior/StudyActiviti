@@ -1,5 +1,6 @@
 package com.jy.activiti.config;
 
+import com.jy.activiti.interceptor.LoginInterceptor;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.activiti.engine.*;
 import org.activiti.spring.ProcessEngineFactoryBean;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -42,6 +44,8 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     private Environment environment;
     @Autowired
     private ProcessEngine processEngine;
+    @Autowired
+    private LoginInterceptor loginInterceptor;
 
     /* 数据模型package */
     private static String[] MODEL_PACKAGES = {
@@ -62,6 +66,11 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         viewResolver.setPrefix("/WEB-INF/");
         viewResolver.setSuffix(".jsp");
         return viewResolver;
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(loginInterceptor);
     }
 
     /**
