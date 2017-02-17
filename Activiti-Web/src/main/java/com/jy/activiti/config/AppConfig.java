@@ -28,6 +28,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
+import java.io.IOException;
 import java.util.Properties;
 
 @Configuration
@@ -105,14 +106,16 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     /**
      * 数据连接会话
      */
+
     @Bean
     @Autowired
-    public LocalSessionFactoryBean sessionFactory(DataSource dataSource) throws Exception {
-        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-        sessionFactory.setDataSource(dataSource);
-        sessionFactory.setPackagesToScan(MODEL_PACKAGES);
-        sessionFactory.setHibernateProperties(hibernateProperties());
-        return sessionFactory;
+    public SessionFactory sessionFactory(DataSource dataSource) throws IOException {
+        LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
+        sessionFactoryBean.setDataSource(dataSource);
+        sessionFactoryBean.setPackagesToScan(MODEL_PACKAGES);
+        sessionFactoryBean.setHibernateProperties(hibernateProperties());
+        sessionFactoryBean.afterPropertiesSet();
+        return sessionFactoryBean.getObject();
     }
 
     /**

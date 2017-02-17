@@ -3,7 +3,7 @@ package com.jy.activiti.init;
 import com.jy.activiti.config.AppConfig;
 import com.jy.activiti.listener.AppStartupListener;
 import com.jy.activiti.websocket.ServletWebsocketEndPoint;
-import org.springframework.orm.hibernate4.support.OpenSessionInViewFilter;
+import org.springframework.orm.hibernate5.support.OpenSessionInViewFilter;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;

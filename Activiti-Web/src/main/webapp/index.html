@@ -20,7 +20,7 @@ function login() {
     var method = POST;
     var param = {username: username, password: password}
 
-    var queryUserAvatarCallback = function (result) {
+    var loginCallback = function (result) {
         if (result.success) {
             alert("登录成功");
         }
@@ -36,7 +36,7 @@ function login() {
             }
         }
     }
-    executeRequest(queryUrl, param, method, queryUserAvatarCallback);
+    executeRequest(queryUrl, param, method, loginCallback);
 }
 
 $.registerVLCEvent("#password", "keydown", function(e){
