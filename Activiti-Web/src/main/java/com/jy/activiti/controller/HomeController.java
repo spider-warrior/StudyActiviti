@@ -18,9 +18,20 @@ public class HomeController extends BaseController{
         return success();
     }
 
-    @RequestMapping(value = {"/askforleave"})
+    /**
+     * 请假流程申请页面
+     * */
+    @RequestMapping("/askforleave")
     public String askforleave() {
         return "pages/askforleave";
+    }
+
+    /**
+     * 流程管理页面
+     * */
+    @RequestMapping("/pdm")
+    public String pdManagement() {
+        return "pages/processdefinitionmanagement";
     }
 
 }

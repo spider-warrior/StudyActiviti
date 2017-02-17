@@ -15,6 +15,8 @@ var DELETE = "DELETE";
 //code
 //服务器内部异常
 var SERVER_INTERNAL_EXCEPTION_CODE = "500";
+//406
+var REQUEST_NOT_ALLOWED = "405";
 //404
 var RESOURCE_NOT_FOUND_EXCEPTION_CODE = "404";
 //400
@@ -262,8 +264,8 @@ $.bindHtml = function (bindConfig) {
 }
 
 
-$.registerVLCEvent = function(id, event, handler){
-    var dom = $(id);
+$.registerEvent = function(id, event, handler){
+    var dom = $("#" + id);
     if (dom) {
         if (dom.attachEvent) {
             // Microsoft
@@ -275,15 +277,31 @@ $.registerVLCEvent = function(id, event, handler){
     }
 }
 // stop listening to event
-$.unregisterVLCEvent = function(id, event, handler) {
-    var dom = $(id);
+$.unregisterEvent = function(id, event, handler) {
+    var dom = $("#" + id);
     if (dom) {
         if (dom.detachEvent) {
             // Microsoft
             dom.detachEvent (event, handler);
-        } else if (vlc.removeEventListener) {
+        } else if (dom.removeEventListener) {
             // Mozilla: DOM level 2
             dom.removeEventListener (event, handler, false);
         }
     }
+}
+
+
+
+$.createTr = function() {
+    return document.createElement("tr");
+}
+
+$.createTd = function() {
+    return document.createElement("td");
+}
+
+$.createTdWithText = function(text) {
+    var td = document.createElement("td");
+    td.innerText = text;
+    return td;
 }

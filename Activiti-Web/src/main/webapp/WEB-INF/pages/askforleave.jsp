@@ -29,7 +29,10 @@ function submitFormData() {
                 alert("服务器内部异常");
             }
             else if(result.code == REQUEST_PARAM_ERROR) {
-                alert("流程申参数格式不正确")
+                alert("流程申参数格式不正确");
+            }
+            else if (result.code == REQUEST_NOT_ALLOWED) {
+                alert("无权限操作");
             }
             else {
                 alert(result.msg);
@@ -39,8 +42,8 @@ function submitFormData() {
     executeRequest(queryUrl, param, method, submitFormDataCallback);
 }
 
-$.registerVLCEvent("#submit_btn", "click", submitFormData);
-$.registerVLCEvent("#pageBody", "keydown", function(e){
+$.registerEvent("submit_btn", "click", submitFormData);
+$.registerEvent("pageBody", "keydown", function(e){
     var theEvent = e || window.event;
     var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
     if (code == 13) {

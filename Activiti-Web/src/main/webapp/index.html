@@ -39,14 +39,14 @@ function login() {
     executeRequest(queryUrl, param, method, loginCallback);
 }
 
-$.registerVLCEvent("#password", "keydown", function(e){
+$.registerEvent("password", "keydown", function(e){
     var theEvent = e || window.event;
     var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
     if (code == 13) {
         login();
     }
 });
-$.registerVLCEvent("#login", "click", login);
+$.registerEvent("login", "click", login);
 </script>
 </body>
 </html>

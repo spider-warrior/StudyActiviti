@@ -2,6 +2,7 @@ package com.jy.activiti.helper;
 
 import com.jy.activiti.entity.User;
 import com.jy.activiti.common.util.StringUtil;
+import org.activiti.engine.IdentityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +20,8 @@ public class LoginHelper {
 
     @Autowired
     private CookieHelper cookieHelper;
+    @Autowired
+    private IdentityService identityService;
 
     private final Map<String, User> sessionHolder = new HashMap<>();
 
@@ -44,11 +47,16 @@ public class LoginHelper {
     }
 
     public User login(String username, String password, String code) {
-        if (username.equals("admin") && password.equals("admin")) {
-            User user = new User();
-            user.setUsername("admin");
-            user.setPassword("admin");
-            return user;
+        org.activiti.engine.identity.User user = identityService.createUserQuery().userId(username).singleResult();
+        if (user == null) {
+            return null;
+        }
+        if (user.getId().equals(username) && user.getPassword().equals(password)) {
+            User lUser = new User();
+            lUser.setId(Long.parseLong(user.getId()));
+            lUser.setUsername(user.getId());
+            lUser.setPassword(user.getPassword());
+            return lUser;
         }
         return null;
     }
