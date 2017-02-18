@@ -67,6 +67,7 @@ public class AskForLeaveController extends BaseController{
         for (ProcessDefinition d : processDefinitionList) {
             if (pd.getId().equals(d.getId())) {
                 hasAuth = true;
+                break;
             }
         }
         if (hasAuth) {

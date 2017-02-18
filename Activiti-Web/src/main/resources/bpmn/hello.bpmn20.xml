@@ -3,13 +3,13 @@
              xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
              typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath"
              targetNamespace="Cool Processes">
-    <process id="askForLeaveProcess" name="Simple approval process">
-        <documentation>This is a simple approval process.</documentation>
-        <startEvent id="startevent" name="Start" activiti:initiator="initiator"/>
+    <process id="askForLeaveProcess" name="askForLeaveProcess">
+        <documentation>This is a ask for leave process.</documentation>
+        <startEvent id="startevent" name="Start"/>
         <sequenceFlow id="flow1" name="" sourceRef="startevent" targetRef="usertask1"/>
-        <userTask id="usertask1" name="Approval task"/>
+        <userTask id="usertask1" name="submit material task"/>
         <sequenceFlow id="flow2" name="" sourceRef="usertask1" targetRef="usertask2"/>
-        <userTask id="usertask2" name="Check outcome"/>
+        <userTask id="usertask2" name="Audit Apply"/>
         <sequenceFlow id="flow3" name="" sourceRef="usertask2" targetRef="endevent"/>
         <endEvent id="endevent" name="End"/>
     </process>
