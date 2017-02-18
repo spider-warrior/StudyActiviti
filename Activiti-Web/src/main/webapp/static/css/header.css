@@ -1,0 +1,10 @@
+#header {
+    width:100%;
+    text-align: right;
+}
+.ib {
+    display: inline-block;
+}
+.margin0-10-0-10{
+    margin:0 10px 0 10px;
+}

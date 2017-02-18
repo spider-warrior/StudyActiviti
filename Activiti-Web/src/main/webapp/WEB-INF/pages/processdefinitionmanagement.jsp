@@ -2,8 +2,10 @@
 <html>
 <head>
     <title>流程管理</title>
+    <%@include file="basic-static-file-import.jsp"%>
 </head>
 <body>
+<%@include file="header.jsp"%>
 流程列表: <button id="queryProcessDefinitionBtn">刷新列表</button> <br/>
 <table width="80%" align="center" border="1">
     <thead>
@@ -31,7 +33,6 @@
 流程id：<input name="pdid" id="pdid" type="text"/><br/>
 <button id="user_add_pd_btn">添加</button>
 
-<script src="/static/js/common.js"></script>
 <script type="text/javascript">
     // for list
     function queryProcessDefinition() {

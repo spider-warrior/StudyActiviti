@@ -17,6 +17,7 @@ import java.util.UUID;
 public class LoginHelper {
 
     private static final String SESSION_KEY = "login_session";
+    private static final String USER_NAME_COOKIE_KEY = "username_key";
 
     @Autowired
     private CookieHelper cookieHelper;
@@ -33,6 +34,7 @@ public class LoginHelper {
         sessionHolder.put(key, user);
         if (response != null) {
             cookieHelper.addCookie(response, SESSION_KEY, key);
+            cookieHelper.addCookie(response, USER_NAME_COOKIE_KEY, user.getId().toString());
         }
         return key;
     }
@@ -43,6 +45,9 @@ public class LoginHelper {
 
     public User getSessionCacheUser(HttpServletRequest request) {
         String sessionKey = cookieHelper.getCookieValue(request, SESSION_KEY);
+        if (StringUtil.isEmpty(sessionKey)) {
+            return null;
+        }
         return sessionHolder.get(sessionKey);
     }
 

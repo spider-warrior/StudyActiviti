@@ -2,16 +2,16 @@
 <html>
 <head>
     <title>请假流程</title>
+    <%@include file="basic-static-file-import.jsp"%>
 </head>
 <body id="pageBody">
+<%@include file="header.jsp"%>
 天数： <input name="time" id="time" type="text"/><br/>
 事由: <input name="reason" id="reason" type="text"/><br/>
 <button id="submit_btn">提交申请</button>
 </body>
 
-<script src="/static/js/common.js"></script>
 <script type="text/javascript">
-
 function submitFormData() {
 
     var time = $("#time").value;
