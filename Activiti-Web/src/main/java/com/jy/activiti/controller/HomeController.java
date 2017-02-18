@@ -23,7 +23,7 @@ public class HomeController extends BaseController{
      * */
     @RequestMapping("/askforleave")
     public String askforleave() {
-        return "pages/askforleave";
+        return "pages/ask-for-leave";
     }
 
     /**
@@ -31,7 +31,15 @@ public class HomeController extends BaseController{
      * */
     @RequestMapping("/pdm")
     public String pdManagement() {
-        return "pages/processdefinitionmanagement";
+        return "pages/process-definition-management";
+    }
+
+    /**
+     * 用户任务列表页面
+     * */
+    @RequestMapping("/task/user/list")
+    public String userTaskList() {
+        return "pages/user-task-list";
     }
 
 }
