@@ -57,16 +57,16 @@
                         if (owners && owners.length > 0) {
                             var first = true;
                             for (var k=0; k<owners.length; k++) {
-                                if (first) {
+                                if (!first) {
                                     first = false;
-                                    content += owners[k].id;
+                                    content += ", ";
                                 }
                                 else {
-                                    content += (", " + owners[k].id);
+                                    content += ("<a href='javascript:void(0);' onclick='userDeletePdAuth(\""+ owners[k].id + "\", \"" + pd.id +"\")'>" + owners[k].id + "</a>");
                                 }
                             }
                         }
-                        var authedUserTd = $.createTdWithText(content);
+                        var authedUserTd = $.createTdWithHtml(content);
                         tr.appendChild(idTd);
                         tr.appendChild(nameTd);
                         tr.appendChild(businessKeyTd);
@@ -108,6 +108,7 @@ function userAddPdAuth() {
 
     var userAddPdAuthCallback = function (result) {
         if (result.success) {
+            queryProcessDefinition();
             alert("成功");
         }
         else {
@@ -120,6 +121,17 @@ function userAddPdAuth() {
             else if (result.code == REQUEST_NOT_ALLOWED) {
                 alert("无权限操作");
             }
+            else if (result.code == RESOURCE_NOT_FOUND_EXCEPTION_CODE) {
+                if(result.msg == "user") {
+                    alert("用户不存在");
+                }
+                else if (result.msg == "processdefinition") {
+                    alert("流程定义不存在");
+                }
+                else {
+                    alert(result.msg);
+                }
+            }
             else {
                 alert(result.msg);
             }
@@ -128,5 +140,45 @@ function userAddPdAuth() {
     executeRequest(queryUrl, param, method, userAddPdAuthCallback);
 }
 $.registerEvent("user_add_pd_btn", "click", userAddPdAuth);
+</script>
+<script type="text/javascript">
+    function userDeletePdAuth(username, pdid) {
+        var queryUrl = "/pdm/user/delete/auth";
+        var method = POST;
+        var param = {username: username, pdid: pdid};
+
+        var userDeletePdAuthCallback = function (result) {
+            if (result.success) {
+                queryProcessDefinition();
+                alert("成功");
+            }
+            else {
+                if (result.code == SERVER_INTERNAL_EXCEPTION_CODE) {
+                    alert("服务器内部异常");
+                }
+                else if(result.code == REQUEST_PARAM_ERROR) {
+                    alert("流程申参数格式不正确");
+                }
+                else if (result.code == REQUEST_NOT_ALLOWED) {
+                    alert("无权限操作");
+                }
+                else if (result.code == RESOURCE_NOT_FOUND_EXCEPTION_CODE) {
+                    if(result.msg == "user") {
+                        alert("用户不存在");
+                    }
+                    else if (result.msg == "processdefinition") {
+                        alert("流程定义不存在");
+                    }
+                    else {
+                        alert(result.msg);
+                    }
+                }
+                else {
+                    alert(result.msg);
+                }
+            }
+        }
+        executeRequest(queryUrl, param, method, userDeletePdAuthCallback);
+    }
 </script>
 </html>

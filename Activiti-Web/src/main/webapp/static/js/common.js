@@ -305,3 +305,9 @@ $.createTdWithText = function(text) {
     td.innerText = text;
     return td;
 }
+
+$.createTdWithHtml = function(text) {
+    var td = document.createElement("td");
+    td.innerHTML = text;
+    return td;
+}

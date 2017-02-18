@@ -64,4 +64,26 @@ public class ProcessDefinitionController extends BaseController{
         return success();
     }
 
+    @RequiredLogin
+    @RequestMapping("/user/delete/auth")
+    public Object userDeletePdAuth(@RequestBody(required = false) Map<String, String> param) {
+        String userId = param.get("username");
+        String pdid = param.get("pdid");
+
+        if (StringUtil.isEmpty(userId) || StringUtil.isEmpty(pdid)) {
+            return fail(ResponseCode.REQUEST_PARAM_ERROR.getValue());
+        }
+
+        User user = identityService.createUserQuery().userId(userId).singleResult();
+        if (user == null) {
+            return fail(ResponseCode.REQUEST_SOURCE_NOT_FOUND.getValue(), ResourcesType.USER.getValue());
+        }
+        ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().processDefinitionId(pdid).singleResult();
+        if (pd == null) {
+            return fail(ResponseCode.REQUEST_SOURCE_NOT_FOUND.getValue(), ResourcesType.PROCESSDEFINITION.getValue());
+        }
+        repositoryService.deleteCandidateStarterUser(pdid, userId);
+        return success();
+    }
+
 }

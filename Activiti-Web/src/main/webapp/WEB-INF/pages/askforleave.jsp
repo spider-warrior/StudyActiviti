@@ -34,6 +34,17 @@ function submitFormData() {
             else if (result.code == REQUEST_NOT_ALLOWED) {
                 alert("无权限操作");
             }
+            else if (result.code == RESOURCE_NOT_FOUND_EXCEPTION_CODE) {
+                if(result.msg == "user") {
+                    alert("用户不存在");
+                }
+                else if (result.msg == "processdefinition") {
+                    alert("流程定义不存在");
+                }
+                else {
+                    alert(result.msg);
+                }
+            }
             else {
                 alert(result.msg);
             }
