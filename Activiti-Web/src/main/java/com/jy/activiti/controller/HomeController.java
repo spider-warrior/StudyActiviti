@@ -42,4 +42,12 @@ public class HomeController extends BaseController{
         return "pages/user-task-list";
     }
 
+    /**
+     * model页面
+     * */
+    @RequestMapping("/model")
+    public String model() {
+        return "pages/model";
+    }
+
 }

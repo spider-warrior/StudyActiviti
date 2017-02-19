@@ -1,5 +1,7 @@
 package com.jy.activiti.config;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jy.activiti.interceptor.LoginInterceptor;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.activiti.engine.*;
@@ -58,6 +60,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**").addResourceLocations("/static/");
+        registry.addResourceHandler("/process-editor/**").addResourceLocations("/process-editor/");
     }
 
     @Bean
@@ -139,6 +142,13 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         HibernateTransactionManager txManager = new HibernateTransactionManager();
         txManager.setSessionFactory(sessionFactory);
         return txManager;
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        return objectMapper;
     }
 
     @Bean

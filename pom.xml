@@ -20,6 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.framework.version>4.1.5.RELEASE</spring.framework.version>
         <spring.security.version>3.2.3.RELEASE</spring.security.version>
+        <batik.version>1.7</batik.version>
     </properties>
 
     <build>
@@ -80,6 +81,17 @@
                 <version>Athens-RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.xmlgraphics</groupId>
+                <artifactId>batik-transcoder</artifactId>
+                <version>${batik.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>commons-logging</artifactId>
+                        <groupId>commons-logging</groupId>
+                    </exclusion>
+                </exclusions>
             </dependency>
         </dependencies>
     </dependencyManagement>
