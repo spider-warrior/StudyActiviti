@@ -123,6 +123,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-codec</artifactId>
+            <version>1.7</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -162,7 +167,7 @@
             <properties>
                 <!-- jdbc -->
                 <db.driver.class>com.mysql.cj.jdbc.Driver</db.driver.class>
-                <db.url>jdbc:mysql://localhost:3306/activiti?useSSL=false&amp;characterEncoding=UTF-8&amp;createDatabaseIfNotExist=true&amp;useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC</db.url>
+                <db.url>jdbc:mysql://192.168.14.227:3306/activiti?useSSL=false&amp;characterEncoding=UTF-8&amp;createDatabaseIfNotExist=true&amp;useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC</db.url>
                 <db.username>activiti-test</db.username>
                 <db.password>activiti-test</db.password>
                 <db.initialPoolSize>5</db.initialPoolSize>
