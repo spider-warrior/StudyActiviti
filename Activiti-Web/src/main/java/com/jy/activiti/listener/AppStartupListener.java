@@ -12,6 +12,8 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
+import java.util.List;
+
 public class AppStartupListener implements ApplicationListener {
 
     private final Logger LOGGER = LogManager.getLogger(AppStartupListener.class);
@@ -50,8 +52,8 @@ public class AppStartupListener implements ApplicationListener {
     }
     public Deployment getDefaultDeployment() {
         RepositoryService repositoryService = ContextHelper.getBean(RepositoryService.class);
-        Deployment deployment = repositoryService.createDeploymentQuery().singleResult();
-        return deployment;
+        List<Deployment> deployments = repositoryService.createDeploymentQuery().list();
+        return deployments.get(0);
     }
     public ProcessDefinition getDeploymentProcessDefinition(Deployment deployment) {
         RepositoryService repositoryService = ContextHelper.getBean(RepositoryService.class);
