@@ -28,12 +28,18 @@
 
 添加Model: <br/>
 model 名称: <input name="name" id="name" type="text"/><br/>
+model 范畴: <input name="category" id="category" type="text"/><br/>
+model 部署Id: <input name="deploymentId" id="deploymentId" type="text"/><br/>
+model key: <input name="key" id="key" type="text"/><br/>
+model metaInfo: <input name="metaInfo" id="metaInfo" type="text"/><br/>
+model tenantId: <input name="tenantId" id="tenantId" type="text"/><br/>
+model version: <input name="version" id="version" type="text"/><br/>
 model 描述: <textarea name="description" id="description" rows="4" cols="50"></textarea><br/>
 <button id="submit_model_btn" type="button">添加model</button><br/>
 
 <script type="text/javascript">
     function queryModelList () {
-        var queryUrl = "/service/model/list";
+        var queryUrl = "/model/list";
         var method = POST;
         var param = {}
         var queryModelListCallback = function (result) {
@@ -52,7 +58,8 @@ model 描述: <textarea name="description" id="description" rows="4" cols="50"><
                         var versionTd = $.createTdWithText(model.version);
                         var createTimeTd = $.createTdWithText(model.createTime);
                         var deploymentId = $.createTdWithText(model.deploymentId);
-                        var operationId = $.createTdWithHtml("<a target='_blank' href='/process-editor/modeler.html?modelId=" + model.id + "'>" + "详情" + "</a>");
+                        var operationId = $.createTdWithHtml("<a target='_blank' href='/process-editor/modeler.html?modelId=" + model.id + "'>" + "详情" + "</a>&nbsp;&nbsp;"
+                                                                + "<a href='javascript:void(0)' onclick='alert(\"部署成功\")'>部署</a>");
                         tr.appendChild(idTd);
                         tr.appendChild(nameTd);
                         tr.appendChild(keyTd);
@@ -90,7 +97,7 @@ model 描述: <textarea name="description" id="description" rows="4" cols="50"><
     function addModel() {
         var name = $("#name").value;
         var description = $("#description").value;
-        var queryUrl = "/service/model";
+        var queryUrl = "/model/save/quick";
         var method = POST;
         var param = {name: name, description: description}
         var addModelCallback = function (result) {

@@ -5,10 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jy.activiti.interceptor.LoginInterceptor;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.activiti.engine.*;
+import org.activiti.engine.impl.FormServiceImpl;
+import org.activiti.rest.common.application.DefaultContentTypeResolver;
+import org.activiti.rest.service.api.RestResponseFactory;
 import org.activiti.spring.ProcessEngineFactoryBean;
 import org.activiti.spring.SpringProcessEngineConfiguration;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -37,7 +41,10 @@ import java.util.Properties;
 @EnableWebMvc
 @EnableTransactionManagement
 @ComponentScan(
-        basePackages = "com.jy.activiti"
+        basePackages = {"com.jy.activiti",
+        "org.activiti.rest.service.api",
+        "org.activiti.rest.editor.model",
+        "org.activiti.rest.editor.main"}
 )
 @PropertySource({"classpath:props/db.properties",
         "classpath:props/hibernate.properties"})
@@ -165,10 +172,11 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     @Autowired
-    public ProcessEngineFactoryBean processEngineFactoryBean(SpringProcessEngineConfiguration processEngineConfiguration) {
+    public ProcessEngine processEngine(SpringProcessEngineConfiguration processEngineConfiguration, ApplicationContext applicationContext) throws Exception {
         ProcessEngineFactoryBean processEngineFactoryBean = new ProcessEngineFactoryBean();
         processEngineFactoryBean.setProcessEngineConfiguration(processEngineConfiguration);
-        return processEngineFactoryBean;
+        processEngineFactoryBean.setApplicationContext(applicationContext);
+        return processEngineFactoryBean.getObject();
     }
 
     @Bean
@@ -195,5 +203,21 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     public IdentityService identityService() {
         return processEngine.getIdentityService();
     }
+    @Bean
+    public RestResponseFactory restResponseFactory() {
+        RestResponseFactory restResponseFactory = new RestResponseFactory();
+        return restResponseFactory;
+    }
+    @Bean
+    public FormServiceImpl formService() {
+        FormServiceImpl formService = new FormServiceImpl();
+        return formService;
+    }
+    @Bean
+    public DefaultContentTypeResolver contentTypeResolver() {
+        DefaultContentTypeResolver contentTypeResolver = new DefaultContentTypeResolver();
+        return contentTypeResolver;
+    }
+
 
 }
