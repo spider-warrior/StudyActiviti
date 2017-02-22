@@ -37,6 +37,7 @@ model version: <input name="version" id="version" type="text"/><br/>
 model 描述: <textarea name="description" id="description" rows="4" cols="50"></textarea><br/>
 <button id="submit_model_btn" type="button">添加model</button><br/>
 
+<iframe id="hiddenframe" name="hiddenframe" style="display: none;"></iframe>
 <script type="text/javascript">
     function queryModelList () {
         var queryUrl = "/model/list";
@@ -60,7 +61,9 @@ model 描述: <textarea name="description" id="description" rows="4" cols="50"><
                         var deploymentId = $.createTdWithText(model.deploymentId);
                         var operationId = $.createTdWithHtml("<a target='_blank' href='/process-editor/modeler.html?modelId=" + model.id + "'>" + "详情" + "</a>&nbsp;&nbsp;"
                                                                 + "<a href='javascript:void(0)' onclick='deleteModel(\"" + model.id +"\")'>删除</a>&nbsp;&nbsp;"
-                                                                + "<a href='javascript:void(0)' onclick='alert(\"" + model.id +"\")'>部署</a>&nbsp;&nbsp;");
+                                                                + "<a href='javascript:void(0)' onclick='deployModel(\"" + model.id +"\")'>部署</a>&nbsp;&nbsp;"
+                                                                + "<a href='/model/export/" + model.id + "' target='hiddenframe'>导出流程文件</a>&nbsp;&nbsp;"
+                                                                + "<a href='/model/image/" + model.id + "' target='_blank'>查看流程图</a>&nbsp;&nbsp;");
                         tr.appendChild(idTd);
                         tr.appendChild(nameTd);
                         tr.appendChild(keyTd);
@@ -142,7 +145,7 @@ model 描述: <textarea name="description" id="description" rows="4" cols="50"><
         var queryUrl = "/model/" + modelId;
         var method = DELETE;
         var param = {};
-        var addModelCallback = function (result) {
+        var deleteModelCallback = function (result) {
             if (result.success) {
                 queryModelList();
                 alert("model删除成功");
@@ -173,7 +176,86 @@ model 描述: <textarea name="description" id="description" rows="4" cols="50"><
                 }
             }
         }
-        executeRequest(queryUrl, param, method, addModelCallback);
+        executeRequest(queryUrl, param, method, deleteModelCallback);
+    }
+</script>
+
+<script type="text/javascript">
+    function deployModel(modelId) {
+        var queryUrl = "/model/deploy/" + modelId;
+        var method = GET;
+        var param = {};
+        var deployModelCallback = function (result) {
+            if (result.success) {
+                alert("model部署成功");
+            }
+            else {
+                if (result.code == SERVER_INTERNAL_EXCEPTION_CODE) {
+                    alert("服务器内部异常");
+                }
+                else if(result.code == REQUEST_PARAM_ERROR) {
+                    alert("流程申参数格式不正确");
+                }
+                else if (result.code == REQUEST_NOT_ALLOWED) {
+                    alert("无权限操作");
+                }
+                else if (result.code == RESOURCE_NOT_FOUND_EXCEPTION_CODE) {
+                    if(result.msg == "user") {
+                        alert("用户不存在");
+                    }
+                    else if (result.msg == "processdefinition") {
+                        alert("流程定义不存在");
+                    }
+                    else {
+                        alert(result.msg);
+                    }
+                }
+                else {
+                    alert(result.msg);
+                }
+            }
+        }
+        executeRequest(queryUrl, param, method, deployModelCallback);
+    }
+</script>
+
+<script type="text/javascript">
+    function exportModel(modelId) {
+        var queryUrl = "/model/export/" + modelId;
+        var method = GET;
+        var param = {};
+        var exportModelCallback = function (result) {
+            if (result.success) {
+                queryModelList();
+                alert("model删除成功");
+            }
+            else {
+                if (result.code == SERVER_INTERNAL_EXCEPTION_CODE) {
+                    alert("服务器内部异常");
+                }
+                else if(result.code == REQUEST_PARAM_ERROR) {
+                    alert("流程申参数格式不正确");
+                }
+                else if (result.code == REQUEST_NOT_ALLOWED) {
+                    alert("无权限操作");
+                }
+                else if (result.code == RESOURCE_NOT_FOUND_EXCEPTION_CODE) {
+                    if(result.msg == "user") {
+                        alert("用户不存在");
+                    }
+                    else if (result.msg == "processdefinition") {
+                        alert("流程定义不存在");
+                    }
+                    else {
+                        alert(result.msg);
+                    }
+                }
+                else {
+                    alert(result.msg);
+                }
+            }
+        }
+        executeRequest(queryUrl, param, method, exportModelCallback);
     }
 </script>
 </body>

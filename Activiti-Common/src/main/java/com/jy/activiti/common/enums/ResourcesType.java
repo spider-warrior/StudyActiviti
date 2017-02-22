@@ -13,7 +13,22 @@ public enum ResourcesType {
     /**
      * 流程定义
      * */
-    PROCESSDEFINITION("processdefinition");
+    PROCESSDEFINITION("processdefinition"),
+
+    /**
+     * 流程模型
+     * */
+    PROCESSDEFINITION_MODEL("processdefinition_model"),
+
+    /**
+     * 流程文件
+     * */
+    PROCESSDEFINITION_DOC("processdefinition_doc"),
+
+    /**
+     * 流程图
+     * */
+    PROCESSDEFINITION_IMG("processdefinition_img");
 
     public static ResourcesType getResourcesType(String value) {
         for (ResourcesType type: values()) {

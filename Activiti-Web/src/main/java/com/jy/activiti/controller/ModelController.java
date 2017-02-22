@@ -1,11 +1,16 @@
 package com.jy.activiti.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.jy.activiti.common.enums.ResourcesType;
 import com.jy.activiti.response.entity.ModelWrapper;
 import com.jy.activiti.response.service.ModelWrapperBuilder;
 import com.jy.activiti.service.exception.ExceptionCode;
+import org.activiti.bpmn.converter.BpmnXMLConverter;
+import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.editor.constants.ModelDataJsonConstants;
+import org.activiti.editor.language.json.converter.BpmnJsonConverter;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.Model;
 import org.activiti.engine.repository.ModelQuery;
@@ -13,7 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -176,9 +183,61 @@ public class ModelController extends BaseController {
 
 
     @RequestMapping(value="/{modelId}", method = RequestMethod.DELETE)
-    public Object deleteModel(@PathVariable String modelId, HttpServletResponse response) {
+    public Object deleteModel(@PathVariable String modelId) {
         repositoryService.deleteModel(modelId);
         return success();
+    }
+
+    @RequestMapping(value="/deploy/{modelId}", method = RequestMethod.GET)
+    public Object deployModel(@PathVariable String modelId) throws IOException {
+
+        Model model = repositoryService.createModelQuery().modelId(modelId).singleResult();
+        if (model == null) {
+            return fail(ExceptionCode.SOURCE_NOT_FOUND_EXCEPTION.getValue(), ResourcesType.PROCESSDEFINITION_MODEL.getValue());
+        }
+        byte[] editorSource = repositoryService.getModelEditorSource(modelId);
+        if (editorSource == null) {
+            return fail(ExceptionCode.SOURCE_NOT_FOUND_EXCEPTION.getValue(), ResourcesType.PROCESSDEFINITION_DOC.getValue());
+        }
+        JsonNode modelNode = objectMapper.readTree(editorSource);
+
+        BpmnModel bpmnModel = new BpmnJsonConverter().convertToBpmnModel(modelNode);
+        byte[] bpmnBytes = new BpmnXMLConverter().convertToXML(bpmnModel);
+
+        String processName = model.getName() + ".bpmn20.xml";
+        repositoryService.createDeployment()
+                .name(model.getName())
+                .addString(processName, new String(bpmnBytes))
+                .deploy();
+        return success();
+    }
+
+    @RequestMapping(value="/export/{modelId}", method = RequestMethod.GET)
+    public Object exportModel(@PathVariable String modelId, HttpServletResponse response) throws IOException {
+        byte[] editorSource = repositoryService.getModelEditorSource(modelId);
+        if (editorSource == null) {
+            return fail(ExceptionCode.SOURCE_NOT_FOUND_EXCEPTION.getValue(), ResourcesType.PROCESSDEFINITION_DOC.getValue());
+        }
+        JsonNode editorNode = new ObjectMapper().readTree(repositoryService.getModelEditorSource(modelId));
+        BpmnJsonConverter jsonConverter = new BpmnJsonConverter();
+        BpmnModel bpmnModel = jsonConverter.convertToBpmnModel(editorNode);
+        String filename = bpmnModel.getMainProcess().getId() + ".bpmn20.xml";
+        byte[] bpmnBytes = new BpmnXMLConverter().convertToXML(bpmnModel);
+
+        response.setContentType("application/octet-stream");
+        response.addHeader("content-Disposition", "attachment;fileName="+ URLEncoder.encode(filename, "utf-8"));
+        return bpmnBytes;
+    }
+
+    @RequestMapping(value="/image/{modelId}", method = RequestMethod.GET)
+    public Object modelImage(@PathVariable String modelId, HttpServletResponse response) throws IOException {
+        final byte[] editorSourceExtra = repositoryService.getModelEditorSourceExtra(modelId);
+        if (editorSourceExtra == null) {
+            return fail(ExceptionCode.SOURCE_NOT_FOUND_EXCEPTION.getValue(), ResourcesType.PROCESSDEFINITION_IMG.getValue());
+        }
+        response.setContentType("image/png");
+        response.addHeader("content-Disposition", "attachment;fileName="+ URLEncoder.encode("流程图.png", "utf-8"));
+        return editorSourceExtra;
     }
 
     public ModelController() {
