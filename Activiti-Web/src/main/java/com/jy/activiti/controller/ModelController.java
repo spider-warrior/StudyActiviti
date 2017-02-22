@@ -12,6 +12,7 @@ import org.activiti.engine.repository.ModelQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -174,17 +175,11 @@ public class ModelController extends BaseController {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
+    @RequestMapping(value="/{modelId}", method = RequestMethod.DELETE)
+    public Object deleteModel(@PathVariable String modelId, HttpServletResponse response) {
+        repositoryService.deleteModel(modelId);
+        return success();
+    }
 
     public ModelController() {
 
