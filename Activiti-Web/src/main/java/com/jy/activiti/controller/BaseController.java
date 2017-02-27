@@ -53,6 +53,11 @@ public class BaseController {
         return result(false, ExceptionCode.SERVER_INTERNAL_EXCEPTION.getValue(), description, data);
     }
 
+    public Map<String, Object> failSourceNotFound(String sourceType) {
+        return fail(ExceptionCode.SOURCE_NOT_FOUND_EXCEPTION.getValue(), sourceType);
+    }
+
+
     /**
      * 404
      */

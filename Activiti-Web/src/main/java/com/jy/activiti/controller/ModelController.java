@@ -14,17 +14,27 @@ import org.activiti.editor.language.json.converter.BpmnJsonConverter;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.Model;
 import org.activiti.engine.repository.ModelQuery;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.activiti.editor.constants.ModelDataJsonConstants.MODEL_DESCRIPTION;
+import static org.activiti.editor.constants.ModelDataJsonConstants.MODEL_NAME;
+import static org.activiti.editor.constants.ModelDataJsonConstants.MODEL_REVISION;
 
 @RequestMapping("/model")
 @RestController
@@ -136,9 +146,9 @@ public class ModelController extends BaseController {
         editorNode.set("stencilset", stencilSetNode);
         //modelObjectNode
         ObjectNode modelObjectNode = objectMapper.createObjectNode();
-        modelObjectNode.put(ModelDataJsonConstants.MODEL_NAME, modelName);
-        modelObjectNode.put(ModelDataJsonConstants.MODEL_REVISION, 1);
-        modelObjectNode.put(ModelDataJsonConstants.MODEL_DESCRIPTION, description);
+        modelObjectNode.put(MODEL_NAME, modelName);
+        modelObjectNode.put(MODEL_REVISION, 1);
+        modelObjectNode.put(MODEL_DESCRIPTION, description);
 
         Model modelData = repositoryService.newModel();
         modelData.setMetaInfo(modelObjectNode.toString());
@@ -167,7 +177,7 @@ public class ModelController extends BaseController {
         } catch (Exception e) {
             return fail(ExceptionCode.PARAM_INVALID.getValue());
         }
-        Model model = this.repositoryService.newModel();
+        Model model = repositoryService.newModel();
         model.setCategory(categoty);
         model.setDeploymentId(deploymentId);
         model.setKey(key);
@@ -176,7 +186,7 @@ public class ModelController extends BaseController {
         model.setTenantId(tenantId);
         model.setVersion(version);
 
-        this.repositoryService.saveModel(model);
+        repositoryService.saveModel(model);
 
         return success();
     }
@@ -193,11 +203,11 @@ public class ModelController extends BaseController {
 
         Model model = repositoryService.createModelQuery().modelId(modelId).singleResult();
         if (model == null) {
-            return fail(ExceptionCode.SOURCE_NOT_FOUND_EXCEPTION.getValue(), ResourcesType.PROCESSDEFINITION_MODEL.getValue());
+            return failSourceNotFound(ResourcesType.PROCESSDEFINITION_MODEL.getValue());
         }
         byte[] editorSource = repositoryService.getModelEditorSource(modelId);
         if (editorSource == null) {
-            return fail(ExceptionCode.SOURCE_NOT_FOUND_EXCEPTION.getValue(), ResourcesType.PROCESSDEFINITION_DOC.getValue());
+            return failSourceNotFound(ResourcesType.PROCESSDEFINITION_DOC.getValue());
         }
         JsonNode modelNode = objectMapper.readTree(editorSource);
 
@@ -216,7 +226,7 @@ public class ModelController extends BaseController {
     public Object exportModel(@PathVariable String modelId, HttpServletResponse response) throws IOException {
         byte[] editorSource = repositoryService.getModelEditorSource(modelId);
         if (editorSource == null) {
-            return fail(ExceptionCode.SOURCE_NOT_FOUND_EXCEPTION.getValue(), ResourcesType.PROCESSDEFINITION_DOC.getValue());
+            return failSourceNotFound(ResourcesType.PROCESSDEFINITION_DOC.getValue());
         }
         JsonNode editorNode = new ObjectMapper().readTree(repositoryService.getModelEditorSource(modelId));
         BpmnJsonConverter jsonConverter = new BpmnJsonConverter();
@@ -233,11 +243,39 @@ public class ModelController extends BaseController {
     public Object modelImage(@PathVariable String modelId, HttpServletResponse response) throws IOException {
         final byte[] editorSourceExtra = repositoryService.getModelEditorSourceExtra(modelId);
         if (editorSourceExtra == null) {
-            return fail(ExceptionCode.SOURCE_NOT_FOUND_EXCEPTION.getValue(), ResourcesType.PROCESSDEFINITION_IMG.getValue());
+            return failSourceNotFound(ResourcesType.PROCESSDEFINITION_IMG.getValue());
         }
         response.setContentType("image/png");
         response.addHeader("content-Disposition", "attachment;fileName="+ URLEncoder.encode("流程图.png", "utf-8"));
         return editorSourceExtra;
+    }
+
+    @RequestMapping(value="/import/{processDefinitionId}", method = RequestMethod.GET)
+    public Object importModelByProcessDefinition(@PathVariable("processDefinitionId") String processDefinitionId) throws IOException, XMLStreamException {
+        ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().processDefinitionId(processDefinitionId).singleResult();
+        if (pd == null) {
+            return failSourceNotFound(ResourcesType.PROCESSDEFINITION_DOC.getValue());
+        }
+        InputStream xmlsourceInputStream = repositoryService.getResourceAsStream(pd.getDeploymentId(), pd.getResourceName());
+        if (xmlsourceInputStream == null) {
+            return failSourceNotFound(ResourcesType.PROCESSDEFINITION_DOC.getValue());
+        }
+        XMLInputFactory xif = XMLInputFactory.newInstance();
+        InputStreamReader in = new InputStreamReader(xmlsourceInputStream, "UTF-8");
+        XMLStreamReader xtr = xif.createXMLStreamReader(in);
+        BpmnModel bpmnModel = new BpmnXMLConverter().convertToBpmnModel(xtr);
+        BpmnJsonConverter jsonConverter = new BpmnJsonConverter();
+        ObjectNode objectNode = jsonConverter.convertToJson(bpmnModel);
+        Model modelData = repositoryService.newModel();
+        ObjectNode modelObjectNode = new ObjectMapper().createObjectNode();
+        modelObjectNode.put(MODEL_NAME, pd.getName());
+        modelObjectNode.put(MODEL_REVISION, 1);
+        modelObjectNode.put(MODEL_DESCRIPTION, pd.getDescription());
+        modelData.setMetaInfo(modelObjectNode.toString());
+        modelData.setName(pd.getName());
+        repositoryService.saveModel(modelData);
+        repositoryService.addModelEditorSource(modelData.getId(), objectNode.toString().getBytes("utf-8"));
+        return success();
     }
 
     public ModelController() {

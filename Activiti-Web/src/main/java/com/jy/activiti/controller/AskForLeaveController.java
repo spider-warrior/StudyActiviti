@@ -52,7 +52,7 @@ public class AskForLeaveController extends BaseController{
             return fail(ExceptionCode.PARAM_INVALID.getValue(), null);
         }
         //流程是否存在
-        ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().processDefinitionKeyLike("askForLeaveProcess").singleResult();
+        ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().processDefinitionKey("askForLeaveProcess").singleResult();
         if (pd == null) {
             return fail(ExceptionCode.SERVER_INTERNAL_EXCEPTION.getValue(), "流程不存在");
         }

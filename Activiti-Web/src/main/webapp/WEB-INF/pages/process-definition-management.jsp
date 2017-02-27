@@ -14,6 +14,7 @@
         <th>流程名称</th>
         <th>业务码</th>
         <th>有权限用户</th>
+        <th>操作</th>
     </tr>
     </thead>
     <tbody id="tbody"></tbody>
@@ -68,10 +69,14 @@
                             }
                         }
                         var authedUserTd = $.createTdWithHtml(content);
+                        var operationTd = $.createTd();
+                        var operationTdHtml = "<a href='javascript:void(0)' onclick='pdGenerateModel(\"" + pd.id +"\")'>生成model</a>";
+                        operationTd.innerHTML = operationTdHtml;
                         tr.appendChild(idTd);
                         tr.appendChild(nameTd);
                         tr.appendChild(businessKeyTd);
                         tr.appendChild(authedUserTd);
+                        tr.appendChild(operationTd);
                         $("#tbody").appendChild(tr);
                     }
                     $("#total").innerText = processes.length;
@@ -180,6 +185,45 @@ $.registerEvent("user_add_pd_btn", "click", userAddPdAuth);
             }
         }
         executeRequest(queryUrl, param, method, userDeletePdAuthCallback);
+    }
+</script>
+
+<script type="text/javascript">
+    function pdGenerateModel(pdid) {
+        var queryUrl = "/model/import/" + pdid;
+        var method = GET;
+        var param = {};
+        var pdGenerateModelCallback = function (result) {
+            if (result.success) {
+                alert("model生成成功");
+            }
+            else {
+                if (result.code == SERVER_INTERNAL_EXCEPTION_CODE) {
+                    alert("服务器内部异常");
+                }
+                else if(result.code == REQUEST_PARAM_ERROR) {
+                    alert("流程申参数格式不正确");
+                }
+                else if (result.code == REQUEST_NOT_ALLOWED) {
+                    alert("无权限操作");
+                }
+                else if (result.code == RESOURCE_NOT_FOUND_EXCEPTION_CODE) {
+                    if(result.msg == "user") {
+                        alert("用户不存在");
+                    }
+                    else if (result.msg == "processdefinition") {
+                        alert("流程定义不存在");
+                    }
+                    else {
+                        alert(result.msg);
+                    }
+                }
+                else {
+                    alert(result.msg);
+                }
+            }
+        }
+        executeRequest(queryUrl, param, method, pdGenerateModelCallback);
     }
 </script>
 </html>

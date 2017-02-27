@@ -6,9 +6,14 @@
 </head>
 <body id="pageBody">
 <%@include file="header.jsp"%>
+<h2>process key: askForLeaveProcess</h2>
 天数： <input name="time" id="time" type="text"/><br/>
 事由: <input name="reason" id="reason" type="text"/><br/>
 <button id="submit_btn">提交申请</button>
+
+<hr/>
+流程图: 
+<img src="">
 </body>
 
 <script type="text/javascript">
