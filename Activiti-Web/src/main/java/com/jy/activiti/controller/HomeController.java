@@ -50,4 +50,12 @@ public class HomeController extends BaseController{
         return "pages/model";
     }
 
+    /**
+     * identity management
+     * */
+    @RequestMapping("/identity")
+    public String identity() {
+        return "pages/identity-management";
+    }
+
 }

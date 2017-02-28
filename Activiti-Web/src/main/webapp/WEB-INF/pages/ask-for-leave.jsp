@@ -23,7 +23,7 @@ function submitFormData() {
     var reason = $("#reason").value;
     var queryUrl = "/askforleave";
     var method = POST;
-    var param = {time: time, reason: reason}
+    var param = {time: time, reason: reason};
 
     var submitFormDataCallback = function (result) {
         if (result.success) {
