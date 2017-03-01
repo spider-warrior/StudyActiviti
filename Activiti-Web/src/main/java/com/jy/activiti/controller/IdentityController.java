@@ -43,6 +43,19 @@ public class IdentityController extends BaseController {
         return success(result);
     }
 
+    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    public Object addUser(@RequestBody Map<String, String> param) {
+        String id = param.get("id");
+        String password = param.get("password");
+        if (StringUtil.isEmpty(id) || StringUtil.isEmpty(password)) {
+            return failOnParamInvalid(null);
+        }
+        User user = identityService.newUser(id);
+        user.setPassword(password);
+        identityService.saveUser(user);
+        return success();
+    }
+
 
     @RequestMapping(value = "/groups", method = {RequestMethod.GET, RequestMethod.POST})
     public Object groupList(@RequestBody(required = false) Map<String, String> param) {
