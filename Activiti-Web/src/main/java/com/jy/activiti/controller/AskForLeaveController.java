@@ -49,7 +49,7 @@ public class AskForLeaveController extends BaseController{
         Object reason = param.get("reason");
         //参数异常
         if (timeStr == null || reason == null) {
-            return fail(ExceptionCode.PARAM_INVALID.getValue(), null);
+            return failOnParamInvalid(null);
         }
         //流程是否存在
         ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().processDefinitionKey("askForLeaveProcess").singleResult();

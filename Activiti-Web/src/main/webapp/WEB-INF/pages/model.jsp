@@ -77,18 +77,7 @@ model 描述: <textarea name="description" id="description" rows="4" cols="50"><
                 }
             }
             else {
-                if (result.code == SERVER_INTERNAL_EXCEPTION_CODE) {
-                    alert("服务器内部异常");
-                }
-                else if(result.code == REQUEST_PARAM_ERROR) {
-                    alert("流程申参数格式不正确");
-                }
-                else if (result.code == REQUEST_NOT_ALLOWED) {
-                    alert("无权限操作");
-                }
-                else {
-                    alert(result.msg);
-                }
+                dealAjaxError(result);
             }
         }
         executeRequest(queryUrl, param, method, queryModelListCallback);
@@ -110,29 +99,7 @@ model 描述: <textarea name="description" id="description" rows="4" cols="50"><
                 alert("model添加成功");
             }
             else {
-                if (result.code == SERVER_INTERNAL_EXCEPTION_CODE) {
-                    alert("服务器内部异常");
-                }
-                else if(result.code == REQUEST_PARAM_ERROR) {
-                    alert("流程申参数格式不正确");
-                }
-                else if (result.code == REQUEST_NOT_ALLOWED) {
-                    alert("无权限操作");
-                }
-                else if (result.code == RESOURCE_NOT_FOUND_EXCEPTION_CODE) {
-                    if(result.msg == "user") {
-                        alert("用户不存在");
-                    }
-                    else if (result.msg == "processdefinition") {
-                        alert("流程定义不存在");
-                    }
-                    else {
-                        alert(result.msg);
-                    }
-                }
-                else {
-                    alert(result.msg);
-                }
+                dealAjaxError(result);
             }
         }
         executeRequest(queryUrl, param, method, addModelCallback);
@@ -151,29 +118,7 @@ model 描述: <textarea name="description" id="description" rows="4" cols="50"><
                 alert("model删除成功");
             }
             else {
-                if (result.code == SERVER_INTERNAL_EXCEPTION_CODE) {
-                    alert("服务器内部异常");
-                }
-                else if(result.code == REQUEST_PARAM_ERROR) {
-                    alert("流程申参数格式不正确");
-                }
-                else if (result.code == REQUEST_NOT_ALLOWED) {
-                    alert("无权限操作");
-                }
-                else if (result.code == RESOURCE_NOT_FOUND_EXCEPTION_CODE) {
-                    if(result.msg == "user") {
-                        alert("用户不存在");
-                    }
-                    else if (result.msg == "processdefinition") {
-                        alert("流程定义不存在");
-                    }
-                    else {
-                        alert(result.msg);
-                    }
-                }
-                else {
-                    alert(result.msg);
-                }
+                dealAjaxError(result);
             }
         }
         executeRequest(queryUrl, param, method, deleteModelCallback);
@@ -190,29 +135,7 @@ model 描述: <textarea name="description" id="description" rows="4" cols="50"><
                 alert("model部署成功");
             }
             else {
-                if (result.code == SERVER_INTERNAL_EXCEPTION_CODE) {
-                    alert("服务器内部异常");
-                }
-                else if(result.code == REQUEST_PARAM_ERROR) {
-                    alert("流程申参数格式不正确");
-                }
-                else if (result.code == REQUEST_NOT_ALLOWED) {
-                    alert("无权限操作");
-                }
-                else if (result.code == RESOURCE_NOT_FOUND_EXCEPTION_CODE) {
-                    if(result.msg == "user") {
-                        alert("用户不存在");
-                    }
-                    else if (result.msg == "processdefinition") {
-                        alert("流程定义不存在");
-                    }
-                    else {
-                        alert(result.msg);
-                    }
-                }
-                else {
-                    alert(result.msg);
-                }
+                dealAjaxError(result);
             }
         }
         executeRequest(queryUrl, param, method, deployModelCallback);
@@ -230,29 +153,7 @@ model 描述: <textarea name="description" id="description" rows="4" cols="50"><
                 alert("model删除成功");
             }
             else {
-                if (result.code == SERVER_INTERNAL_EXCEPTION_CODE) {
-                    alert("服务器内部异常");
-                }
-                else if(result.code == REQUEST_PARAM_ERROR) {
-                    alert("流程申参数格式不正确");
-                }
-                else if (result.code == REQUEST_NOT_ALLOWED) {
-                    alert("无权限操作");
-                }
-                else if (result.code == RESOURCE_NOT_FOUND_EXCEPTION_CODE) {
-                    if(result.msg == "user") {
-                        alert("用户不存在");
-                    }
-                    else if (result.msg == "processdefinition") {
-                        alert("流程定义不存在");
-                    }
-                    else {
-                        alert(result.msg);
-                    }
-                }
-                else {
-                    alert(result.msg);
-                }
+                dealAjaxError(result);
             }
         }
         executeRequest(queryUrl, param, method, exportModelCallback);

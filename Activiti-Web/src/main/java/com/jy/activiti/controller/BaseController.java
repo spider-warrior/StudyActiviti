@@ -56,6 +56,9 @@ public class BaseController {
     public Map<String, Object> failSourceNotFound(String sourceType) {
         return fail(ExceptionCode.SOURCE_NOT_FOUND_EXCEPTION.getValue(), sourceType);
     }
+    public Map<String, Object> failOnParamInvalid(String description) {
+        return fail(ExceptionCode.PARAM_INVALID.getValue(), description);
+    }
 
 
     /**
