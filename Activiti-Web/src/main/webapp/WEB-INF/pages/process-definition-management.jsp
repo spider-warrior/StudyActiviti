@@ -2,10 +2,10 @@
 <html>
 <head>
     <title>流程管理</title>
-    <%@include file="basic-static-file-import.jsp"%>
+    <%@include file="header.jsp"%>
 </head>
 <body>
-<%@include file="header.jsp"%>
+<%@include file="banner.jsp"%>
 流程列表: <button id="queryProcessDefinitionBtn">刷新列表</button> <br/>
 <table width="80%" align="center" border="1">
     <thead>
@@ -64,7 +64,7 @@
                                     content += ", ";
                                 }
                                 else {
-                                    content += ("<a href='javascript:void(0);' onclick='userDeletePdAuth(\""+ owners[k].id + "\", \"" + pd.id +"\")'>" + owners[k].id + "</a>");
+                                    content += ("<a href='javascript:void(0);' onclick='userDeletePdAuth(\""+ owners[k].id + "\", \"" + pd.id +"\")'>" + owners[k].id + "</a>&nbsp;&nbsp;");
                                 }
                             }
                         }

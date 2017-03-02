@@ -11,6 +11,11 @@ public enum ResourcesType {
     USER("user"),
 
     /**
+     * 用户组
+     * */
+    GROUP("group"),
+
+    /**
      * 流程定义
      * */
     PROCESSDEFINITION("processdefinition"),

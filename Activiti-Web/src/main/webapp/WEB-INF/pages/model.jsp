@@ -2,10 +2,10 @@
 <html>
 <head>
     <title>Model</title>
-    <%@include file="basic-static-file-import.jsp"%>
+    <%@include file="header.jsp"%>
 </head>
 <body>
-<%@include file="header.jsp"%>
+<%@include file="banner.jsp"%>
 流程列表: <button id="queryModelBtn">刷新列表</button> <br/>
 <table width="80%" align="center" border="1">
     <thead>

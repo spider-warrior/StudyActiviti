@@ -230,23 +230,23 @@ function executeRequest(url, param, method, callback) {
 
 $.redirect404 = function () {
     document.location.href = "/404";
-}
+};
 
 $.redirect500 = function () {
     document.location.href = "/500";
-}
+};
 
 $.redirectRoot = function() {
     document.location.href = "/";
-}
+};
 
 $.alertError = function(message) {
     alert(message);
-}
+};
 
 $.getUserIndexUrl = function () {
     return "/user/" + username;
-}
+};
 $.randomNumberChars = function(len) {
     if (typeof len == UNDEFINED || len == null) {
         len = 8;
@@ -256,7 +256,7 @@ $.randomNumberChars = function(len) {
         result += Math.floor(Math.random()*10);
     }
     return result;
-}
+};
 
 $.bindHtml = function (bindConfig) {
     for (var key in bindConfig) {
@@ -265,7 +265,7 @@ $.bindHtml = function (bindConfig) {
             ele.innerHTML = bindConfig[key];
         }
     }
-}
+};
 
 
 $.registerEvent = function(id, event, handler){
@@ -279,7 +279,7 @@ $.registerEvent = function(id, event, handler){
             dom.addEventListener (event, handler, false);
         }
     }
-}
+};
 // stop listening to event
 $.unregisterEvent = function(id, event, handler) {
     var dom = $("#" + id);
@@ -292,51 +292,75 @@ $.unregisterEvent = function(id, event, handler) {
             dom.removeEventListener (event, handler, false);
         }
     }
-}
+};
 
 
 
 $.createTr = function() {
     return document.createElement("tr");
-}
+};
 
 $.createTd = function() {
     return document.createElement("td");
-}
+};
 
 $.createTdWithText = function(text) {
     var td = document.createElement("td");
     td.innerText = text;
     return td;
-}
+};
 
 $.createTdWithHtml = function(text) {
     var td = document.createElement("td");
     td.innerHTML = text;
     return td;
+};
+
+$.createAnchor = function(setting) {
+    var config = setting || {};
+    var a = document.createElement("a");
+    if (config.innerText) {
+        a.innerText = config.innerText;
+    }
+    if (config.href) {
+        a.href = config.href;
+    }
+    else {
+        a.href = "javascript:void(0);";
+    }
+    if (config.click) {
+        a.onclick = config.click;
+    }
+    return a;
+};
+
+$.createTextElement = function(content) {
+    return document.createTextNode(content);
 }
 
 $.setCookie = function(c_name,value,expiredays)
 {
-    var exdate=new Date()
-    exdate.setDate(exdate.getDate()+expiredays)
+    var exdate=new Date();
+    exdate.setDate(exdate.getDate()+expiredays);
     document.cookie=c_name+ "=" +encodeURI(value)+
-        ((expiredays==null) ? "" : ";expires="+exdate.toGMTString())
-}
+        ((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
+};
 
 
 $.getCookie = function(c_name)
 {
     if (document.cookie.length>0)
     {
-        c_start=document.cookie.indexOf(c_name + "=")
+        c_start=document.cookie.indexOf(c_name + "=");
         if (c_start!=-1)
         {
-            c_start=c_start + c_name.length+1
-            c_end=document.cookie.indexOf(";",c_start)
-            if (c_end==-1) c_end=document.cookie.length
+            c_start=c_start + c_name.length+1;
+            c_end=document.cookie.indexOf(";",c_start);
+            if (c_end==-1) c_end=document.cookie.length;
             return decodeURI(document.cookie.substring(c_start,c_end))
         }
     }
-    return ""
-}
+    return "";
+};
+
+

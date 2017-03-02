@@ -2,9 +2,9 @@
 <html>
 <head>
     <title>我的任务</title>
-    <%@include file="basic-static-file-import.jsp"%>
+    <%@include file="header.jsp"%>
 </head>
 <body>
-<%@include file="header.jsp"%>
+<%@include file="banner.jsp"%>
 </body>
 </html>

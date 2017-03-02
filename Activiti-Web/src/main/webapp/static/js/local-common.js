@@ -53,6 +53,9 @@ function dealAjaxError(response) {
         if(response.msg == "user") {
             alert("用户不存在");
         }
+        else if(response.msg == "group") {
+            alert("用户组不存在");
+        }
         else if (response.msg == "processdefinition") {
             alert("流程定义不存在");
         }

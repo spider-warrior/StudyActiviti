@@ -2,10 +2,10 @@
 <html>
 <head>
     <title>请假流程</title>
-    <%@include file="basic-static-file-import.jsp"%>
+    <%@include file="header.jsp"%>
 </head>
 <body id="pageBody">
-<%@include file="header.jsp"%>
+<%@include file="banner.jsp"%>
 <h2>process key: askForLeaveProcess</h2>
 天数： <input name="time" id="time" type="text"/><br/>
 事由: <input name="reason" id="reason" type="text"/><br/>
