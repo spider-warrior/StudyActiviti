@@ -1,9 +1,9 @@
 package com.jy.activiti.controller;
 
-import com.jy.activiti.entity.User;
 import com.jy.activiti.common.enums.ResponseCode;
 import com.jy.activiti.common.util.StringUtil;
 import com.jy.activiti.helper.LoginHelper;
+import org.activiti.engine.identity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

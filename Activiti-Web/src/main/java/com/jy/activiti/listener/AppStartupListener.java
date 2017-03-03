@@ -41,7 +41,7 @@ public class AppStartupListener implements ApplicationListener {
         IdentityService identityService = ContextHelper.getBean(IdentityService.class);
         User user = identityService.createUserQuery().userId(userId).singleResult();
         if (user == null) {
-            user = identityService.newUser("123456");
+            user = identityService.newUser("admin");
             user.setEmail("362961910@qq.com");
             user.setFirstName("jian");
             user.setLastName("yang");
