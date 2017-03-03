@@ -1,9 +1,9 @@
 package com.jy.activiti.interceptor;
 
-import com.jy.activiti.entity.User;
 import com.jy.activiti.common.annotation.RequiredLogin;
 import com.jy.activiti.helper.ContextHelper;
 import com.jy.activiti.helper.LoginHelper;
+import org.activiti.engine.identity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;

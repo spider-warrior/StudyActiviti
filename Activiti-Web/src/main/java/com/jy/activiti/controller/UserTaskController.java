@@ -1,11 +1,11 @@
 package com.jy.activiti.controller;
 
 import com.jy.activiti.common.annotation.RequiredLogin;
-import com.jy.activiti.entity.User;
 import com.jy.activiti.helper.ContextHelper;
 import com.jy.activiti.response.entity.TaskWrapper;
 import com.jy.activiti.response.service.TaskWrapperBuilder;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.identity.User;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;

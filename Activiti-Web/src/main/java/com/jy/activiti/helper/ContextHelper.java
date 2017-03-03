@@ -1,6 +1,6 @@
 package com.jy.activiti.helper;
 
-import com.jy.activiti.entity.User;
+import org.activiti.engine.identity.User;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;

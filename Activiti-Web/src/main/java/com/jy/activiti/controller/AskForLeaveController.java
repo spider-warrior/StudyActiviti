@@ -1,6 +1,5 @@
 package com.jy.activiti.controller;
 
-import com.jy.activiti.entity.User;
 import com.jy.activiti.common.annotation.RequiredLogin;
 import com.jy.activiti.common.enums.ResponseCode;
 import com.jy.activiti.helper.ContextHelper;
@@ -9,6 +8,7 @@ import org.activiti.engine.IdentityService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.identity.User;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
