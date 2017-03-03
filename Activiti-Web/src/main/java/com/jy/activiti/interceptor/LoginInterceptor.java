@@ -3,6 +3,7 @@ package com.jy.activiti.interceptor;
 import com.jy.activiti.common.annotation.RequiredLogin;
 import com.jy.activiti.helper.ContextHelper;
 import com.jy.activiti.helper.LoginHelper;
+import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     private LoginHelper loginHelper;
     @Autowired
     private ContextHelper contextHelper;
+    @Autowired
+    private IdentityService identityService;
 
     public LoginInterceptor() {
     }
@@ -45,6 +48,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
                     return false;
                 }
                 contextHelper.setCurrentUser(user);
+                identityService.setAuthenticatedUserId(user.getId());
                 return true;
             }
         }
@@ -54,6 +58,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         contextHelper.removeCurrentUser();
+        super.postHandle(request, response, handler, modelAndView);
     }
 
     @Override

@@ -18,9 +18,9 @@ import java.util.List;
 import java.util.Map;
 
 @RequiredLogin
-@RequestMapping("/task")
+@RequestMapping("/user")
 @RestController
-public class UserTaskController extends BaseController{
+public class UserController extends BaseController{
 
     @Autowired
     private ContextHelper contextHelper;
@@ -29,7 +29,7 @@ public class UserTaskController extends BaseController{
     @Autowired
     private TaskWrapperBuilder taskWrapperBuilder;
 
-    @RequestMapping("/user/list")
+    @RequestMapping("/task/list")
     public Object userTaskList(@RequestBody(required = false) Map<String, String> param) {
         User user = contextHelper.getCurrentUser();
         List<Task> taskEntityList = taskService.createTaskQuery().taskCandidateOrAssigned(user.getId().toString()).list();
@@ -37,7 +37,7 @@ public class UserTaskController extends BaseController{
         taskEntityList.forEach(task -> taskWrapperList.add(taskWrapperBuilder.buildTaskWrapper(task)));
         Map<String, Object> result = new HashMap<>();
         result.put("tasks", taskWrapperList);
-        return result;
+        return success(result);
     }
 
 }

@@ -70,7 +70,7 @@
                         }
                         var authedUserTd = $.createTdWithHtml(content);
                         var operationTd = $.createTd();
-                        var operationTdHtml = "<a href='javascript:void(0)' onclick='pdGenerateModel(\"" + pd.id +"\")'>生成model</a>";
+                        var operationTdHtml = "<a href='javascript:void(0)' onclick='pdGenerateModel(\"" + pd.id +"\")'>生成model</a>　&nbsp;&nbsp;" +　"<a href='javascript:void(0)' onclick='deleteProcessDefinition(\"" + pd.id +"\")'>删除</a>";
                         operationTd.innerHTML = operationTdHtml;
                         tr.appendChild(idTd);
                         tr.appendChild(nameTd);
@@ -147,6 +147,24 @@ $.registerEvent("user_add_pd_btn", "click", userAddPdAuth);
             }
         }
         executeRequest(queryUrl, param, method, pdGenerateModelCallback);
+    }
+</script>
+
+<script type="text/javascript">
+    function deleteProcessDefinition(pdid) {
+        var queryUrl = "/pdm/" + pdid;
+        var method = DELETE;
+        var param = {};
+        var deleteProcessDefinitionCallback = function (result) {
+            if (result.success) {
+                queryProcessDefinition();
+                alert("删除流程定义成功");
+            }
+            else {
+                dealAjaxError(result);
+            }
+        }
+        executeRequest(queryUrl, param, method, deleteProcessDefinitionCallback);
     }
 </script>
 </html>

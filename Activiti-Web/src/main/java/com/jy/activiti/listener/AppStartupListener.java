@@ -24,7 +24,7 @@ public class AppStartupListener implements ApplicationListener {
         if (applicationEvent instanceof ContextRefreshedEvent) {
             System.out.println("AppStartupListener works....");
             //设置用户权限
-            findDefaultUserAndSerAuthentication("123456");
+            findDefaultUserAndSerAuthentication("admin");
             //获取部署
             Deployment deployment = getDefaultDeployment();
             if (deployment != null) {
@@ -41,7 +41,7 @@ public class AppStartupListener implements ApplicationListener {
         IdentityService identityService = ContextHelper.getBean(IdentityService.class);
         User user = identityService.createUserQuery().userId(userId).singleResult();
         if (user == null) {
-            user = identityService.newUser("admin");
+            user = identityService.newUser(userId);
             user.setEmail("362961910@qq.com");
             user.setFirstName("jian");
             user.setLastName("yang");

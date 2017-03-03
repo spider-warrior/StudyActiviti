@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>首页登录</title>
 </head>
-<body>
+<body id="page">
 username: <input name="username" id="username" type="text"/><br/>
 password: <input name="password" id="password" type="password"/><br/>
 <button id="login">Login</button><br/>
@@ -50,7 +50,7 @@ function login() {
     executeRequest(queryUrl, param, method, loginCallback);
 }
 
-$.registerEvent("password", "keydown", function(e){
+$.registerEvent("page", "keydown", function(e){
     var theEvent = e || window.event;
     var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
     if (code == 13) {

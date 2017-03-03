@@ -12,8 +12,8 @@
 <button id="submit_btn">提交申请</button>
 
 <hr/>
-流程图: 
-<img src="">
+流程图: <br/>
+<img src="/pdm/student-ask-for-leave/img">
 </body>
 
 <script type="text/javascript">
@@ -32,7 +32,7 @@ function submitFormData() {
         else {
             dealAjaxError(result);
         }
-    }
+    };
     executeRequest(queryUrl, param, method, submitFormDataCallback);
 }
 

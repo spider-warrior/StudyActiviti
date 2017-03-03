@@ -37,7 +37,7 @@ public class HomeController extends BaseController{
     /**
      * 用户任务列表页面
      * */
-    @RequestMapping("/task/user/list")
+    @RequestMapping("/user/task/list")
     public String userTaskList() {
         return "pages/user-task-list";
     }

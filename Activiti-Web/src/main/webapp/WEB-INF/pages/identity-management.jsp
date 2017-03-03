@@ -12,12 +12,12 @@
     <br/></h3>
 <table border="1">
     <thead>
-        <tr>
-            <th>id</th>
-            <th>name</th>
-            <th>groups</th>
-            <th>操作</th>
-        </tr>
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>groups</th>
+        <th>操作</th>
+    </tr>
     </thead>
     <tbody id="userListBody">
     </tbody>
@@ -33,11 +33,11 @@
     <br/></h3>
 <table border="1">
     <thead>
-        <tr>
-            <th>id</th>
-            <th>name</th>
-            <th>操作</th>
-        </tr>
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>操作</th>
+    </tr>
     </thead>
     <tbody id="groupListBody">
     </tbody>
@@ -75,11 +75,11 @@
                             var userGroups = user.userGroups;
                             for (var k = 0; k < userGroups.length; k++) {
                                 var userGroup = userGroups[k];
-                                groupsContent = groupsContent.concat("<a href='javascript:void(0);' onclick='cancelMemberShip(\""+ user.id + "\", \"" + userGroup.id +"\");'>", userGroup.name, "</a>", "&nbsp;&nbsp;");
+                                groupsContent = groupsContent.concat("<a href='javascript:void(0);' onclick='cancelMemberShip(\"" + user.id + "\", \"" + userGroup.id + "\");'>", userGroup.name, "</a>", "&nbsp;&nbsp;");
                             }
                         }
                         var groupsTd = $.createTdWithHtml(groupsContent);
-                        var operationHtml = "<a href='javascript:void(0);' onclick='deleteUser(\""+ user.id + "\")'>" + "删除" + "</a>&nbsp;&nbsp;";
+                        var operationHtml = "<a href='javascript:void(0);' onclick='deleteUser(\"" + user.id + "\")'>" + "删除" + "</a>&nbsp;&nbsp;";
                         var operationTd = $.createTdWithHtml(operationHtml);
                         var row = $.createTr();
                         row.appendChild(idTd);
@@ -154,7 +154,7 @@
                         var group = groups[i];
                         var idTd = $.createTdWithText(group.id);
                         var nameTd = $.createTdWithText(group.name);
-                        var operationHtml = "<a href='javascript:void(0);' onclick='deleteGroup(\""+ group.id + "\")'>" + "删除" + "</a>&nbsp;&nbsp;";
+                        var operationHtml = "<a href='javascript:void(0);' onclick='deleteGroup(\"" + group.id + "\")'>" + "删除" + "</a>&nbsp;&nbsp;";
                         var operationTd = $.createTdWithHtml(operationHtml);
                         var row = $.createTr();
                         row.appendChild(idTd);

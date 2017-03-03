@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.jy.activiti.common.enums.ResourcesType;
+import com.jy.activiti.common.util.StringUtil;
 import com.jy.activiti.response.entity.ModelWrapper;
 import com.jy.activiti.response.service.ModelWrapperBuilder;
 import com.jy.activiti.service.exception.ExceptionCode;
@@ -12,6 +13,7 @@ import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.editor.constants.ModelDataJsonConstants;
 import org.activiti.editor.language.json.converter.BpmnJsonConverter;
 import org.activiti.engine.RepositoryService;
+import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.Model;
 import org.activiti.engine.repository.ModelQuery;
 import org.activiti.engine.repository.ProcessDefinition;
@@ -209,8 +211,12 @@ public class ModelController extends BaseController {
         if (editorSource == null) {
             return failSourceNotFound(ResourcesType.PROCESSDEFINITION_DOC.getValue());
         }
+        Deployment deployment;
+        if (StringUtil.isEmpty(model.getDeploymentId())) {
+            deployment = repositoryService.createDeployment();
+        }
+        repositoryService.createDeploymentQuery().deploymentId();
         JsonNode modelNode = objectMapper.readTree(editorSource);
-
         BpmnModel bpmnModel = new BpmnJsonConverter().convertToBpmnModel(modelNode);
         byte[] bpmnBytes = new BpmnXMLConverter().convertToXML(bpmnModel);
 

@@ -52,7 +52,7 @@ public class AskForLeaveController extends BaseController{
             return failOnParamInvalid(null);
         }
         //流程是否存在
-        ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().processDefinitionKey("askForLeaveProcess").singleResult();
+        ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().processDefinitionKey("student-ask-for-leave").singleResult();
         if (pd == null) {
             return fail(ExceptionCode.SERVER_INTERNAL_EXCEPTION.getValue(), "流程不存在");
         }
@@ -71,7 +71,7 @@ public class AskForLeaveController extends BaseController{
             }
         }
         if (hasAuth) {
-            runtimeService.startProcessInstanceByKey("askForLeaveProcess", param);
+            runtimeService.startProcessInstanceByKey("student-ask-for-leave", param);
             return success();
         }
         else {
