@@ -2,12 +2,12 @@
          pageEncoding="UTF-8" %>
 <html>
 <head>
-    <title>流程管理</title>
+    <title>流程定义管理</title>
     <%@include file="header.jsp" %>
 </head>
 <body>
 <%@include file="banner.jsp" %>
-<h3>流程列表:
+<h3>流程定义列表:
     <button id="queryProcessDefinitionBtn">刷新列表</button>
     <br/></h3>
 <table width="80%" align="center" border="1">
@@ -92,7 +92,9 @@
                         }
                         var authedUserTd = $.createTdWithHtml(content);
                         var operationTd = $.createTd();
-                        var operationTdHtml = "<a href='javascript:void(0)' onclick='pdGenerateModel(\"" + pd.id + "\")'>生成model</a>　&nbsp;&nbsp;" + "<a href='javascript:void(0)' onclick='deleteProcessDefinition(\"" + pd.id + "\")'>删除</a>";
+                        var operationTdHtml = "<a href='javascript:void(0)' onclick='pdGenerateModel(\"" + pd.id + "\")'>生成model</a>&nbsp;&nbsp;"
+                                            + "<a href='javascript:void(0)' onclick='deleteProcessDefinition(\"" + pd.id + "\")'>删除</a>&nbsp;&nbsp;"
+                                            + "<a href='javascript:void(0);'>编辑流程任务权限</a>";
                         operationTd.innerHTML = operationTdHtml;
                         tr.appendChild(idTd);
                         tr.appendChild(nameTd);

@@ -10,6 +10,7 @@ import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,25 +65,10 @@ public class AskForLeaveController extends BaseController {
         if (processDefinition != null) {
             hasAuth = true;
         }
-//        if (!hasAuth) {
-//            List<IdentityLink> identityLinkList = repositoryService.getIdentityLinksForProcessDefinition(pd.getId());
-//            if (identityLinkList != null && !identityLinkList.isEmpty()) {
-//                List<Group> groupList = identityService.createGroupQuery().groupMember(user.getId()).list();
-//                if (groupList != null && !groupList.isEmpty()) {
-//                    for (IdentityLink link: identityLinkList) {
-//                        for (Group group: groupList) {
-//                            if (group.getId().equals(link.getGroupId())) {
-//                                hasAuth = true;
-//                                break;
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-
         if (hasAuth) {
             runtimeService.startProcessInstanceByKey("student-ask-for-leave", param);
+            Task task = taskService.createTaskQuery().processDefinitionId(pd.getId()).singleResult();
+            taskService.addCandidateGroup(task.getId(), "teacher");
             return success();
         } else {
             return fail(ResponseCode.REQUEST_NOT_ALLOWED.getValue());

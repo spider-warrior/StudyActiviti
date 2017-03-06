@@ -11,6 +11,7 @@ import org.activiti.bpmn.converter.BpmnXMLConverter;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.editor.language.json.converter.BpmnJsonConverter;
 import org.activiti.engine.RepositoryService;
+import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.Model;
 import org.activiti.engine.repository.ModelQuery;
 import org.activiti.engine.repository.ProcessDefinition;
@@ -203,7 +204,7 @@ public class ModelController extends BaseController {
             return failSourceNotFound(ResourcesType.PROCESSDEFINITION_MODEL.getValue());
         }
         if (model.getDeploymentId() != null) {
-            repositoryService.deleteDeployment(model.getDeploymentId());
+            repositoryService.deleteDeployment(model.getDeploymentId(), true);
         }
         byte[] editorSource = repositoryService.getModelEditorSource(modelId);
         if (editorSource == null) {
@@ -211,13 +212,15 @@ public class ModelController extends BaseController {
         }
         JsonNode modelNode = objectMapper.readTree(editorSource);
         BpmnModel bpmnModel = new BpmnJsonConverter().convertToBpmnModel(modelNode);
-        byte[] bpmnBytes = new BpmnXMLConverter().convertToXML(bpmnModel);
 
         String processName = model.getName() + ".bpmn20.xml";
-        repositoryService.createDeployment()
+        Deployment deployment = repositoryService.createDeployment()
                 .name(model.getName())
-                .addString(processName, new String(bpmnBytes))
+                .addBpmnModel(processName, bpmnModel)
                 .deploy();
+        model = repositoryService.createModelQuery().modelId(modelId).singleResult();
+        model.setDeploymentId(deployment.getId());
+        repositoryService.saveModel(model);
         return success();
     }
 
