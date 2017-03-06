@@ -6,7 +6,7 @@
 </head>
 <body>
 <%@include file="banner.jsp"%>
-流程列表: <button id="queryProcessDefinitionBtn">刷新列表</button> <br/>
+<h3>流程列表: <button id="queryProcessDefinitionBtn">刷新列表</button> <br/></h3>
 <table width="80%" align="center" border="1">
     <thead>
     <tr>
@@ -29,10 +29,16 @@
 
 <hr/>
 
-用户添加流程权限:<br/>
-用户名: <input name="username" id="username" type="text"/><br/>
+<h3>用户添加流程权限: <br/></h3>
+用户id: <input name="username" id="username" type="text"/><br/>
 流程id：<input name="pdid" id="pdid" type="text"/><br/>
 <button id="user_add_pd_btn">添加</button>
+
+<h3>用户组添加流程权限: <br/></h3>
+用户组id: <input name="groupId" id="groupId" type="text"/><br/>
+流程id：<input name="g_pdid" id="g_pdid" type="text"/><br/>
+<button id="group_add_pd_btn">添加</button>
+
 
 <script type="text/javascript">
     // for list
@@ -54,17 +60,30 @@
                         var idTd = $.createTdWithText(pd.id);
                         var nameTd = $.createTdWithText(pd.name);
                         var businessKeyTd = $.createTdWithText(pd.businessKey);
-                        var owners = pd.owners;
                         var content = "";
-                        if (owners && owners.length > 0) {
+                        var candidateUsers = pd.candidateUsers;
+                        if (candidateUsers && candidateUsers.length > 0) {
                             var first = true;
-                            for (var k=0; k<owners.length; k++) {
+                            for (var k=0; k<candidateUsers.length; k++) {
                                 if (!first) {
                                     first = false;
                                     content += ", ";
                                 }
                                 else {
-                                    content += ("<a href='javascript:void(0);' onclick='userDeletePdAuth(\""+ owners[k].id + "\", \"" + pd.id +"\")'>" + owners[k].id + "</a>&nbsp;&nbsp;");
+                                    content += ("<a href='javascript:void(0);' onclick='userDeletePdAuth(\""+ candidateUsers[k].id + "\", \"" + pd.id +"\")'>" + candidateUsers[k].id + "</a>&nbsp;&nbsp;");
+                                }
+                            }
+                        }
+                        var candidateGroups = pd.candidateGroups;
+                        if (candidateGroups && candidateGroups.length > 0) {
+                            var first = true;
+                            for (var k=0; k<candidateGroups.length; k++) {
+                                if (!first) {
+                                    first = false;
+                                    content += ", ";
+                                }
+                                else {
+                                    content += ("<a href='javascript:void(0);' onclick='groupDeletePdAuth(\""+ candidateGroups[k].id + "\", \"" + pd.id +"\")'>" + candidateGroups[k].id + "</a>&nbsp;&nbsp;");
                                 }
                             }
                         }
@@ -109,10 +128,29 @@ function userAddPdAuth() {
         else {
             dealAjaxError(result);
         }
-    }
+    };
     executeRequest(queryUrl, param, method, userAddPdAuthCallback);
 }
 $.registerEvent("user_add_pd_btn", "click", userAddPdAuth);
+
+function groupAddPdAuth() {
+    var groupId = $("#groupId").value;
+    var pdid = $("#g_pdid").value;
+    var queryUrl = "/pdm/group/add/auth";
+    var method = POST;
+    var param = {groupId: groupId, pdid: pdid};
+    var groupAddPdAuthCallback = function (result) {
+        if (result.success) {
+            queryProcessDefinition();
+            alert("成功");
+        }
+        else {
+            dealAjaxError(result);
+        }
+    };
+    executeRequest(queryUrl, param, method, groupAddPdAuthCallback);
+}
+$.registerEvent("group_add_pd_btn", "click", groupAddPdAuth);
 </script>
 <script type="text/javascript">
     function userDeletePdAuth(username, pdid) {
@@ -128,8 +166,26 @@ $.registerEvent("user_add_pd_btn", "click", userAddPdAuth);
             else {
                 dealAjaxError(result);
             }
-        }
+        };
         executeRequest(queryUrl, param, method, userDeletePdAuthCallback);
+    }
+</script>
+
+<script type="text/javascript">
+    function groupDeletePdAuth(groupId, pdid) {
+        var queryUrl = "/pdm/group/delete/auth";
+        var method = POST;
+        var param = {groupId: groupId, pdid: pdid};
+        var groupDeletePdAuthCallback = function (result) {
+            if (result.success) {
+                queryProcessDefinition();
+                alert("成功");
+            }
+            else {
+                dealAjaxError(result);
+            }
+        };
+        executeRequest(queryUrl, param, method, groupDeletePdAuthCallback);
     }
 </script>
 

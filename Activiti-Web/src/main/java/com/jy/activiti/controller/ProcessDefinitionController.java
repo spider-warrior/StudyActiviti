@@ -9,6 +9,7 @@ import com.jy.activiti.response.service.ProcessDefinitionWrapperBuilder;
 import com.jy.activiti.service.exception.ExceptionCode;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RepositoryService;
+import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +67,30 @@ public class ProcessDefinitionController extends BaseController{
     }
 
     @RequiredLogin
+    @RequestMapping("/group/add/auth")
+    public Object groupAddPdAuth(@RequestBody Map<String, String> param) {
+        String groupId = param.get("groupId");
+        String pdid = param.get("pdid");
+
+        if (StringUtil.isEmpty(groupId) || StringUtil.isEmpty(pdid)) {
+            return fail(ResponseCode.REQUEST_PARAM_ERROR.getValue());
+        }
+
+        Group group = identityService.createGroupQuery().groupId(groupId).singleResult();
+        if (group == null) {
+            return fail(ResponseCode.REQUEST_SOURCE_NOT_FOUND.getValue(), ResourcesType.USER.getValue());
+        }
+        ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().processDefinitionId(pdid).singleResult();
+        if (pd == null) {
+            return fail(ResponseCode.REQUEST_SOURCE_NOT_FOUND.getValue(), ResourcesType.PROCESSDEFINITION.getValue());
+        }
+        repositoryService.addCandidateStarterGroup(pdid, groupId);
+        return success();
+    }
+
+
+
+    @RequiredLogin
     @RequestMapping("/user/delete/auth")
     public Object userDeletePdAuth(@RequestBody(required = false) Map<String, String> param) {
         String userId = param.get("username");
@@ -88,13 +113,36 @@ public class ProcessDefinitionController extends BaseController{
     }
 
     @RequiredLogin
+    @RequestMapping("/group/delete/auth")
+    public Object groupDeletePdAuth(@RequestBody(required = false) Map<String, String> param) {
+        String groupId = param.get("groupId");
+        String pdid = param.get("pdid");
+
+        if (StringUtil.isEmpty(groupId) || StringUtil.isEmpty(pdid)) {
+            return fail(ResponseCode.REQUEST_PARAM_ERROR.getValue());
+        }
+
+        Group group = identityService.createGroupQuery().groupId(groupId).singleResult();
+        if (group == null) {
+            return fail(ResponseCode.REQUEST_SOURCE_NOT_FOUND.getValue(), ResourcesType.GROUP.getValue());
+        }
+        ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().processDefinitionId(pdid).singleResult();
+        if (pd == null) {
+            return fail(ResponseCode.REQUEST_SOURCE_NOT_FOUND.getValue(), ResourcesType.PROCESSDEFINITION.getValue());
+        }
+        repositoryService.deleteCandidateStarterGroup(pdid, groupId);
+        return success();
+    }
+
+
+    @RequiredLogin
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public Object deletePd(@PathVariable("id") String pdId) {
         ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().processDefinitionId(pdId).singleResult();
         if (pd == null) {
             return failSourceNotFound(ResourcesType.PROCESSDEFINITION.getValue());
         }
-        repositoryService.deleteDeployment(pd.getDeploymentId());
+        repositoryService.deleteDeployment(pd.getDeploymentId(), true);
         return success();
     }
 

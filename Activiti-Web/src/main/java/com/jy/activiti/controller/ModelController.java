@@ -207,15 +207,13 @@ public class ModelController extends BaseController {
         if (model == null) {
             return failSourceNotFound(ResourcesType.PROCESSDEFINITION_MODEL.getValue());
         }
+        if (model.getDeploymentId() != null) {
+            repositoryService.deleteDeployment(model.getDeploymentId());
+        }
         byte[] editorSource = repositoryService.getModelEditorSource(modelId);
         if (editorSource == null) {
             return failSourceNotFound(ResourcesType.PROCESSDEFINITION_DOC.getValue());
         }
-        Deployment deployment;
-        if (StringUtil.isEmpty(model.getDeploymentId())) {
-            deployment = repositoryService.createDeployment();
-        }
-        repositoryService.createDeploymentQuery().deploymentId();
         JsonNode modelNode = objectMapper.readTree(editorSource);
         BpmnModel bpmnModel = new BpmnJsonConverter().convertToBpmnModel(modelNode);
         byte[] bpmnBytes = new BpmnXMLConverter().convertToXML(bpmnModel);

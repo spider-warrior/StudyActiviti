@@ -61,15 +61,12 @@ public class AskForLeaveController extends BaseController{
             return fail();
         }
         //是否有权限启动流程
-        List<ProcessDefinition> processDefinitionList = repositoryService.createProcessDefinitionQuery().startableByUser(user.getId().toString()).list();
-
+        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().startableByUser(user.getId().toString()).processDefinitionId(pd.getId()).singleResult();
         boolean hasAuth = false;
-        for (ProcessDefinition d : processDefinitionList) {
-            if (pd.getId().equals(d.getId())) {
-                hasAuth = true;
-                break;
-            }
+        if (processDefinition != null) {
+            hasAuth = true;
         }
+
         if (hasAuth) {
             runtimeService.startProcessInstanceByKey("student-ask-for-leave", param);
             return success();

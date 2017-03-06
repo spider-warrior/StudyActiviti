@@ -1,9 +1,11 @@
 package com.jy.activiti.response.service;
 
+import com.jy.activiti.response.entity.GroupWrapper;
 import com.jy.activiti.response.entity.ProcessDefinitionWrapper;
 import com.jy.activiti.response.entity.UserWrapper;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RepositoryService;
+import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class ProcessDefinitionWrapperBuilder {
     private IdentityService identityService;
     @Autowired
     private UserWrapperBuilder userWrapperBuilder;
+    @Autowired
+    private GroupWrapperBuilder groupWrapperBuilder;
 
     private static final ProcessDefinitionWrapper empty = new ProcessDefinitionWrapper();
 
@@ -36,10 +40,14 @@ public class ProcessDefinitionWrapperBuilder {
         List<User> activitiUsers = identityService.createUserQuery().potentialStarter(processDefinition.getId()).list();
         if (activitiUsers != null && activitiUsers.size() > 0) {
             List<UserWrapper> userWrappers = new ArrayList<>();
-            for (User u: activitiUsers) {
-                userWrappers.add(userWrapperBuilder.buildUserWrapper(u));
-            }
-            processDefinitionWrapper.setOwners(userWrappers);
+            activitiUsers.forEach(user -> userWrappers.add(userWrapperBuilder.buildUserWrapper(user)));
+            processDefinitionWrapper.setCandidateUsers(userWrappers);
+        }
+        List<Group> activitiGroups = identityService.createGroupQuery().potentialStarter(processDefinition.getId()).list();
+        if (activitiGroups != null && activitiGroups.size() > 0) {
+            List<GroupWrapper> groupWrappers = new ArrayList<>();
+            activitiGroups.forEach(group -> groupWrappers.add(groupWrapperBuilder.buildGroupWrapper(group)));
+            processDefinitionWrapper.setCandidateGroups(groupWrappers);
         }
         return processDefinitionWrapper;
     }

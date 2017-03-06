@@ -14,9 +14,12 @@ public class ProcessDefinitionWrapper extends BaseWrapper{
     @JsonProperty("businessKey")
     private String businessKey;
 
-    @JsonProperty("owners")
-    List<UserWrapper> owners;
+    @JsonProperty("candidateUsers")
+    List<UserWrapper> candidateUsers;
 
+
+    @JsonProperty("candidateGroups")
+    List<GroupWrapper> candidateGroups;
 
     public String getName() {
         return name;
@@ -36,12 +39,21 @@ public class ProcessDefinitionWrapper extends BaseWrapper{
         return this;
     }
 
-    public List<UserWrapper> getOwners() {
-        return owners;
+    public List<UserWrapper> getCandidateUsers() {
+        return candidateUsers;
     }
 
-    public ProcessDefinitionWrapper setOwners(List<UserWrapper> owners) {
-        this.owners = owners;
+    public ProcessDefinitionWrapper setCandidateUsers(List<UserWrapper> candidateUsers) {
+        this.candidateUsers = candidateUsers;
+        return this;
+    }
+
+    public List<GroupWrapper> getCandidateGroups() {
+        return candidateGroups;
+    }
+
+    public ProcessDefinitionWrapper setCandidateGroups(List<GroupWrapper> candidateGroups) {
+        this.candidateGroups = candidateGroups;
         return this;
     }
 }
