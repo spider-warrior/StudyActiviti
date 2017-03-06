@@ -16,13 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Map;
 
 @RequiredLogin
 @RequestMapping("askforleave")
 @RestController
-public class AskForLeaveController extends BaseController{
+public class AskForLeaveController extends BaseController {
 
     @Autowired
     private RepositoryService repositoryService;
@@ -37,11 +36,10 @@ public class AskForLeaveController extends BaseController{
 
     /**
      * {
-     *     time: xxx, (时间，单位： 天)
-     *     reason: xxx（请假事由）
+     * time: xxx, (时间，单位： 天)
+     * reason: xxx（请假事由）
      * }
-     *
-     * */
+     */
     @RequestMapping(method = RequestMethod.POST)
     public Object add(@RequestBody Map<String, Object> param) {
 
@@ -66,12 +64,27 @@ public class AskForLeaveController extends BaseController{
         if (processDefinition != null) {
             hasAuth = true;
         }
+//        if (!hasAuth) {
+//            List<IdentityLink> identityLinkList = repositoryService.getIdentityLinksForProcessDefinition(pd.getId());
+//            if (identityLinkList != null && !identityLinkList.isEmpty()) {
+//                List<Group> groupList = identityService.createGroupQuery().groupMember(user.getId()).list();
+//                if (groupList != null && !groupList.isEmpty()) {
+//                    for (IdentityLink link: identityLinkList) {
+//                        for (Group group: groupList) {
+//                            if (group.getId().equals(link.getGroupId())) {
+//                                hasAuth = true;
+//                                break;
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
 
         if (hasAuth) {
             runtimeService.startProcessInstanceByKey("student-ask-for-leave", param);
             return success();
-        }
-        else {
+        } else {
             return fail(ResponseCode.REQUEST_NOT_ALLOWED.getValue());
         }
 

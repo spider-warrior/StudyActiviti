@@ -20,7 +20,7 @@ import java.util.Map;
 @RequiredLogin
 @RequestMapping("/user")
 @RestController
-public class UserController extends BaseController{
+public class UserController extends BaseController {
 
     @Autowired
     private ContextHelper contextHelper;

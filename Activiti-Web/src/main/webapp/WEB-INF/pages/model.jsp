@@ -1,12 +1,15 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" session="false" isELIgnored="false" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" session="false" isELIgnored="false"
+         pageEncoding="UTF-8" %>
 <html>
 <head>
     <title>Model</title>
-    <%@include file="header.jsp"%>
+    <%@include file="header.jsp" %>
 </head>
 <body>
-<%@include file="banner.jsp"%>
-流程列表: <button id="queryModelBtn">刷新列表</button> <br/>
+<%@include file="banner.jsp" %>
+流程列表:
+<button id="queryModelBtn">刷新列表</button>
+<br/>
 <table width="80%" align="center" border="1">
     <thead>
     <tr>
@@ -35,11 +38,12 @@ model metaInfo: <input name="metaInfo" id="metaInfo" type="text"/><br/>
 model tenantId: <input name="tenantId" id="tenantId" type="text"/><br/>
 model version: <input name="version" id="version" type="text"/><br/>
 model 描述: <textarea name="description" id="description" rows="4" cols="50"></textarea><br/>
-<button id="submit_model_btn" type="button">添加model</button><br/>
+<button id="submit_model_btn" type="button">添加model</button>
+<br/>
 
 <iframe id="hiddenframe" name="hiddenframe" style="display: none;"></iframe>
 <script type="text/javascript">
-    function queryModelList () {
+    function queryModelList() {
         var queryUrl = "/model/list";
         var method = POST;
         var param = {}
@@ -49,7 +53,7 @@ model 描述: <textarea name="description" id="description" rows="4" cols="50"><
                 var models = result.data.models;
                 if (models && models.length > 0) {
                     $("#tbody").innerHTML = "";
-                    for (var i =0; i<models.length; i++) {
+                    for (var i = 0; i < models.length; i++) {
                         var model = models[i];
                         var tr = $.createTr();
                         var idTd = $.createTdWithText(model.id);
@@ -60,10 +64,10 @@ model 描述: <textarea name="description" id="description" rows="4" cols="50"><
                         var createTimeTd = $.createTdWithText(model.createTime);
                         var deploymentId = $.createTdWithText(model.deploymentId);
                         var operationId = $.createTdWithHtml("<a target='_blank' href='/process-editor/modeler.html?modelId=" + model.id + "'>" + "详情" + "</a>&nbsp;&nbsp;"
-                                                                + "<a href='javascript:void(0)' onclick='deleteModel(\"" + model.id +"\")'>删除</a>&nbsp;&nbsp;"
-                                                                + "<a href='javascript:void(0)' onclick='deployModel(\"" + model.id +"\")'>部署</a>&nbsp;&nbsp;"
-                                                                + "<a href='/model/export/" + model.id + "' target='hiddenframe'>导出流程文件</a>&nbsp;&nbsp;"
-                                                                + "<a href='/model/image/" + model.id + "' target='_blank'>查看流程图</a>&nbsp;&nbsp;");
+                            + "<a href='javascript:void(0)' onclick='deleteModel(\"" + model.id + "\")'>删除</a>&nbsp;&nbsp;"
+                            + "<a href='javascript:void(0)' onclick='deployModel(\"" + model.id + "\")'>部署</a>&nbsp;&nbsp;"
+                            + "<a href='/model/export/" + model.id + "' target='hiddenframe'>导出流程文件</a>&nbsp;&nbsp;"
+                            + "<a href='/model/image/" + model.id + "' target='_blank'>查看流程图</a>&nbsp;&nbsp;");
                         tr.appendChild(idTd);
                         tr.appendChild(nameTd);
                         tr.appendChild(keyTd);

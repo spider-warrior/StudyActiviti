@@ -41,13 +41,13 @@ public class ProcessDefinitionWrapperBuilder {
         if (activitiUsers != null && activitiUsers.size() > 0) {
             List<UserWrapper> userWrappers = new ArrayList<>();
             activitiUsers.forEach(user -> userWrappers.add(userWrapperBuilder.buildUserWrapper(user)));
-            processDefinitionWrapper.setCandidateUsers(userWrappers);
+            processDefinitionWrapper.setStartUsers(userWrappers);
         }
         List<Group> activitiGroups = identityService.createGroupQuery().potentialStarter(processDefinition.getId()).list();
         if (activitiGroups != null && activitiGroups.size() > 0) {
             List<GroupWrapper> groupWrappers = new ArrayList<>();
             activitiGroups.forEach(group -> groupWrappers.add(groupWrapperBuilder.buildGroupWrapper(group)));
-            processDefinitionWrapper.setCandidateGroups(groupWrappers);
+            processDefinitionWrapper.setStartGroups(groupWrappers);
         }
         return processDefinitionWrapper;
     }

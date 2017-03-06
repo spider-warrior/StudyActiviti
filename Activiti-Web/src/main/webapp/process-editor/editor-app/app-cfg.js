@@ -21,7 +21,7 @@
 var ACTIVITI = ACTIVITI || {};
 
 ACTIVITI.CONFIG = {
-	//original
-	//'contextRoot' : '/activiti-explorer/service',
-	'contextRoot' : ''
+    //original
+    //'contextRoot' : '/activiti-explorer/service',
+    'contextRoot': ''
 };

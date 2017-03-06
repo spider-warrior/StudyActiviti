@@ -16,7 +16,7 @@ public class CookieHelper {
     }
 
     private CookieHelper addCookie(HttpServletResponse response, Map<String, String> cookies) {
-        for (Map.Entry<String, String> entry: cookies.entrySet()) {
+        for (Map.Entry<String, String> entry : cookies.entrySet()) {
             response.addCookie(new Cookie(entry.getKey(), entry.getValue()));
         }
         return this;
@@ -25,7 +25,7 @@ public class CookieHelper {
     public String getCookieValue(HttpServletRequest request, String key) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
-            for (Cookie c: cookies) {
+            for (Cookie c : cookies) {
                 if (c.getName().equals(key)) {
                     return c.getValue();
                 }

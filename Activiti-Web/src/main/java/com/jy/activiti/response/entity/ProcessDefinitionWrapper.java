@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ProcessDefinitionWrapper extends BaseWrapper{
+public class ProcessDefinitionWrapper extends BaseWrapper {
 
     @JsonProperty("name")
     private String name;
@@ -14,12 +14,12 @@ public class ProcessDefinitionWrapper extends BaseWrapper{
     @JsonProperty("businessKey")
     private String businessKey;
 
-    @JsonProperty("candidateUsers")
-    List<UserWrapper> candidateUsers;
+    @JsonProperty("startUsers")
+    List<UserWrapper> startUsers;
 
 
-    @JsonProperty("candidateGroups")
-    List<GroupWrapper> candidateGroups;
+    @JsonProperty("startGroups")
+    List<GroupWrapper> startGroups;
 
     public String getName() {
         return name;
@@ -39,21 +39,31 @@ public class ProcessDefinitionWrapper extends BaseWrapper{
         return this;
     }
 
-    public List<UserWrapper> getCandidateUsers() {
-        return candidateUsers;
+    public List<UserWrapper> getStartUsers() {
+        return startUsers;
     }
 
-    public ProcessDefinitionWrapper setCandidateUsers(List<UserWrapper> candidateUsers) {
-        this.candidateUsers = candidateUsers;
+    public ProcessDefinitionWrapper setStartUsers(List<UserWrapper> startUsers) {
+        this.startUsers = startUsers;
         return this;
     }
 
-    public List<GroupWrapper> getCandidateGroups() {
-        return candidateGroups;
+    public List<GroupWrapper> getStartGroups() {
+        return startGroups;
     }
 
-    public ProcessDefinitionWrapper setCandidateGroups(List<GroupWrapper> candidateGroups) {
-        this.candidateGroups = candidateGroups;
+    public ProcessDefinitionWrapper setStartGroups(List<GroupWrapper> startGroups) {
+        this.startGroups = startGroups;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "ProcessDefinitionWrapper{" +
+                "name='" + name + '\'' +
+                ", businessKey='" + businessKey + '\'' +
+                ", startUsers=" + startUsers +
+                ", startGroups=" + startGroups +
+                "} " + super.toString();
     }
 }

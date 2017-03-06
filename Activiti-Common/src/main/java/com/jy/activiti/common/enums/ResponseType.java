@@ -4,16 +4,16 @@ public enum ResponseType {
 
     /**
      * Json
-     * */
+     */
     Json("application/json"),
 
     /**
      * html
-     * */
+     */
     Html("text/html");
 
     public ResponseType getResponseType(String type) {
-        for (ResponseType t: values()) {
+        for (ResponseType t : values()) {
             if (t.equals(type)) {
                 return t;
             }
@@ -23,7 +23,7 @@ public enum ResponseType {
 
     /**
      * value
-     * */
+     */
     private String value;
 
     public String getValue() {

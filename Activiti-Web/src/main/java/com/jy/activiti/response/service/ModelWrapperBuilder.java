@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 public class ModelWrapperBuilder {
 
     private static final ModelWrapper empty = new ModelWrapper();
+
     public ModelWrapper buildModelWrapper(Model model) {
         if (model == null) {
             return empty;

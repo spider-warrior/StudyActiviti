@@ -42,9 +42,9 @@ import java.util.Properties;
 @EnableTransactionManagement
 @ComponentScan(
         basePackages = {"com.jy.activiti",
-        "org.activiti.rest.service.api",
-        "org.activiti.rest.editor.model",
-        "org.activiti.rest.editor.main"}
+                "org.activiti.rest.service.api",
+                "org.activiti.rest.editor.model",
+                "org.activiti.rest.editor.main"}
 )
 @PropertySource({"classpath:props/db.properties",
         "classpath:props/hibernate.properties"})
@@ -61,6 +61,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     private static String[] MODEL_PACKAGES = {
             "com.jy.activiti.entity"
     };
+
     /**
      * 静态文件支持
      */
@@ -183,36 +184,44 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     public RepositoryService repositoryService() {
         return processEngine.getRepositoryService();
     }
+
     @Bean
     public RuntimeService RuntimeService() {
         return processEngine.getRuntimeService();
     }
+
     @Bean
     public TaskService taskService() {
         return processEngine.getTaskService();
     }
+
     @Bean
     public HistoryService historyService() {
         return processEngine.getHistoryService();
     }
+
     @Bean
     public ManagementService managementService() {
         return processEngine.getManagementService();
     }
+
     @Bean
     public IdentityService identityService() {
         return processEngine.getIdentityService();
     }
+
     @Bean
     public RestResponseFactory restResponseFactory() {
         RestResponseFactory restResponseFactory = new RestResponseFactory();
         return restResponseFactory;
     }
+
     @Bean
     public FormServiceImpl formService() {
         FormServiceImpl formService = new FormServiceImpl();
         return formService;
     }
+
     @Bean
     public DefaultContentTypeResolver contentTypeResolver() {
         DefaultContentTypeResolver contentTypeResolver = new DefaultContentTypeResolver();

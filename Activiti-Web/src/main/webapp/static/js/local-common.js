@@ -43,17 +43,17 @@ function dealAjaxError(response) {
     if (response.code == SERVER_INTERNAL_EXCEPTION_CODE) {
         alert("服务器内部异常");
     }
-    else if(response.code == REQUEST_PARAM_ERROR) {
+    else if (response.code == REQUEST_PARAM_ERROR) {
         alert("流程申参数格式不正确");
     }
     else if (response.code == REQUEST_NOT_ALLOWED) {
         alert("无权限操作");
     }
     else if (response.code == RESOURCE_NOT_FOUND_EXCEPTION_CODE) {
-        if(response.msg == "user") {
+        if (response.msg == "user") {
             alert("用户不存在");
         }
-        else if(response.msg == "group") {
+        else if (response.msg == "group") {
             alert("用户组不存在");
         }
         else if (response.msg == "processdefinition") {

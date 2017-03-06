@@ -4,7 +4,7 @@
 //常量
 var UNDEFINED = 'undefined';
 var STRING = 'string';
-var NUMBER_CHARS = ['1','2','3','4','5','6','7','8','9','0'];
+var NUMBER_CHARS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
 
 //请求类型
 var GET = "GET";
@@ -236,24 +236,24 @@ $.redirect500 = function () {
     document.location.href = "/500";
 };
 
-$.redirectRoot = function() {
+$.redirectRoot = function () {
     document.location.href = "/";
 };
 
-$.alertError = function(message) {
+$.alertError = function (message) {
     alert(message);
 };
 
 $.getUserIndexUrl = function () {
     return "/user/" + username;
 };
-$.randomNumberChars = function(len) {
+$.randomNumberChars = function (len) {
     if (typeof len == UNDEFINED || len == null) {
         len = 8;
     }
     var result = '';
-    for (var i=0; i<len; i++) {
-        result += Math.floor(Math.random()*10);
+    for (var i = 0; i < len; i++) {
+        result += Math.floor(Math.random() * 10);
     }
     return result;
 };
@@ -268,55 +268,54 @@ $.bindHtml = function (bindConfig) {
 };
 
 
-$.registerEvent = function(id, event, handler){
+$.registerEvent = function (id, event, handler) {
     var dom = $("#" + id);
     if (dom) {
         if (dom.attachEvent) {
             // Microsoft
-            dom.attachEvent (event, handler);
+            dom.attachEvent(event, handler);
         } else if (dom.addEventListener) {
             // Mozilla: DOM level 2
-            dom.addEventListener (event, handler, false);
+            dom.addEventListener(event, handler, false);
         }
     }
 };
 // stop listening to event
-$.unregisterEvent = function(id, event, handler) {
+$.unregisterEvent = function (id, event, handler) {
     var dom = $("#" + id);
     if (dom) {
         if (dom.detachEvent) {
             // Microsoft
-            dom.detachEvent (event, handler);
+            dom.detachEvent(event, handler);
         } else if (dom.removeEventListener) {
             // Mozilla: DOM level 2
-            dom.removeEventListener (event, handler, false);
+            dom.removeEventListener(event, handler, false);
         }
     }
 };
 
 
-
-$.createTr = function() {
+$.createTr = function () {
     return document.createElement("tr");
 };
 
-$.createTd = function() {
+$.createTd = function () {
     return document.createElement("td");
 };
 
-$.createTdWithText = function(text) {
+$.createTdWithText = function (text) {
     var td = document.createElement("td");
     td.innerText = text;
     return td;
 };
 
-$.createTdWithHtml = function(text) {
+$.createTdWithHtml = function (text) {
     var td = document.createElement("td");
     td.innerHTML = text;
     return td;
 };
 
-$.createAnchor = function(setting) {
+$.createAnchor = function (setting) {
     var config = setting || {};
     var a = document.createElement("a");
     if (config.innerText) {
@@ -334,30 +333,26 @@ $.createAnchor = function(setting) {
     return a;
 };
 
-$.createTextElement = function(content) {
+$.createTextElement = function (content) {
     return document.createTextNode(content);
 }
 
-$.setCookie = function(c_name,value,expiredays)
-{
-    var exdate=new Date();
-    exdate.setDate(exdate.getDate()+expiredays);
-    document.cookie=c_name+ "=" +encodeURI(value)+
-        ((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
+$.setCookie = function (c_name, value, expiredays) {
+    var exdate = new Date();
+    exdate.setDate(exdate.getDate() + expiredays);
+    document.cookie = c_name + "=" + encodeURI(value) +
+        ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString());
 };
 
 
-$.getCookie = function(c_name)
-{
-    if (document.cookie.length>0)
-    {
-        c_start=document.cookie.indexOf(c_name + "=");
-        if (c_start!=-1)
-        {
-            c_start=c_start + c_name.length+1;
-            c_end=document.cookie.indexOf(";",c_start);
-            if (c_end==-1) c_end=document.cookie.length;
-            return decodeURI(document.cookie.substring(c_start,c_end))
+$.getCookie = function (c_name) {
+    if (document.cookie.length > 0) {
+        c_start = document.cookie.indexOf(c_name + "=");
+        if (c_start != -1) {
+            c_start = c_start + c_name.length + 1;
+            c_end = document.cookie.indexOf(";", c_start);
+            if (c_end == -1) c_end = document.cookie.length;
+            return decodeURI(document.cookie.substring(c_start, c_end))
         }
     }
     return "";

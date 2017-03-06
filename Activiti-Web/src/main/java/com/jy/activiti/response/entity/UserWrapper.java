@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserWrapper extends BaseWrapper{
+public class UserWrapper extends BaseWrapper {
 
     @JsonProperty("username")
     private String username;

@@ -4,59 +4,59 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TaskWrapper extends BaseWrapper{
+public class TaskWrapper extends BaseWrapper {
 
     /**
      * 任务名称
-     * */
+     */
     @JsonProperty("name")
     private String name;
 
     /**
      * 范畴
-     * */
+     */
     @JsonProperty("category")
     private String category;
 
     /**
      * 描述
-     * */
+     */
     @JsonProperty("description")
     private String description;
 
     /**
      * 任务持有人
-     * */
+     */
     @JsonProperty("owner")
     private UserWrapper owner;
 
     /**
      * 任务被指派人
-     * */
+     */
     @JsonProperty("assignee")
     private String assignee;
 
     /**
      * 力促哼实例ID
-     * */
+     */
     @JsonProperty("processInstancesId")
     private String processInstancesId;
 
     /**
      * 执行流ID
-     * */
+     */
     @JsonProperty("executionId")
     private String executionId;
 
     /**
      * 流程定义ID
-     * */
+     */
     @JsonProperty("processDefinitionId")
     private String processDefinitionId;
 
     /**
      * 创建时间
-     * */
+     */
     @JsonProperty("createTime")
     private String createTime;
 

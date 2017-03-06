@@ -10,7 +10,7 @@ import java.util.Map;
 @RequiredLogin
 @Controller
 @RequestMapping("/home")
-public class HomeController extends BaseController{
+public class HomeController extends BaseController {
 
     @ResponseBody
     @RequestMapping("/index")
@@ -20,7 +20,7 @@ public class HomeController extends BaseController{
 
     /**
      * 请假流程申请页面
-     * */
+     */
     @RequestMapping("/askforleave")
     public String askforleave() {
         return "pages/ask-for-leave";
@@ -28,15 +28,23 @@ public class HomeController extends BaseController{
 
     /**
      * 流程管理页面
-     * */
+     */
     @RequestMapping("/pdm")
     public String pdManagement() {
         return "pages/process-definition-management";
     }
 
     /**
+     * 用户流程页面
+     */
+    @RequestMapping("/user/processinstance")
+    public String userProcessInstance() {
+        return "pages/user-process-instance";
+    }
+
+    /**
      * 用户任务列表页面
-     * */
+     */
     @RequestMapping("/user/task/list")
     public String userTaskList() {
         return "pages/user-task-list";
@@ -44,7 +52,7 @@ public class HomeController extends BaseController{
 
     /**
      * model页面
-     * */
+     */
     @RequestMapping("/model")
     public String model() {
         return "pages/model";
@@ -52,7 +60,7 @@ public class HomeController extends BaseController{
 
     /**
      * identity management
-     * */
+     */
     @RequestMapping("/identity")
     public String identity() {
         return "pages/identity-management";

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 @RestController
-public class LoginController extends BaseController{
+public class LoginController extends BaseController {
 
     @Autowired
     private LoginHelper loginHelper;

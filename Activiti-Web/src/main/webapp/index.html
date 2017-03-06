@@ -7,57 +7,59 @@
 <body id="page">
 username: <input name="username" id="username" type="text"/><br/>
 password: <input name="password" id="password" type="password"/><br/>
-<button id="login">Login</button><br/>
-<button id="logout">Logout</button><br/>
+<button id="login">Login</button>
+<br/>
+<button id="logout">Logout</button>
+<br/>
 
 <script type="text/javascript" src="/static/js/common.js"></script>
 <script type="text/javascript">
 
-function login() {
-    var username = $("#username").value;
-    var password = $("#password").value;
-    var queryUrl = "/login";
-    var method = POST;
-    var param = {username: username, password: password}
+    function login() {
+        var username = $("#username").value;
+        var password = $("#password").value;
+        var queryUrl = "/login";
+        var method = POST;
+        var param = {username: username, password: password}
 
-    var loginCallback = function (result) {
-        if (result.success) {
-            alert("登录成功");
-        }
-        else {
-            if (result.code == SERVER_INTERNAL_EXCEPTION_CODE) {
-                alert("服务器内部异常");
+        var loginCallback = function (result) {
+            if (result.success) {
+                alert("登录成功");
             }
-            else if(result.code == REQUEST_PARAM_ERROR) {
-                alert("用户名或密码错误")
-            }
-            else if (result.code == RESOURCE_NOT_FOUND_EXCEPTION_CODE) {
-                if(result.msg == "user") {
-                    alert("用户不存在");
+            else {
+                if (result.code == SERVER_INTERNAL_EXCEPTION_CODE) {
+                    alert("服务器内部异常");
                 }
-                else if (result.msg == "processdefinition") {
-                    alert("流程定义不存在");
+                else if (result.code == REQUEST_PARAM_ERROR) {
+                    alert("用户名或密码错误")
+                }
+                else if (result.code == RESOURCE_NOT_FOUND_EXCEPTION_CODE) {
+                    if (result.msg == "user") {
+                        alert("用户不存在");
+                    }
+                    else if (result.msg == "processdefinition") {
+                        alert("流程定义不存在");
+                    }
+                    else {
+                        alert(result.msg);
+                    }
                 }
                 else {
                     alert(result.msg);
                 }
             }
-            else {
-                alert(result.msg);
-            }
         }
+        executeRequest(queryUrl, param, method, loginCallback);
     }
-    executeRequest(queryUrl, param, method, loginCallback);
-}
 
-$.registerEvent("page", "keydown", function(e){
-    var theEvent = e || window.event;
-    var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
-    if (code == 13) {
-        login();
-    }
-});
-$.registerEvent("login", "click", login);
+    $.registerEvent("page", "keydown", function (e) {
+        var theEvent = e || window.event;
+        var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+        if (code == 13) {
+            login();
+        }
+    });
+    $.registerEvent("login", "click", login);
 </script>
 </body>
 </html>

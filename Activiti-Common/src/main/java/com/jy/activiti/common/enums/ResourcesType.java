@@ -2,41 +2,41 @@ package com.jy.activiti.common.enums;
 
 /**
  * 资源类型
- * */
+ */
 public enum ResourcesType {
 
     /**
      * 用户
-     * */
+     */
     USER("user"),
 
     /**
      * 用户组
-     * */
+     */
     GROUP("group"),
 
     /**
      * 流程定义
-     * */
+     */
     PROCESSDEFINITION("processdefinition"),
 
     /**
      * 流程模型
-     * */
+     */
     PROCESSDEFINITION_MODEL("processdefinition_model"),
 
     /**
      * 流程文件
-     * */
+     */
     PROCESSDEFINITION_DOC("processdefinition_doc"),
 
     /**
      * 流程图
-     * */
+     */
     PROCESSDEFINITION_IMG("processdefinition_img");
 
     public static ResourcesType getResourcesType(String value) {
-        for (ResourcesType type: values()) {
+        for (ResourcesType type : values()) {
             if (type.value.equals(value)) {
                 return type;
             }

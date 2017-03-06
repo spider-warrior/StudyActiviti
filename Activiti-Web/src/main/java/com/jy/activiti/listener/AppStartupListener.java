@@ -50,11 +50,13 @@ public class AppStartupListener implements ApplicationListener {
         }
         identityService.setAuthenticatedUserId(user.getId());
     }
+
     public Deployment getDefaultDeployment() {
         RepositoryService repositoryService = ContextHelper.getBean(RepositoryService.class);
         List<Deployment> deployments = repositoryService.createDeploymentQuery().list();
         return deployments.get(0);
     }
+
     public ProcessDefinition getDeploymentProcessDefinition(Deployment deployment) {
         RepositoryService repositoryService = ContextHelper.getBean(RepositoryService.class);
         ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().deploymentId(deployment.getId()).singleResult();

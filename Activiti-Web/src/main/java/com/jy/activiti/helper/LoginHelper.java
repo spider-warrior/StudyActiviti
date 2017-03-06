@@ -28,7 +28,7 @@ public class LoginHelper {
 
     /**
      * 创建session
-     * */
+     */
     public String createSession(User user, HttpServletResponse response) {
         String key = UUID.randomUUID().toString();
         sessionHolder.put(key, user);

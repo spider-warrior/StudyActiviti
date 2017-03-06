@@ -6,7 +6,6 @@ import com.jy.activiti.common.enums.ResponseCode;
 import com.jy.activiti.common.util.StringUtil;
 import com.jy.activiti.response.entity.ProcessDefinitionWrapper;
 import com.jy.activiti.response.service.ProcessDefinitionWrapperBuilder;
-import com.jy.activiti.service.exception.ExceptionCode;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.identity.Group;
@@ -24,7 +23,7 @@ import java.util.Map;
 
 @RequestMapping("/pdm")
 @RestController
-public class ProcessDefinitionController extends BaseController{
+public class ProcessDefinitionController extends BaseController {
 
     @Autowired
     private IdentityService identityService;
@@ -87,7 +86,6 @@ public class ProcessDefinitionController extends BaseController{
         repositoryService.addCandidateStarterGroup(pdid, groupId);
         return success();
     }
-
 
 
     @RequiredLogin

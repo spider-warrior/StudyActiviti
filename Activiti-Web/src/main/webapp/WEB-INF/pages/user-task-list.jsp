@@ -1,23 +1,24 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" session="false" isELIgnored="false" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" session="false" isELIgnored="false"
+         pageEncoding="UTF-8" %>
 <html>
 <head>
     <title>用户任务</title>
-    <%@include file="header.jsp"%>
+    <%@include file="header.jsp" %>
 </head>
 <body>
-<%@include file="banner.jsp"%>
+<%@include file="banner.jsp" %>
 <h3>可领取的任务:
     <button id="queryAvailableTaskBtn">刷新列表</button>
     <br/>
 </h3>
 <table>
     <thead>
-        <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-        </tr>
+    <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
     </thead>
     <tbody id="userTaskToBeClaim">
     </tbody>

@@ -4,8 +4,8 @@ import com.jy.activiti.common.enums.ResponseType;
 
 /**
  * 用户未登录异常
- * */
-public class NonUserLoginException extends RuntimeException{
+ */
+public class NonUserLoginException extends RuntimeException {
 
     private ResponseType responseType;
 

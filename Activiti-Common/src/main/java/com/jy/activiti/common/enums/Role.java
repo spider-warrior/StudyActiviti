@@ -4,22 +4,22 @@ public enum Role {
 
     /**
      * 职员
-     * */
+     */
     WORKER("worker"),
 
     /**
      * 主管
-     * */
+     */
     LEADER("leader"),
 
     /**
      * 经理
-     * */
+     */
     MANAGER("manager"),
 
     /**
      * 老板
-     * */
+     */
     BOSS("boss");
 
 

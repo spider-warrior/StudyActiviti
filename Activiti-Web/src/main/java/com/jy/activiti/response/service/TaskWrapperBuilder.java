@@ -16,6 +16,7 @@ public class TaskWrapperBuilder {
     private IdentityService identityService;
 
     private static final TaskWrapper empty = new TaskWrapper();
+
     public TaskWrapper buildTaskWrapper(Task task) {
         if (task == null) {
             return empty;

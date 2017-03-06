@@ -12,7 +12,7 @@ public class ServletWebsocketEndPoint extends Endpoint {
     public void onOpen(Session session, EndpointConfig config) {
         System.out.println("client connect");
         // Set maximum messages size to 10.000 bytes.
-        Map<String,String> pathParameters = session.getPathParameters();
+        Map<String, String> pathParameters = session.getPathParameters();
         String username = pathParameters.get("username");
         String relationId = pathParameters.get("relationId");
         SessionUtils.put(relationId, username, session);

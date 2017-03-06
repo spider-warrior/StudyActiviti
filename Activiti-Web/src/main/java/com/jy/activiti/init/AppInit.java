@@ -20,7 +20,7 @@ import javax.websocket.server.ServerEndpointConfig;
 import java.util.HashSet;
 import java.util.Set;
 
-public class AppInit implements WebApplicationInitializer,ServerApplicationConfig {
+public class AppInit implements WebApplicationInitializer, ServerApplicationConfig {
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {

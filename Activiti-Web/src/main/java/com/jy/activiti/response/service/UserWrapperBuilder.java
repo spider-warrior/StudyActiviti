@@ -38,7 +38,7 @@ public class UserWrapperBuilder {
         UserWrapper userWrapper = new UserWrapper();
         userWrapper.setId(user.getId().toString());
         List<Group> groupList = identityService.createGroupQuery().groupMember(user.getId()).list();
-        if (groupList !=null && groupList.size() > 0) {
+        if (groupList != null && groupList.size() > 0) {
             List<GroupWrapper> groupWrapperList = new ArrayList<>();
             groupList.forEach(group -> groupWrapperList.add(groupWrapperBuilder.buildGroupWrapper(group)));
             userWrapper.setUserGroups(groupWrapperList);

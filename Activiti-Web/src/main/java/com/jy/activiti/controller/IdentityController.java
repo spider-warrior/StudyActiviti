@@ -33,7 +33,7 @@ public class IdentityController extends BaseController {
         List<User> users = identityService.createUserQuery().list();
         if (users == null || users.size() == 0) {
             result.put("users", Collections.emptyList());
-        }else {
+        } else {
             List<UserWrapper> userWrapperList = new ArrayList<>();
             users.forEach(user -> userWrapperList.add(userWrapperBuilder.buildUserWrapper(user)));
             result.put("users", userWrapperList);
@@ -67,8 +67,7 @@ public class IdentityController extends BaseController {
         List<Group> groupList = identityService.createGroupQuery().list();
         if (groupList == null || groupList.size() == 0) {
             result.put("groups", Collections.emptyList());
-        }
-        else {
+        } else {
             List<GroupWrapper> groupWrapperList = new ArrayList<>();
             groupList.forEach(group -> groupWrapperList.add(groupWrapperBuilder.buildGroupWrapper(group)));
             result.put("groups", groupWrapperList);
