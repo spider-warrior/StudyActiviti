@@ -32,7 +32,7 @@ public class UserController extends BaseController {
     @RequestMapping("/task/list")
     public Object userTaskList(@RequestBody(required = false) Map<String, String> param) {
         User user = contextHelper.getCurrentUser();
-        List<Task> taskEntityList = taskService.createTaskQuery().taskCandidateOrAssigned(user.getId().toString()).list();
+        List<Task> taskEntityList = taskService.createTaskQuery().taskCandidateUser(user.getId()).list();
         List<TaskWrapper> taskWrapperList = new ArrayList<>(taskEntityList.size());
         taskEntityList.forEach(task -> taskWrapperList.add(taskWrapperBuilder.buildTaskWrapper(task)));
         Map<String, Object> result = new HashMap<>();

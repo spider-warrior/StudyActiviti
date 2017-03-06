@@ -77,7 +77,7 @@ public class ProcessDefinitionController extends BaseController {
 
         Group group = identityService.createGroupQuery().groupId(groupId).singleResult();
         if (group == null) {
-            return fail(ResponseCode.REQUEST_SOURCE_NOT_FOUND.getValue(), ResourcesType.USER.getValue());
+            return fail(ResponseCode.REQUEST_SOURCE_NOT_FOUND.getValue(), ResourcesType.GROUP.getValue());
         }
         ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().processDefinitionId(pdid).singleResult();
         if (pd == null) {

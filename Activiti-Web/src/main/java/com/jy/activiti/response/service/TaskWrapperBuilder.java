@@ -1,5 +1,6 @@
 package com.jy.activiti.response.service;
 
+import com.jy.activiti.common.util.StringUtil;
 import com.jy.activiti.common.util.TimeUtil;
 import com.jy.activiti.response.entity.TaskWrapper;
 import org.activiti.engine.IdentityService;
@@ -24,13 +25,13 @@ public class TaskWrapperBuilder {
         TaskWrapper taskWrapper = new TaskWrapper();
         taskWrapper.setId(task.getId());
         taskWrapper.setName(task.getName());
-        taskWrapper.setCreateTime(TimeUtil.formatYYYYMMMDDHHMMSS(task.getCreateTime()));
-        taskWrapper.setAssignee(task.getAssignee());
         taskWrapper.setCategory(task.getCategory());
-        taskWrapper.setDescription(task.getDescription());
-        taskWrapper.setExecutionId(task.getExecutionId());
-        taskWrapper.setOwner(userWrapperBuilder.buildUserWrapper(identityService.createUserQuery().userId(task.getOwner()).singleResult()));
         taskWrapper.setProcessDefinitionId(task.getProcessDefinitionId());
+        taskWrapper.setExecutionId(task.getExecutionId());
+        taskWrapper.setOwner(StringUtil.isEmpty(task.getOwner()) ? null : userWrapperBuilder.buildUserWrapper(identityService.createUserQuery().userId(task.getOwner()).singleResult()));
+        taskWrapper.setAssignee(task.getAssignee());
+        taskWrapper.setCreateTime(TimeUtil.formatYYYYMMMDDHHMMSS(task.getCreateTime()));
+        taskWrapper.setDescription(task.getDescription());
         return taskWrapper;
     }
 }

@@ -10,6 +10,7 @@ import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -66,8 +67,8 @@ public class AskForLeaveController extends BaseController {
             hasAuth = true;
         }
         if (hasAuth) {
-            runtimeService.startProcessInstanceByKey("student-ask-for-leave", param);
-            Task task = taskService.createTaskQuery().processDefinitionId(pd.getId()).singleResult();
+            ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("student-ask-for-leave", param);
+            Task task = taskService.createTaskQuery().executionId(processInstance.getId()).singleResult();
             taskService.addCandidateGroup(task.getId(), "teacher");
             return success();
         } else {
