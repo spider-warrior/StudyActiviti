@@ -4,15 +4,20 @@ import com.jy.activiti.common.annotation.RequiredLogin;
 import com.jy.activiti.helper.ContextHelper;
 import com.jy.activiti.response.entity.HistoricProcessInstanceWrapper;
 import com.jy.activiti.response.service.HistoricProcessInstanceWrapperBuilder;
-import org.activiti.engine.HistoryService;
-import org.activiti.engine.RuntimeService;
+import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.engine.*;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.identity.User;
+import org.activiti.engine.task.Task;
+import org.activiti.image.ProcessDiagramGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +33,12 @@ public class ProcessInstanceController extends BaseController {
     private HistoryService historyService;
     @Autowired
     private RuntimeService runtimeService;
+    @Autowired
+    private TaskService taskService;
+    @Autowired
+    private RepositoryService repositoryService;
+    @Autowired
+    private ProcessEngine processEngine;
     @Autowired
     private HistoricProcessInstanceWrapperBuilder historicProcessInstanceWrapperBuilder;
 
@@ -48,4 +59,25 @@ public class ProcessInstanceController extends BaseController {
         }
         return success(result);
     }
+
+    @RequestMapping(value = "/{id}/image", method = RequestMethod.GET)
+    @RequiredLogin
+    public Object userInstanceList(@PathVariable("id") String processInstanceId) throws IOException {
+        Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
+        //流程定义
+        BpmnModel bpmnModel = repositoryService.getBpmnModel(task.getProcessDefinitionId());
+        //正在活动节点
+        List<String> activeActivityIds = runtimeService.getActiveActivityIds(task.getExecutionId());
+        ProcessDiagramGenerator pdg = processEngine.getProcessEngineConfiguration().getProcessDiagramGenerator();
+        //生成流图片
+        InputStream inputStream = pdg.generateDiagram(bpmnModel, "PNG", activeActivityIds, activeActivityIds,
+        processEngine.getProcessEngineConfiguration().getActivityFontName(),
+        processEngine.getProcessEngineConfiguration().getLabelFontName(),
+        processEngine.getProcessEngineConfiguration().getActivityFontName(),
+        processEngine.getProcessEngineConfiguration().getProcessEngineConfiguration().getClassLoader(), 1.0);
+        byte[] content = new byte[inputStream.available()];
+        inputStream.read(content);
+        return content;
+    }
+
 }

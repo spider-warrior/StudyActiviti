@@ -43,6 +43,14 @@ public class HomeController extends BaseController {
     }
 
     /**
+     * 用户流程实例详情页面
+     */
+    @RequestMapping("/user/processinstance/{id}")
+    public String userProcessInstanceDetail() {
+        return "pages/process-instance-detail";
+    }
+
+    /**
      * 用户任务列表页面
      */
     @RequestMapping("/user/task/list")

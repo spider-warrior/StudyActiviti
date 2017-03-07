@@ -46,7 +46,8 @@
                         var startTimeTd = $.createTdWithText(instance.startTime);
                         var endTime = $.createTdWithText(instance.endTime);
                         var starterTd = $.createTdWithText(instance.starter.id);
-                        var operationTd = $.createTd();
+                        var operationTdContent = "<a href='/home/user/processinstance/" + instance.id + "'>详情</a>";
+                        var operationTd = $.createTdWithHtml(operationTdContent);
                         var tr = $.createTr();
                         tr.appendChild(idTd);
                         tr.appendChild(businessKeyTd);

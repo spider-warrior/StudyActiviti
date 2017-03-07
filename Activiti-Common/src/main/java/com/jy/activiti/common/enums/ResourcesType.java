@@ -33,7 +33,17 @@ public enum ResourcesType {
     /**
      * 流程图
      */
-    PROCESSDEFINITION_IMG("processdefinition_img");
+    PROCESSDEFINITION_IMG("processdefinition_img"),
+
+    /**
+     * 流程实例
+     * */
+    PROCESSINSTANCE("processinstance"),
+
+    /**
+     * 历史流程实例
+     * */
+    HISTORICPROCESSINSTANCE("historic_process_instance");
 
     public static ResourcesType getResourcesType(String value) {
         for (ResourcesType type : values()) {

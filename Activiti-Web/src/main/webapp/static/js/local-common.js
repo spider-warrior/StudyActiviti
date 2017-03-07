@@ -27,6 +27,12 @@ function logout() {
                 else if (result.msg == "processdefinition") {
                     alert("流程定义不存在");
                 }
+                else if (result.msg == 'processinstance') {
+                    alert("流程实例不存在");
+                }
+                else if (result.ms == 'historic_process_instance') {
+                    alert("历史流程实例不存在");
+                }
                 else {
                     alert(result.msg);
                 }

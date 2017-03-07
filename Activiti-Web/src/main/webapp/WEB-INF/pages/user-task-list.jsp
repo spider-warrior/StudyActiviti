@@ -30,6 +30,7 @@
     </tbody>
 </table>
 
+
 <script type="text/javascript">
     function queryAvailableTask() {
         var queryUrl = "/user/task/list";
