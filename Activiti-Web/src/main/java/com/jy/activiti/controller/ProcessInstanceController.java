@@ -1,6 +1,7 @@
 package com.jy.activiti.controller;
 
 import com.jy.activiti.common.annotation.RequiredLogin;
+import com.jy.activiti.common.enums.ResourcesType;
 import com.jy.activiti.helper.ContextHelper;
 import com.jy.activiti.response.entity.HistoricProcessInstanceWrapper;
 import com.jy.activiti.response.service.HistoricProcessInstanceWrapperBuilder;
@@ -63,11 +64,14 @@ public class ProcessInstanceController extends BaseController {
     @RequestMapping(value = "/{id}/image", method = RequestMethod.GET)
     @RequiredLogin
     public Object userInstanceList(@PathVariable("id") String processInstanceId) throws IOException {
-        Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
+        HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
+        if (historicProcessInstance == null) {
+            return failSourceNotFound(ResourcesType.HISTORICPROCESSINSTANCE.getValue());
+        }
         //流程定义
-        BpmnModel bpmnModel = repositoryService.getBpmnModel(task.getProcessDefinitionId());
+        BpmnModel bpmnModel = repositoryService.getBpmnModel(historicProcessInstance.getProcessDefinitionId());
         //正在活动节点
-        List<String> activeActivityIds = runtimeService.getActiveActivityIds(task.getExecutionId());
+        List<String> activeActivityIds = runtimeService.getActiveActivityIds(historicProcessInstance.getId());
         ProcessDiagramGenerator pdg = processEngine.getProcessEngineConfiguration().getProcessDiagramGenerator();
         //生成流图片
         InputStream inputStream = pdg.generateDiagram(bpmnModel, "PNG", activeActivityIds, activeActivityIds,

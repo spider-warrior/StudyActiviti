@@ -31,7 +31,7 @@ public class HomeController extends BaseController {
      */
     @RequestMapping("/pdm")
     public String pdManagement() {
-        return "pages/process-definition-management";
+        return "pages/process-definition-list";
     }
 
     /**
@@ -39,7 +39,7 @@ public class HomeController extends BaseController {
      */
     @RequestMapping("/user/processinstance")
     public String userProcessInstance() {
-        return "pages/user-process-instance";
+        return "pages/user-process-instance-list";
     }
 
     /**
@@ -63,7 +63,7 @@ public class HomeController extends BaseController {
      */
     @RequestMapping("/model")
     public String model() {
-        return "pages/model";
+        return "pages/process-model-list";
     }
 
     /**
