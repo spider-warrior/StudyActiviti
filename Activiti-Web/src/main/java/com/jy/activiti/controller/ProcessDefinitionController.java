@@ -5,21 +5,22 @@ import com.jy.activiti.common.enums.ResourcesType;
 import com.jy.activiti.common.enums.ResponseCode;
 import com.jy.activiti.common.util.StringUtil;
 import com.jy.activiti.response.entity.ProcessDefinitionWrapper;
+import com.jy.activiti.response.entity.TaskWrapper;
 import com.jy.activiti.response.service.ProcessDefinitionWrapperBuilder;
+import com.jy.activiti.response.service.TaskWrapperBuilder;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RepositoryService;
+import org.activiti.engine.TaskService;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RequestMapping("/processdefinition")
 @RestController
@@ -30,7 +31,11 @@ public class ProcessDefinitionController extends BaseController {
     @Autowired
     private RepositoryService repositoryService;
     @Autowired
+    private TaskService taskService;
+    @Autowired
     private ProcessDefinitionWrapperBuilder processDefinitionWrapperBuilder;
+    @Autowired
+    private TaskWrapperBuilder taskWrapperBuilder;
 
     @RequiredLogin
     @RequestMapping("/list")
@@ -145,9 +150,9 @@ public class ProcessDefinitionController extends BaseController {
     }
 
     @RequiredLogin
-    @RequestMapping(value = "/{businessKey}/img", method = RequestMethod.GET)
-    public Object pdImg(@PathVariable("businessKey") String businessKey) throws IOException {
-        ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().processDefinitionKey(businessKey).singleResult();
+    @RequestMapping(value = "/{processDefinitionId}/image", method = RequestMethod.GET)
+    public Object pdImg(@PathVariable("processDefinitionId") String processDefinitionId) throws IOException {
+        ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().processDefinitionId(processDefinitionId).singleResult();
         if (pd == null) {
             return failSourceNotFound(ResourcesType.PROCESSDEFINITION.getValue());
         }
@@ -158,6 +163,26 @@ public class ProcessDefinitionController extends BaseController {
         byte[] img = new byte[inputStream.available()];
         inputStream.read(img);
         return img;
+    }
+
+    @RequiredLogin
+    @RequestMapping(value = "/{id}/usertask", method = RequestMethod.GET)
+    public Object processDefinitionUserTask(@PathVariable("id") String processDefinitionId) throws IOException {
+        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionId(processDefinitionId).singleResult();
+        if (processDefinition == null) {
+            return failSourceNotFound(ResourcesType.PROCESSDEFINITION.getValue());
+        }
+        Map<String, Object> result = new HashMap<>();
+        List<Task> taskList = taskService.createTaskQuery().processDefinitionId(processDefinitionId).list();
+        if (taskList == null || taskList.size() == 0) {
+            result.put("tasks", Collections.emptyList());
+        }
+        else {
+            List<TaskWrapper> taskWrapperList = new ArrayList<>(taskList.size());
+            taskList.forEach(task -> taskWrapperList.add(taskWrapperBuilder.buildTaskWrapper(task)));
+            result.put("tasks", taskWrapperList);
+        }
+        return success(result);
     }
 
 }

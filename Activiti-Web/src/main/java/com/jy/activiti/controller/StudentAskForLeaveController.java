@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RequiredLogin
-@RequestMapping("askforleave")
+@RequestMapping("/student-ask-for-leave")
 @RestController
-public class AskForLeaveController extends BaseController {
+public class StudentAskForLeaveController extends BaseController {
 
     @Autowired
     private RepositoryService repositoryService;
@@ -47,12 +47,13 @@ public class AskForLeaveController extends BaseController {
 
         Object timeStr = param.get("time");
         Object reason = param.get("reason");
+        String processDefinitionId = (String)param.get("processDefinitionId");
         //参数异常
-        if (timeStr == null || reason == null) {
+        if (timeStr == null || reason == null || processDefinitionId == null) {
             return failOnParamInvalid(null);
         }
         //流程是否存在
-        ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().processDefinitionKey("student-ask-for-leave").singleResult();
+        ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().processDefinitionId(processDefinitionId).singleResult();
         if (pd == null) {
             return fail(ExceptionCode.SERVER_INTERNAL_EXCEPTION.getValue(), "流程不存在");
         }
@@ -68,8 +69,6 @@ public class AskForLeaveController extends BaseController {
         }
         if (hasAuth) {
             ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("student-ask-for-leave", param);
-            Task task = taskService.createTaskQuery().executionId(processInstance.getId()).singleResult();
-            taskService.addCandidateGroup(task.getId(), "teacher");
             return success();
         } else {
             return fail(ResponseCode.REQUEST_NOT_ALLOWED.getValue());

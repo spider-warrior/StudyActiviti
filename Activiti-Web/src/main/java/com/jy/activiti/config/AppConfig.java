@@ -6,6 +6,7 @@ import com.jy.activiti.interceptor.LoginInterceptor;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.activiti.engine.*;
 import org.activiti.engine.impl.FormServiceImpl;
+import org.activiti.engine.impl.interceptor.CommandExecutor;
 import org.activiti.rest.common.application.DefaultContentTypeResolver;
 import org.activiti.rest.service.api.RestResponseFactory;
 import org.activiti.spring.ProcessEngineFactoryBean;
@@ -178,6 +179,12 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         processEngineFactoryBean.setProcessEngineConfiguration(processEngineConfiguration);
         processEngineFactoryBean.setApplicationContext(applicationContext);
         return processEngineFactoryBean.getObject();
+    }
+
+    @Bean
+    @Autowired
+    public CommandExecutor commandExecutor(SpringProcessEngineConfiguration springProcessEngineConfiguration) {
+        return springProcessEngineConfiguration.getCommandExecutor();
     }
 
     @Bean

@@ -94,7 +94,8 @@
                         var operationTd = $.createTd();
                         var operationTdHtml = "<a href='javascript:void(0)' onclick='pdGenerateModel(\"" + pd.id + "\")'>生成model</a>&nbsp;&nbsp;"
                                             + "<a href='javascript:void(0)' onclick='deleteProcessDefinition(\"" + pd.id + "\")'>删除</a>&nbsp;&nbsp;"
-                                            + "<a target='_blank' href='/home/processdefinition/" + pd.id + "'>详情</a>";
+                                            + "<a target='_blank' href='/home/processdefinition/" + pd.id + "'>详情</a>&nbsp;&nbsp;"
+                                            + "<a target='_blank' href='/home/processdefinition/start/" + pd.id + "'>申请流程</a>&nbsp;&nbsp;";
                         operationTd.innerHTML = operationTdHtml;
                         tr.appendChild(idTd);
                         tr.appendChild(nameTd);

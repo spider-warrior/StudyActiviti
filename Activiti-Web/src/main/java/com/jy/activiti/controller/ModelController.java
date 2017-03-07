@@ -11,10 +11,14 @@ import org.activiti.bpmn.converter.BpmnXMLConverter;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.editor.language.json.converter.BpmnJsonConverter;
 import org.activiti.engine.RepositoryService;
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.impl.cmd.SetProcessDefinitionVersionCmd;
+import org.activiti.engine.impl.interceptor.CommandExecutor;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.Model;
 import org.activiti.engine.repository.ModelQuery;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,7 +45,11 @@ public class ModelController extends BaseController {
     @Autowired
     private RepositoryService repositoryService;
     @Autowired
+    private RuntimeService runtimeService;
+    @Autowired
     private ModelWrapperBuilder modelWrapperBuilder;
+    @Autowired
+    private CommandExecutor commandExecutor;
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -203,9 +211,6 @@ public class ModelController extends BaseController {
         if (model == null) {
             return failSourceNotFound(ResourcesType.PROCESSDEFINITION_MODEL.getValue());
         }
-        if (model.getDeploymentId() != null) {
-            repositoryService.deleteDeployment(model.getDeploymentId(), true);
-        }
         byte[] editorSource = repositoryService.getModelEditorSource(modelId);
         if (editorSource == null) {
             return failSourceNotFound(ResourcesType.PROCESSDEFINITION_DOC.getValue());
@@ -215,9 +220,18 @@ public class ModelController extends BaseController {
 
         String processName = model.getName() + ".bpmn20.xml";
         Deployment deployment = repositoryService.createDeployment()
+                .enableDuplicateFiltering()
                 .name(model.getName())
                 .addBpmnModel(processName, bpmnModel)
                 .deploy();
+        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().deploymentId(deployment.getId()).singleResult();
+        //曾经部署过,更新旧流程实例到新流程
+        if (model.getDeploymentId() != null) {
+            List<ProcessInstance> processInstanceList = runtimeService.createProcessInstanceQuery().deploymentId(model.getDeploymentId()).list();
+            for (ProcessInstance processInstance: processInstanceList) {
+                commandExecutor.execute(new SetProcessDefinitionVersionCmd(processInstance.getProcessInstanceId(), processDefinition.getVersion()));
+            }
+        }
         model = repositoryService.createModelQuery().modelId(modelId).singleResult();
         model.setDeploymentId(deployment.getId());
         repositoryService.saveModel(model);

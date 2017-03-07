@@ -2,29 +2,35 @@
          pageEncoding="UTF-8" %>
 <html>
 <head>
-    <title>请假流程</title>
+    <title>请假流程(key: student-ask-for-leave)</title>
     <%@include file="header.jsp" %>
 </head>
 <body id="pageBody">
 <%@include file="banner.jsp" %>
-<h2>process key: askForLeaveProcess</h2>
+<h2>process key: student-ask-for-leave</h2>
 天数： <input name="time" id="time" type="text"/><br/>
 事由: <input name="reason" id="reason" type="text"/><br/>
 <button id="submit_btn">提交申请</button>
 
 <hr/>
 流程图: <br/>
-<img src="/processdefinition/student-ask-for-leave/img">
+<img id="processDefinition_img" src="">
 </body>
 
 <script type="text/javascript">
+    var uri = document.location.pathname;
+    var processDefinitionId = uri.substr(uri.lastIndexOf("/") + 1);
+    $("#processDefinition_img").src = "/processdefinition/" + processDefinitionId + "/image";
+</script>
+<script type="text/javascript">
     function submitFormData() {
-
         var time = $("#time").value;
         var reason = $("#reason").value;
-        var queryUrl = "/askforleave";
+        var queryUrl = "/student-ask-for-leave";
+        var uri = document.location.pathname;
+        var processDefinitionId = uri.substr(uri.lastIndexOf("/") + 1);
         var method = POST;
-        var param = {time: time, reason: reason};
+        var param = {time: time, reason: reason, processDefinitionId: processDefinitionId};
 
         var submitFormDataCallback = function (result) {
             if (result.success) {
