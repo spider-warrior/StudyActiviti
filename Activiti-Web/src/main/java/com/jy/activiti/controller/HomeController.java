@@ -29,10 +29,19 @@ public class HomeController extends BaseController {
     /**
      * 流程管理页面
      */
-    @RequestMapping("/pdm")
-    public String pdManagement() {
+    @RequestMapping("/processdefinition")
+    public String processDefinition() {
         return "pages/process-definition-list";
     }
+
+    /**
+     * 流程管理页面
+     */
+    @RequestMapping("/processdefinition/{id}")
+    public String processDefinitionDetail(String id) {
+        return "pages/process-definition-detail";
+    }
+
 
     /**
      * 用户流程页面

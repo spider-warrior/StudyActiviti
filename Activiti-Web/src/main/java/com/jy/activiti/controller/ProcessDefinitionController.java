@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RequestMapping("/pdm")
+@RequestMapping("/processdefinition")
 @RestController
 public class ProcessDefinitionController extends BaseController {
 

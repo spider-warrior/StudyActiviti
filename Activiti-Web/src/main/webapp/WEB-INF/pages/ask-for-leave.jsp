@@ -14,7 +14,7 @@
 
 <hr/>
 流程图: <br/>
-<img src="/pdm/student-ask-for-leave/img">
+<img src="/processdefinition/student-ask-for-leave/img">
 </body>
 
 <script type="text/javascript">

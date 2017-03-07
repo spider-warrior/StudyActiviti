@@ -46,7 +46,7 @@
 <script type="text/javascript">
     // for list
     function queryProcessDefinition() {
-        var queryUrl = "/pdm/list";
+        var queryUrl = "/processdefinition/list";
         var method = POST;
         var param = {}
 
@@ -94,7 +94,7 @@
                         var operationTd = $.createTd();
                         var operationTdHtml = "<a href='javascript:void(0)' onclick='pdGenerateModel(\"" + pd.id + "\")'>生成model</a>&nbsp;&nbsp;"
                                             + "<a href='javascript:void(0)' onclick='deleteProcessDefinition(\"" + pd.id + "\")'>删除</a>&nbsp;&nbsp;"
-                                            + "<a href='javascript:void(0);'>编辑流程任务权限</a>";
+                                            + "<a target='_blank' href='/home/processdefinition/" + pd.id + "'>详情</a>";
                         operationTd.innerHTML = operationTdHtml;
                         tr.appendChild(idTd);
                         tr.appendChild(nameTd);
@@ -121,7 +121,7 @@
     function userAddPdAuth() {
         var username = $("#username").value;
         var pdid = $("#pdid").value;
-        var queryUrl = "/pdm/user/add/auth";
+        var queryUrl = "/processdefinition/user/add/auth";
         var method = POST;
         var param = {username: username, pdid: pdid};
 
@@ -141,7 +141,7 @@
     function groupAddPdAuth() {
         var groupId = $("#groupId").value;
         var pdid = $("#g_pdid").value;
-        var queryUrl = "/pdm/group/add/auth";
+        var queryUrl = "/processdefinition/group/add/auth";
         var method = POST;
         var param = {groupId: groupId, pdid: pdid};
         var groupAddPdAuthCallback = function (result) {
@@ -159,7 +159,7 @@
 </script>
 <script type="text/javascript">
     function userDeletePdAuth(username, pdid) {
-        var queryUrl = "/pdm/user/delete/auth";
+        var queryUrl = "/processdefinition/user/delete/auth";
         var method = POST;
         var param = {username: username, pdid: pdid};
 
@@ -178,7 +178,7 @@
 
 <script type="text/javascript">
     function groupDeletePdAuth(groupId, pdid) {
-        var queryUrl = "/pdm/group/delete/auth";
+        var queryUrl = "/processdefinition/group/delete/auth";
         var method = POST;
         var param = {groupId: groupId, pdid: pdid};
         var groupDeletePdAuthCallback = function (result) {
@@ -213,7 +213,7 @@
 
 <script type="text/javascript">
     function deleteProcessDefinition(pdid) {
-        var queryUrl = "/pdm/" + pdid;
+        var queryUrl = "/processdefinition/" + pdid;
         var method = DELETE;
         var param = {};
         var deleteProcessDefinitionCallback = function (result) {
