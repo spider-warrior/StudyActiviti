@@ -1,6 +1,7 @@
 package com.jy.activiti.controller;
 
 
+import com.jy.activiti.common.enums.ResponseCode;
 import com.jy.activiti.service.exception.ExceptionCode;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -59,6 +60,9 @@ public class BaseController {
 
     public Map<String, Object> failOnParamInvalid(String description) {
         return fail(ExceptionCode.PARAM_INVALID.getValue(), description);
+    }
+    public Map<String, Object> failOnRequestNotAllow() {
+        return fail(ResponseCode.REQUEST_NOT_ALLOWED.getValue());
     }
 
 

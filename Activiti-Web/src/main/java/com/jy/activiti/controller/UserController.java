@@ -5,14 +5,12 @@ import com.jy.activiti.common.enums.ResourcesType;
 import com.jy.activiti.helper.ContextHelper;
 import com.jy.activiti.response.entity.TaskWrapper;
 import com.jy.activiti.response.service.TaskWrapperBuilder;
+import com.jy.activiti.service.exception.ExceptionCode;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +34,7 @@ public class UserController extends BaseController {
         User user = contextHelper.getCurrentUser();
         List<Task> taskEntityList = taskService.createTaskQuery().taskUnassigned().taskCandidateUser(user.getId()).list();
         List<TaskWrapper> taskWrapperList = new ArrayList<>(taskEntityList.size());
-        taskEntityList.forEach(task -> taskWrapperList.add(taskWrapperBuilder.buildTaskWrapper(task)));
+        taskEntityList.forEach(task -> taskWrapperList.add(taskWrapperBuilder.buildTaskWrapper(task, false)));
         Map<String, Object> result = new HashMap<>();
         result.put("tasks", taskWrapperList);
         return success(result);
@@ -47,13 +45,13 @@ public class UserController extends BaseController {
         User user = contextHelper.getCurrentUser();
         List<Task> taskEntityList = taskService.createTaskQuery().taskAssignee(user.getId()).list();
         List<TaskWrapper> taskWrapperList = new ArrayList<>(taskEntityList.size());
-        taskEntityList.forEach(task -> taskWrapperList.add(taskWrapperBuilder.buildTaskWrapper(task)));
+        taskEntityList.forEach(task -> taskWrapperList.add(taskWrapperBuilder.buildTaskWrapper(task, false)));
         Map<String, Object> result = new HashMap<>();
         result.put("tasks", taskWrapperList);
         return success(result);
     }
 
-    @RequestMapping("/task/claimed/{taskId}")
+    @RequestMapping("/task/claime/{taskId}")
     public Object userClaimeTask(@PathVariable("taskId") String taskId) {
         User user = contextHelper.getCurrentUser();
         Task task = taskService.createTaskQuery().taskUnassigned().taskId(taskId).singleResult();
@@ -63,5 +61,23 @@ public class UserController extends BaseController {
         taskService.claim(taskId, user.getId());
         return success();
     }
+
+    @RequestMapping(value = "/task/audit/student-ask-for-leave/agree", method = RequestMethod.POST)
+    public Object teacherAuditStudentAskForLeaveAgree(@RequestBody Map<String, String> param) {
+        String taskId = param.get("taskId");
+        String commnect = param.get("comment");
+        User user = contextHelper.getCurrentUser();
+        Task task = taskService.createTaskQuery().taskAssignee(user.getId()).taskId(taskId).singleResult();
+        if (task == null) {
+            return failSourceNotFound(ResourcesType.USER_TASK.getValue());
+        }
+        if (!user.getId().equals(task.getAssignee())) {
+            return failOnRequestNotAllow();
+        }
+        taskService.addComment(taskId, task.getProcessInstanceId(), commnect);
+        taskService.complete(taskId);
+        return success();
+    }
+
 
 }

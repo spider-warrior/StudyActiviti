@@ -24,4 +24,17 @@ public class BaseWrapper {
                 "id='" + id + '\'' +
                 '}';
     }
+
+    public static class Config {
+        private boolean needId;
+
+        public boolean isNeedId() {
+            return needId;
+        }
+
+        public Config setNeedId(boolean needId) {
+            this.needId = needId;
+            return this;
+        }
+    }
 }

@@ -106,7 +106,7 @@
 
 <script type="text/javascript">
     function claimUserTask(taskId) {
-        var queryUrl = "/user/task/claimed/" + taskId;
+        var queryUrl = "/user/task/claime/" + taskId;
         var method = POST;
         var param = {};
         var submitFormDataCallback = function (result) {

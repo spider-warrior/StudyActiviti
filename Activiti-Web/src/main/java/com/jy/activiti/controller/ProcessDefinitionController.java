@@ -179,7 +179,7 @@ public class ProcessDefinitionController extends BaseController {
         }
         else {
             List<TaskWrapper> taskWrapperList = new ArrayList<>(taskList.size());
-            taskList.forEach(task -> taskWrapperList.add(taskWrapperBuilder.buildTaskWrapper(task)));
+            taskList.forEach(task -> taskWrapperList.add(taskWrapperBuilder.buildTaskWrapper(task, false)));
             result.put("tasks", taskWrapperList);
         }
         return success(result);

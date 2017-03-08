@@ -3,6 +3,9 @@ package com.jy.activiti.response.entity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+import java.util.Map;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TaskWrapper extends BaseWrapper {
 
@@ -65,6 +68,18 @@ public class TaskWrapper extends BaseWrapper {
      */
     @JsonProperty("createTime")
     private String createTime;
+
+    /**
+     * 变量
+     * */
+    @JsonProperty("variables")
+    private Map<String, Object> variables;
+
+    /**
+     * 任务评论
+     * */
+    @JsonProperty("comments")
+    private List<CommentWrapper> comments;
 
     public String getName() {
         return name;
@@ -156,19 +171,21 @@ public class TaskWrapper extends BaseWrapper {
         return this;
     }
 
-    @Override
-    public String toString() {
-        return "TaskWrapper{" +
-                "name='" + name + '\'' +
-                ", taskDefinitionKey='" + taskDefinitionKey + '\'' +
-                ", category='" + category + '\'' +
-                ", description='" + description + '\'' +
-                ", owner=" + owner +
-                ", assignee='" + assignee + '\'' +
-                ", processInstancesId='" + processInstancesId + '\'' +
-                ", executionId='" + executionId + '\'' +
-                ", processDefinitionWrapper=" + processDefinitionWrapper +
-                ", createTime='" + createTime + '\'' +
-                "} " + super.toString();
+    public Map<String, Object> getVariables() {
+        return variables;
+    }
+
+    public TaskWrapper setVariables(Map<String, Object> variables) {
+        this.variables = variables;
+        return this;
+    }
+
+    public List<CommentWrapper> getComments() {
+        return comments;
+    }
+
+    public TaskWrapper setComments(List<CommentWrapper> comments) {
+        this.comments = comments;
+        return this;
     }
 }

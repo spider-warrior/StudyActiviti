@@ -1,6 +1,7 @@
 package com.jy.activiti.controller;
 
 import com.jy.activiti.common.annotation.RequiredLogin;
+import com.jy.activiti.common.enums.ResourcesType;
 import com.jy.activiti.common.enums.ResponseCode;
 import com.jy.activiti.helper.ContextHelper;
 import com.jy.activiti.service.exception.ExceptionCode;
@@ -55,7 +56,7 @@ public class StudentAskForLeaveController extends BaseController {
         //流程是否存在
         ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().processDefinitionId(processDefinitionId).singleResult();
         if (pd == null) {
-            return fail(ExceptionCode.SERVER_INTERNAL_EXCEPTION.getValue(), "流程不存在");
+            return failSourceNotFound(ResourcesType.PROCESSDEFINITION.getValue());
         }
         User user = contextHelper.getCurrentUser();
         if (user == null) {
@@ -71,7 +72,7 @@ public class StudentAskForLeaveController extends BaseController {
             ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("student-ask-for-leave", param);
             return success();
         } else {
-            return fail(ResponseCode.REQUEST_NOT_ALLOWED.getValue());
+            return failOnRequestNotAllow();
         }
 
     }
