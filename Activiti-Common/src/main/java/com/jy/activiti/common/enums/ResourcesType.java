@@ -43,7 +43,12 @@ public enum ResourcesType {
     /**
      * 历史流程实例
      * */
-    HISTORICPROCESSINSTANCE("historic_process_instance");
+    HISTORICPROCESSINSTANCE("historic_process_instance"),
+
+    /**
+     * 用户任务
+     * */
+    USER_TASK("user_task");
 
     public static ResourcesType getResourcesType(String value) {
         for (ResourcesType type : values()) {
