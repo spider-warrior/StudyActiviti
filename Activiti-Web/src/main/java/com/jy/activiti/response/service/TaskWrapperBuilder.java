@@ -4,6 +4,8 @@ import com.jy.activiti.common.util.StringUtil;
 import com.jy.activiti.common.util.TimeUtil;
 import com.jy.activiti.response.entity.TaskWrapper;
 import org.activiti.engine.IdentityService;
+import org.activiti.engine.RepositoryService;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,7 +16,11 @@ public class TaskWrapperBuilder {
     @Autowired
     private UserWrapperBuilder userWrapperBuilder;
     @Autowired
+    private ProcessDefinitionWrapperBuilder processDefinitionWrapperBuilder;
+    @Autowired
     private IdentityService identityService;
+    @Autowired
+    private RepositoryService repositoryService;
 
     private static final TaskWrapper empty = new TaskWrapper();
 
@@ -25,8 +31,10 @@ public class TaskWrapperBuilder {
         TaskWrapper taskWrapper = new TaskWrapper();
         taskWrapper.setId(task.getId());
         taskWrapper.setName(task.getName());
+        taskWrapper.setTaskDefinitionKey(task.getTaskDefinitionKey());
         taskWrapper.setCategory(task.getCategory());
-        taskWrapper.setProcessDefinitionId(task.getProcessDefinitionId());
+        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionId(task.getProcessDefinitionId()).singleResult();
+        taskWrapper.setProcessDefinitionWrapper(processDefinitionWrapperBuilder.buildProcessDefinitionWrapper(processDefinition));
         taskWrapper.setExecutionId(task.getExecutionId());
         taskWrapper.setOwner(StringUtil.isEmpty(task.getOwner()) ? null : userWrapperBuilder.buildUserWrapper(identityService.createUserQuery().userId(task.getOwner()).singleResult()));
         taskWrapper.setAssignee(task.getAssignee());

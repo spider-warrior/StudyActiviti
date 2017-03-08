@@ -4,3 +4,4 @@
 <link type="text/css" rel="stylesheet" href="/static/css/header.css"/>
 <script src="/static/js/common.js"></script>
 <script src="/static/js/local-common.js"></script>
+<script src="/static/js/local-var.js"></script>

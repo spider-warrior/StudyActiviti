@@ -5,7 +5,6 @@ function logout() {
     var queryUrl = "/logout";
     var method = GET;
     var param = null;
-
     var logoutCallback = function (result) {
         if (result.success) {
             $.redirectRoot();
@@ -72,4 +71,5 @@ function dealAjaxError(response) {
     else {
         alert(response.msg);
     }
+
 }

@@ -13,6 +13,12 @@ public class TaskWrapper extends BaseWrapper {
     private String name;
 
     /**
+     * task definition key
+     * */
+    @JsonProperty("taskDefinitionKey")
+    private String taskDefinitionKey;
+
+    /**
      * 范畴
      */
     @JsonProperty("category")
@@ -49,10 +55,10 @@ public class TaskWrapper extends BaseWrapper {
     private String executionId;
 
     /**
-     * 流程定义ID
+     * 流程定义
      */
-    @JsonProperty("processDefinitionId")
-    private String processDefinitionId;
+    @JsonProperty("processDefinition")
+    private ProcessDefinitionWrapper processDefinitionWrapper;
 
     /**
      * 创建时间
@@ -66,6 +72,15 @@ public class TaskWrapper extends BaseWrapper {
 
     public TaskWrapper setName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public String getTaskDefinitionKey() {
+        return taskDefinitionKey;
+    }
+
+    public TaskWrapper setTaskDefinitionKey(String taskDefinitionKey) {
+        this.taskDefinitionKey = taskDefinitionKey;
         return this;
     }
 
@@ -123,12 +138,12 @@ public class TaskWrapper extends BaseWrapper {
         return this;
     }
 
-    public String getProcessDefinitionId() {
-        return processDefinitionId;
+    public ProcessDefinitionWrapper getProcessDefinitionWrapper() {
+        return processDefinitionWrapper;
     }
 
-    public TaskWrapper setProcessDefinitionId(String processDefinitionId) {
-        this.processDefinitionId = processDefinitionId;
+    public TaskWrapper setProcessDefinitionWrapper(ProcessDefinitionWrapper processDefinitionWrapper) {
+        this.processDefinitionWrapper = processDefinitionWrapper;
         return this;
     }
 
@@ -145,14 +160,15 @@ public class TaskWrapper extends BaseWrapper {
     public String toString() {
         return "TaskWrapper{" +
                 "name='" + name + '\'' +
+                ", taskDefinitionKey='" + taskDefinitionKey + '\'' +
                 ", category='" + category + '\'' +
                 ", description='" + description + '\'' +
                 ", owner=" + owner +
                 ", assignee='" + assignee + '\'' +
                 ", processInstancesId='" + processInstancesId + '\'' +
                 ", executionId='" + executionId + '\'' +
-                ", processDefinitionId='" + processDefinitionId + '\'' +
+                ", processDefinitionWrapper=" + processDefinitionWrapper +
                 ", createTime='" + createTime + '\'' +
-                '}';
+                "} " + super.toString();
     }
 }

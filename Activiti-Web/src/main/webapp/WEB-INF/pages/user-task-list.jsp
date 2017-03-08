@@ -143,7 +143,8 @@
                         var assigneeTd = $.createTdWithText(task.assignee);
                         var createTimeTd = $.createTdWithText(task.createTime);
                         var descriptionTd = $.createTdWithText(task.description);
-                        var operationTdContent = "<a href='javascript:void(0);'>处理任务</a>&nbsp;&nbsp;";
+                        var page = getUserTaskPageName(task.processDefinition.businessKey, task.taskDefinitionKey);
+                        var operationTdContent = "<a target='_blank' href='/home/audit/" + page + "/"+ task.id +"'>处理任务</a>&nbsp;&nbsp;";
                         var operationTd = $.createTdWithHtml(operationTdContent);
                         var tr = $.createTr();
                         tr.appendChild(idTd);

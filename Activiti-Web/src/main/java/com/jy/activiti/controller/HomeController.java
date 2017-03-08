@@ -101,4 +101,9 @@ public class HomeController extends BaseController {
         return "pages/identity-management";
     }
 
+    @RequestMapping("/audit/{page}/{taskId}")
+    public String audit(@PathVariable("page") String auditPage) {
+        return "pages/" + auditPage;
+    }
+
 }
