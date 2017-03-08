@@ -2,6 +2,7 @@ package com.jy.activiti.response.service;
 
 import com.jy.activiti.common.util.TimeUtil;
 import com.jy.activiti.response.entity.CommentWrapper;
+import com.jy.activiti.response.entity.UserWrapper;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.task.Comment;
@@ -30,7 +31,8 @@ public class CommentWrapperBuilder {
             commentWrapper.setId(comment.getId());
         }
         if (config.isNeedCommentUser()) {
-            commentWrapper.setCommentUser(userWrapperBuilder.buildUserWrapper(identityService.createUserQuery().userId(comment.getUserId()).singleResult()));
+            UserWrapper.UserWrapperConfig userWrapperConfig = new UserWrapper.UserWrapperConfig();
+            commentWrapper.setCommentUser(userWrapperBuilder.buildUserWrapper(identityService.createUserQuery().userId(comment.getUserId()).singleResult(), userWrapperConfig));
         }
         if (config.isNeedType()) {
             commentWrapper.setType(comment.getType());

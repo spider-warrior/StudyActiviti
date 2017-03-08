@@ -14,18 +14,32 @@ public class VariableInstanceWrapperBuilder {
 
     private static final VariableInstanceWrapper empty = new VariableInstanceWrapper();
 
-    public VariableInstanceWrapper buildVariableInstanceWrapper(VariableInstance variableInstance) {
+    public VariableInstanceWrapper buildVariableInstanceWrapper(VariableInstance variableInstance, VariableInstanceWrapper.VariableInstanceWrapperConfig config) {
         if (variableInstance == null) {
             return empty;
         }
         VariableInstanceWrapper variableInstanceWrapper = new VariableInstanceWrapper();
-        variableInstanceWrapper.setId(variableInstance.getId());
-        variableInstanceWrapper.setName(variableInstance.getName());
-        variableInstanceWrapper.setTypeName(variableInstance.getTypeName());
-        variableInstanceWrapper.setValue(variableInstance.getValue());
-        variableInstanceWrapper.setProcessInstanceId(variableInstance.getProcessInstanceId());
-        variableInstanceWrapper.setExecutionId(variableInstance.getExecutionId());
-        variableInstanceWrapper.setTaskId(variableInstance.getTaskId());
+        if (config.isNeedId()) {
+            variableInstanceWrapper.setId(variableInstance.getId());
+        }
+        if (config.isNeedName()) {
+            variableInstanceWrapper.setName(variableInstance.getName());
+        }
+        if (config.isNeedTypeName()) {
+            variableInstanceWrapper.setTypeName(variableInstance.getTypeName());
+        }
+        if (config.isNeedValue()) {
+            variableInstanceWrapper.setValue(variableInstance.getValue());
+        }
+        if (config.isNeedProcessInstanceId()) {
+            variableInstanceWrapper.setProcessInstanceId(variableInstance.getProcessInstanceId());
+        }
+        if (config.isNeedExecutionId()) {
+            variableInstanceWrapper.setExecutionId(variableInstance.getExecutionId());
+        }
+        if (config.isNeedTaskId()) {
+            variableInstanceWrapper.setTaskId(variableInstance.getTaskId());
+        }
         return variableInstanceWrapper;
     }
     public List<VariableInstanceWrapper> buildVariableInstanceWrapper(Map<String, Object> variables) {

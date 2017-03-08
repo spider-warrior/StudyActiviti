@@ -61,7 +61,7 @@
                         var pd = processes[i];
                         var tr = $.createTr();
                         var idTd = $.createTdWithText(pd.id);
-                        var nameTd = $.createTdWithText(pd.name);
+                        var nameTd = $.createTdWithText(pd.processDefinitionName);
                         var businessKeyTd = $.createTdWithText(pd.businessKey);
                         var content = "";
                         var startUsers = pd.startUsers;

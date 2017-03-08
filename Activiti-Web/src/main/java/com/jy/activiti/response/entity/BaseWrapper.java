@@ -26,7 +26,8 @@ public class BaseWrapper {
     }
 
     public static class Config {
-        private boolean needId;
+
+        private boolean needId = true;
 
         public boolean isNeedId() {
             return needId;

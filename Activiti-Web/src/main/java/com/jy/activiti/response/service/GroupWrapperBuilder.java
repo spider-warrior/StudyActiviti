@@ -9,14 +9,20 @@ public class GroupWrapperBuilder {
 
     public static final GroupWrapper empty = new GroupWrapper();
 
-    public GroupWrapper buildGroupWrapper(Group group) {
+    public GroupWrapper buildGroupWrapper(Group group, GroupWrapper.GroupWrapperConfig config) {
         if (group == null) {
             return empty;
         }
         GroupWrapper groupWrapper = new GroupWrapper();
-        groupWrapper.setId(group.getId());
-        groupWrapper.setName(group.getName());
-        groupWrapper.setGroupType(group.getType());
+        if (config.isNeedId()) {
+            groupWrapper.setId(group.getId());
+        }
+        if (config.isNeedGroupName()) {
+            groupWrapper.setGroupName(group.getName());
+        }
+        if (config.isNeedGroupType()) {
+            groupWrapper.setGroupType(group.getType());
+        }
         return groupWrapper;
     }
 }

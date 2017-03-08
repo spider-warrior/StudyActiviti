@@ -129,7 +129,8 @@ public class ModelController extends BaseController {
             return success(modelList);
         }
         List<ModelWrapper> modelWrapperList = new ArrayList<>(modelList.size());
-        modelList.forEach(model -> modelWrapperList.add(modelWrapperBuilder.buildModelWrapper(model)));
+        ModelWrapper.ModelWrapperConfig config = new ModelWrapper.ModelWrapperConfig();
+        modelList.forEach(model -> modelWrapperList.add(modelWrapperBuilder.buildModelWrapper(model, config)));
         Map<String, Object> result = new HashMap<>();
         result.put("models", modelWrapperList);
         return success(result);

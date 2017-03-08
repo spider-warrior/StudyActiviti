@@ -6,18 +6,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class GroupWrapper extends BaseWrapper {
 
-    @JsonProperty("name")
-    private String name;
+    @JsonProperty("groupName")
+    private String groupName;
 
     @JsonProperty("groupType")
     private String groupType;
 
-    public String getName() {
-        return name;
+    public String getGroupName() {
+        return groupName;
     }
 
-    public GroupWrapper setName(String name) {
-        this.name = name;
+    public GroupWrapper setGroupName(String groupName) {
+        this.groupName = groupName;
         return this;
     }
 
@@ -30,11 +30,26 @@ public class GroupWrapper extends BaseWrapper {
         return this;
     }
 
-    @Override
-    public String toString() {
-        return "GroupWrapper{" +
-                "name='" + name + '\'' +
-                ", groupType=" + groupType +
-                "} " + super.toString();
+    public static class GroupWrapperConfig extends BaseWrapper.Config {
+        private boolean needGroupName;
+        private boolean needGroupType;
+
+        public boolean isNeedGroupName() {
+            return needGroupName;
+        }
+
+        public GroupWrapperConfig setNeedGroupName(boolean needGroupName) {
+            this.needGroupName = needGroupName;
+            return this;
+        }
+
+        public boolean isNeedGroupType() {
+            return needGroupType;
+        }
+
+        public GroupWrapperConfig setNeedGroupType(boolean needGroupType) {
+            this.needGroupType = needGroupType;
+            return this;
+        }
     }
 }

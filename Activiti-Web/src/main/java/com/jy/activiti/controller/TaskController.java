@@ -32,7 +32,8 @@ public class TaskController extends BaseController {
         if (task == null) {
             return failSourceNotFound(ResourcesType.USER_TASK.getValue());
         }
-        TaskWrapper taskWrapper = taskWrapperBuilder.buildTaskWrapper(task, true);
+        TaskWrapper.TaskWrapperConfig taskWrapperConfig = new TaskWrapper.TaskWrapperConfig();
+        TaskWrapper taskWrapper = taskWrapperBuilder.buildTaskWrapper(task, taskWrapperConfig);
         Map<String, Object> result = new HashMap<>();
         result.put("task", taskWrapper);
         return success(result);

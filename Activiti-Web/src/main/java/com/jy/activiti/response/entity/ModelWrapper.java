@@ -110,4 +110,78 @@ public class ModelWrapper extends BaseWrapper {
         this.deploymentId = deploymentId;
         return this;
     }
+    
+    public static class ModelWrapperConfig extends BaseWrapper.Config {
+
+        private boolean needName;
+        private boolean needKey;
+        private boolean needCategory;
+        private boolean needCreateTime;
+        private boolean needVersion;
+        private boolean needMetaInfo;
+        private boolean needDeploymentId;
+
+        public boolean isNeedName() {
+            return needName;
+        }
+
+        public ModelWrapperConfig setNeedName(boolean needName) {
+            this.needName = needName;
+            return this;
+        }
+
+        public boolean isNeedKey() {
+            return needKey;
+        }
+
+        public ModelWrapperConfig setNeedKey(boolean needKey) {
+            this.needKey = needKey;
+            return this;
+        }
+
+        public boolean isNeedCategory() {
+            return needCategory;
+        }
+
+        public ModelWrapperConfig setNeedCategory(boolean needCategory) {
+            this.needCategory = needCategory;
+            return this;
+        }
+
+        public boolean isNeedCreateTime() {
+            return needCreateTime;
+        }
+
+        public ModelWrapperConfig setNeedCreateTime(boolean needCreateTime) {
+            this.needCreateTime = needCreateTime;
+            return this;
+        }
+
+        public boolean isNeedVersion() {
+            return needVersion;
+        }
+
+        public ModelWrapperConfig setNeedVersion(boolean needVersion) {
+            this.needVersion = needVersion;
+            return this;
+        }
+
+        public boolean isNeedMetaInfo() {
+            return needMetaInfo;
+        }
+
+        public ModelWrapperConfig setNeedMetaInfo(boolean needMetaInfo) {
+            this.needMetaInfo = needMetaInfo;
+            return this;
+        }
+
+        public boolean isNeedDeploymentId() {
+            return needDeploymentId;
+        }
+
+        public ModelWrapperConfig setNeedDeploymentId(boolean needDeploymentId) {
+            this.needDeploymentId = needDeploymentId;
+            return this;
+        }
+    }
 }

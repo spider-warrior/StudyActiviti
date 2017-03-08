@@ -34,7 +34,9 @@ public class UserController extends BaseController {
         User user = contextHelper.getCurrentUser();
         List<Task> taskEntityList = taskService.createTaskQuery().taskUnassigned().taskCandidateUser(user.getId()).list();
         List<TaskWrapper> taskWrapperList = new ArrayList<>(taskEntityList.size());
-        taskEntityList.forEach(task -> taskWrapperList.add(taskWrapperBuilder.buildTaskWrapper(task, false)));
+        TaskWrapper.TaskWrapperConfig taskWrapperConfig = new TaskWrapper.TaskWrapperConfig();
+        taskWrapperConfig.setNeedVariables(false);
+        taskEntityList.forEach(task -> taskWrapperList.add(taskWrapperBuilder.buildTaskWrapper(task, taskWrapperConfig)));
         Map<String, Object> result = new HashMap<>();
         result.put("tasks", taskWrapperList);
         return success(result);
@@ -45,7 +47,9 @@ public class UserController extends BaseController {
         User user = contextHelper.getCurrentUser();
         List<Task> taskEntityList = taskService.createTaskQuery().taskAssignee(user.getId()).list();
         List<TaskWrapper> taskWrapperList = new ArrayList<>(taskEntityList.size());
-        taskEntityList.forEach(task -> taskWrapperList.add(taskWrapperBuilder.buildTaskWrapper(task, false)));
+        TaskWrapper.TaskWrapperConfig taskWrapperConfig = new TaskWrapper.TaskWrapperConfig();
+        taskWrapperConfig.setNeedVariables(false);
+        taskEntityList.forEach(task -> taskWrapperList.add(taskWrapperBuilder.buildTaskWrapper(task, taskWrapperConfig)));
         Map<String, Object> result = new HashMap<>();
         result.put("tasks", taskWrapperList);
         return success(result);

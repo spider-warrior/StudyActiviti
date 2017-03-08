@@ -77,4 +77,68 @@ public class VariableInstanceWrapper extends BaseWrapper{
         this.typeName = typeName;
         return this;
     }
+    
+    public static class VariableInstanceWrapperConfig extends BaseWrapper.Config {
+        
+        private boolean needName;
+        private boolean needProcessInstanceId;
+        private boolean needExecutionId;
+        private boolean needTaskId;
+        private boolean needValue;
+        private boolean needTypeName;
+
+        public boolean isNeedName() {
+            return needName;
+        }
+
+        public VariableInstanceWrapperConfig setNeedName(boolean needName) {
+            this.needName = needName;
+            return this;
+        }
+
+        public boolean isNeedProcessInstanceId() {
+            return needProcessInstanceId;
+        }
+
+        public VariableInstanceWrapperConfig setNeedProcessInstanceId(boolean needProcessInstanceId) {
+            this.needProcessInstanceId = needProcessInstanceId;
+            return this;
+        }
+
+        public boolean isNeedExecutionId() {
+            return needExecutionId;
+        }
+
+        public VariableInstanceWrapperConfig setNeedExecutionId(boolean needExecutionId) {
+            this.needExecutionId = needExecutionId;
+            return this;
+        }
+
+        public boolean isNeedTaskId() {
+            return needTaskId;
+        }
+
+        public VariableInstanceWrapperConfig setNeedTaskId(boolean needTaskId) {
+            this.needTaskId = needTaskId;
+            return this;
+        }
+
+        public boolean isNeedValue() {
+            return needValue;
+        }
+
+        public VariableInstanceWrapperConfig setNeedValue(boolean needValue) {
+            this.needValue = needValue;
+            return this;
+        }
+
+        public boolean isNeedTypeName() {
+            return needTypeName;
+        }
+
+        public VariableInstanceWrapperConfig setNeedTypeName(boolean needTypeName) {
+            this.needTypeName = needTypeName;
+            return this;
+        }
+    }
 }

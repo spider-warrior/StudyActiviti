@@ -69,7 +69,7 @@
                     for (var i=0; i<tasks.length; i++) {
                         var task = tasks[i];
                         var idTd = $.createTdWithText(task.id);
-                        var nameTd = $.createTdWithText(task.name);
+                        var nameTd = $.createTdWithText(task.taskName);
                         var categoryTd = $.createTdWithText(task.category);
                         var processDefinitionIdTd = $.createTdWithText(task.processDefinitionId);
                         var executionIdTd = $.createTdWithText(task.executionId);
@@ -135,7 +135,7 @@
                     for (var i=0; i<tasks.length; i++) {
                         var task = tasks[i];
                         var idTd = $.createTdWithText(task.id);
-                        var nameTd = $.createTdWithText(task.name);
+                        var nameTd = $.createTdWithText(task.taskName);
                         var categoryTd = $.createTdWithText(task.category);
                         var processDefinitionIdTd = $.createTdWithText(task.processDefinitionId);
                         var executionIdTd = $.createTdWithText(task.executionId);

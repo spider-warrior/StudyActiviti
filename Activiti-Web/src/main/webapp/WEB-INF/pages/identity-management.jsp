@@ -75,7 +75,7 @@
                             var userGroups = user.userGroups;
                             for (var k = 0; k < userGroups.length; k++) {
                                 var userGroup = userGroups[k];
-                                groupsContent = groupsContent.concat("<a href='javascript:void(0);' onclick='cancelMemberShip(\"" + user.id + "\", \"" + userGroup.id + "\");'>", userGroup.name, "</a>", "&nbsp;&nbsp;");
+                                groupsContent = groupsContent.concat("<a href='javascript:void(0);' onclick='cancelMemberShip(\"" + user.id + "\", \"" + userGroup.id + "\");'>", userGroup.groupName, "</a>", "&nbsp;&nbsp;");
                             }
                         }
                         var groupsTd = $.createTdWithHtml(groupsContent);
@@ -153,7 +153,7 @@
                     for (var i = 0; i < groups.length; i++) {
                         var group = groups[i];
                         var idTd = $.createTdWithText(group.id);
-                        var nameTd = $.createTdWithText(group.name);
+                        var nameTd = $.createTdWithText(group.groupName);
                         var operationHtml = "<a href='javascript:void(0);' onclick='deleteGroup(\"" + group.id + "\")'>" + "删除" + "</a>&nbsp;&nbsp;";
                         var operationTd = $.createTdWithHtml(operationHtml);
                         var row = $.createTr();

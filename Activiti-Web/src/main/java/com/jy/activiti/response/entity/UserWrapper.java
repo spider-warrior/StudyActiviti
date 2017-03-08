@@ -33,11 +33,27 @@ public class UserWrapper extends BaseWrapper {
         return this;
     }
 
-    @Override
-    public String toString() {
-        return "UserWrapper{" +
-                "username='" + username + '\'' +
-                ", userGroups=" + userGroups +
-                "} " + super.toString();
+    public static class UserWrapperConfig extends BaseWrapper.Config {
+
+        private boolean needUsername;
+        private boolean needUserGroups;
+
+        public boolean isNeedUsername() {
+            return needUsername;
+        }
+
+        public UserWrapperConfig setNeedUsername(boolean needUsername) {
+            this.needUsername = needUsername;
+            return this;
+        }
+
+        public boolean isNeedUserGroups() {
+            return needUserGroups;
+        }
+
+        public UserWrapperConfig setNeedUserGroups(boolean needUserGroups) {
+            this.needUserGroups = needUserGroups;
+            return this;
+        }
     }
 }

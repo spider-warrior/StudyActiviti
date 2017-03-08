@@ -66,14 +66,57 @@ public class HistoricProcessInstanceWrapper extends BaseWrapper {
         return this;
     }
 
-    @Override
-    public String toString() {
-        return "HistoricProcessInstanceWrapper{" +
-                "businessKey='" + businessKey + '\'' +
-                ", processDefinitionId='" + processDefinitionId + '\'' +
-                ", startTime='" + startTime + '\'' +
-                ", endTime='" + endTime + '\'' +
-                ", starter=" + starter +
-                "} " + super.toString();
+    public static class HistoricProcessInstanceWrapperConfig extends BaseWrapper.Config {
+
+        private boolean needBusinessKey;
+        private boolean needProcessDefinitionId;
+        private boolean needStartTime;
+        private boolean needEndTime;
+        private boolean needStarter;
+
+        public boolean isNeedBusinessKey() {
+            return needBusinessKey;
+        }
+
+        public HistoricProcessInstanceWrapperConfig setNeedBusinessKey(boolean needBusinessKey) {
+            this.needBusinessKey = needBusinessKey;
+            return this;
+        }
+
+        public boolean isNeedProcessDefinitionId() {
+            return needProcessDefinitionId;
+        }
+
+        public HistoricProcessInstanceWrapperConfig setNeedProcessDefinitionId(boolean needProcessDefinitionId) {
+            this.needProcessDefinitionId = needProcessDefinitionId;
+            return this;
+        }
+
+        public boolean isNeedStartTime() {
+            return needStartTime;
+        }
+
+        public HistoricProcessInstanceWrapperConfig setNeedStartTime(boolean needStartTime) {
+            this.needStartTime = needStartTime;
+            return this;
+        }
+
+        public boolean isNeedEndTime() {
+            return needEndTime;
+        }
+
+        public HistoricProcessInstanceWrapperConfig setNeedEndTime(boolean needEndTime) {
+            this.needEndTime = needEndTime;
+            return this;
+        }
+
+        public boolean isNeedStarter() {
+            return needStarter;
+        }
+
+        public HistoricProcessInstanceWrapperConfig setNeedStarter(boolean needStarter) {
+            this.needStarter = needStarter;
+            return this;
+        }
     }
 }

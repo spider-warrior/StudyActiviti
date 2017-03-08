@@ -29,26 +29,39 @@ public class ProcessDefinitionWrapperBuilder {
 
     private static final ProcessDefinitionWrapper empty = new ProcessDefinitionWrapper();
 
-    public ProcessDefinitionWrapper buildProcessDefinitionWrapper(ProcessDefinition processDefinition) {
+    public ProcessDefinitionWrapper buildProcessDefinitionWrapper(ProcessDefinition processDefinition, ProcessDefinitionWrapper.ProcessDefinitionWrapperConfig config) {
         if (processDefinition == null) {
             return empty;
         }
         ProcessDefinitionWrapper processDefinitionWrapper = new ProcessDefinitionWrapper();
-        processDefinitionWrapper.setId(processDefinition.getId());
-        processDefinitionWrapper.setBusinessKey(processDefinition.getKey());
-        processDefinitionWrapper.setName(processDefinition.getName());
-        List<User> activitiUsers = identityService.createUserQuery().potentialStarter(processDefinition.getId()).list();
-        if (activitiUsers != null && activitiUsers.size() > 0) {
-            List<UserWrapper> userWrappers = new ArrayList<>();
-            activitiUsers.forEach(user -> userWrappers.add(userWrapperBuilder.buildUserWrapper(user)));
-            processDefinitionWrapper.setStartUsers(userWrappers);
+        if (config.isNeedId()) {
+            processDefinitionWrapper.setId(processDefinition.getId());
         }
-        List<Group> activitiGroups = identityService.createGroupQuery().potentialStarter(processDefinition.getId()).list();
-        if (activitiGroups != null && activitiGroups.size() > 0) {
-            List<GroupWrapper> groupWrappers = new ArrayList<>();
-            activitiGroups.forEach(group -> groupWrappers.add(groupWrapperBuilder.buildGroupWrapper(group)));
-            processDefinitionWrapper.setStartGroups(groupWrappers);
+        if (config.isNeedBusinessKey()) {
+            processDefinitionWrapper.setBusinessKey(processDefinition.getKey());
         }
+        if (config.isProcessDefinitionName()) {
+            processDefinitionWrapper.setProcessDefinitionName(processDefinition.getName());
+        }
+        if (config.isNeedStartUsers()) {
+            List<User> activitiUsers = identityService.createUserQuery().potentialStarter(processDefinition.getId()).list();
+            if (activitiUsers != null && activitiUsers.size() > 0) {
+                List<UserWrapper> userWrappers = new ArrayList<>();
+                UserWrapper.UserWrapperConfig userWrapperConfig = new UserWrapper.UserWrapperConfig();
+                activitiUsers.forEach(user -> userWrappers.add(userWrapperBuilder.buildUserWrapper(user, userWrapperConfig)));
+                processDefinitionWrapper.setStartUsers(userWrappers);
+            }
+        }
+        if (config.isNeedStartGroups()) {
+            List<Group> activitiGroups = identityService.createGroupQuery().potentialStarter(processDefinition.getId()).list();
+            if (activitiGroups != null && activitiGroups.size() > 0) {
+                List<GroupWrapper> groupWrappers = new ArrayList<>();
+                GroupWrapper.GroupWrapperConfig groupWrapperConfig = new GroupWrapper.GroupWrapperConfig();
+                activitiGroups.forEach(group -> groupWrappers.add(groupWrapperBuilder.buildGroupWrapper(group, groupWrapperConfig)));
+                processDefinitionWrapper.setStartGroups(groupWrappers);
+            }
+        }
+
         return processDefinitionWrapper;
     }
 }

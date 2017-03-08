@@ -55,7 +55,8 @@ public class ProcessInstanceController extends BaseController {
 
         } else {
             List<HistoricProcessInstanceWrapper> historicProcessInstanceWrapperList = new ArrayList<>(historicProcessInstanceList.size());
-            historicProcessInstanceList.forEach(historicProcessInstance -> historicProcessInstanceWrapperList.add(historicProcessInstanceWrapperBuilder.buildHistoricProcessInstanceWrapper(historicProcessInstance)));
+            HistoricProcessInstanceWrapper.HistoricProcessInstanceWrapperConfig config = new HistoricProcessInstanceWrapper.HistoricProcessInstanceWrapperConfig();
+            historicProcessInstanceList.forEach(historicProcessInstance -> historicProcessInstanceWrapperList.add(historicProcessInstanceWrapperBuilder.buildHistoricProcessInstanceWrapper(historicProcessInstance, config)));
             result.put("processinstances", historicProcessInstanceWrapperList);
         }
         return success(result);

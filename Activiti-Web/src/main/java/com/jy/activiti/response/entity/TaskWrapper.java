@@ -12,8 +12,8 @@ public class TaskWrapper extends BaseWrapper {
     /**
      * 任务名称
      */
-    @JsonProperty("name")
-    private String name;
+    @JsonProperty("taskName")
+    private String taskName;
 
     /**
      * task definition key
@@ -81,12 +81,12 @@ public class TaskWrapper extends BaseWrapper {
     @JsonProperty("comments")
     private List<CommentWrapper> comments;
 
-    public String getName() {
-        return name;
+    public String getTaskName() {
+        return taskName;
     }
 
-    public TaskWrapper setName(String name) {
-        this.name = name;
+    public TaskWrapper setTaskName(String taskName) {
+        this.taskName = taskName;
         return this;
     }
 
@@ -187,5 +187,129 @@ public class TaskWrapper extends BaseWrapper {
     public TaskWrapper setComments(List<CommentWrapper> comments) {
         this.comments = comments;
         return this;
+    }
+
+    public static class TaskWrapperConfig extends BaseWrapper.Config {
+
+        private boolean needTaskName;
+        private boolean needTaskDefinitionKey;
+        private boolean needCategory;
+        private boolean needDescription;
+        private boolean needOwner;
+        private boolean needAssignee;
+        private boolean needProcessInstancesId;
+        private boolean needExecutionId;
+        private boolean needProcessDefinitionWrapper;
+        private boolean needCreateTime;
+        private boolean needVariables;
+        private boolean needComments;
+
+        public boolean isNeedTaskName() {
+            return needTaskName;
+        }
+
+        public TaskWrapperConfig setNeedTaskName(boolean needTaskName) {
+            this.needTaskName = needTaskName;
+            return this;
+        }
+
+        public boolean isNeedTaskDefinitionKey() {
+            return needTaskDefinitionKey;
+        }
+
+        public TaskWrapperConfig setNeedTaskDefinitionKey(boolean needTaskDefinitionKey) {
+            this.needTaskDefinitionKey = needTaskDefinitionKey;
+            return this;
+        }
+
+        public boolean isNeedCategory() {
+            return needCategory;
+        }
+
+        public TaskWrapperConfig setNeedCategory(boolean needCategory) {
+            this.needCategory = needCategory;
+            return this;
+        }
+
+        public boolean isNeedDescription() {
+            return needDescription;
+        }
+
+        public TaskWrapperConfig setNeedDescription(boolean needDescription) {
+            this.needDescription = needDescription;
+            return this;
+        }
+
+        public boolean isNeedOwner() {
+            return needOwner;
+        }
+
+        public TaskWrapperConfig setNeedOwner(boolean needOwner) {
+            this.needOwner = needOwner;
+            return this;
+        }
+
+        public boolean isNeedAssignee() {
+            return needAssignee;
+        }
+
+        public TaskWrapperConfig setNeedAssignee(boolean needAssignee) {
+            this.needAssignee = needAssignee;
+            return this;
+        }
+
+        public boolean isNeedProcessInstancesId() {
+            return needProcessInstancesId;
+        }
+
+        public TaskWrapperConfig setNeedProcessInstancesId(boolean needProcessInstancesId) {
+            this.needProcessInstancesId = needProcessInstancesId;
+            return this;
+        }
+
+        public boolean isNeedExecutionId() {
+            return needExecutionId;
+        }
+
+        public TaskWrapperConfig setNeedExecutionId(boolean needExecutionId) {
+            this.needExecutionId = needExecutionId;
+            return this;
+        }
+
+        public boolean isNeedProcessDefinitionWrapper() {
+            return needProcessDefinitionWrapper;
+        }
+
+        public TaskWrapperConfig setNeedProcessDefinitionWrapper(boolean needProcessDefinitionWrapper) {
+            this.needProcessDefinitionWrapper = needProcessDefinitionWrapper;
+            return this;
+        }
+
+        public boolean isNeedCreateTime() {
+            return needCreateTime;
+        }
+
+        public TaskWrapperConfig setNeedCreateTime(boolean needCreateTime) {
+            this.needCreateTime = needCreateTime;
+            return this;
+        }
+
+        public boolean isNeedVariables() {
+            return needVariables;
+        }
+
+        public TaskWrapperConfig setNeedVariables(boolean needVariables) {
+            this.needVariables = needVariables;
+            return this;
+        }
+
+        public boolean isNeedComments() {
+            return needComments;
+        }
+
+        public TaskWrapperConfig setNeedComments(boolean needComments) {
+            this.needComments = needComments;
+            return this;
+        }
     }
 }

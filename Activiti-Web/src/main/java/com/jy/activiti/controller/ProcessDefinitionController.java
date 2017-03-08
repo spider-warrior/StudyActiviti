@@ -43,7 +43,8 @@ public class ProcessDefinitionController extends BaseController {
         Map<String, Object> result = new HashMap<>();
         List<ProcessDefinition> processDefinitionList = repositoryService.createProcessDefinitionQuery().list();
         List<ProcessDefinitionWrapper> processDefinitionWrappers = new ArrayList<>(processDefinitionList.size());
-        processDefinitionList.forEach(p -> processDefinitionWrappers.add(processDefinitionWrapperBuilder.buildProcessDefinitionWrapper(p)));
+        ProcessDefinitionWrapper.ProcessDefinitionWrapperConfig processDefinitionWrapperConfig = new ProcessDefinitionWrapper.ProcessDefinitionWrapperConfig();
+        processDefinitionList.forEach(p -> processDefinitionWrappers.add(processDefinitionWrapperBuilder.buildProcessDefinitionWrapper(p, processDefinitionWrapperConfig)));
         result.put("processes", processDefinitionWrappers);
         return success(result);
     }
@@ -179,7 +180,9 @@ public class ProcessDefinitionController extends BaseController {
         }
         else {
             List<TaskWrapper> taskWrapperList = new ArrayList<>(taskList.size());
-            taskList.forEach(task -> taskWrapperList.add(taskWrapperBuilder.buildTaskWrapper(task, false)));
+            TaskWrapper.TaskWrapperConfig taskWrapperConfig = new TaskWrapper.TaskWrapperConfig();
+            taskWrapperConfig.setNeedVariables(false);
+            taskList.forEach(task -> taskWrapperList.add(taskWrapperBuilder.buildTaskWrapper(task, taskWrapperConfig)));
             result.put("tasks", taskWrapperList);
         }
         return success(result);

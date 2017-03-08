@@ -35,7 +35,8 @@ public class IdentityController extends BaseController {
             result.put("users", Collections.emptyList());
         } else {
             List<UserWrapper> userWrapperList = new ArrayList<>();
-            users.forEach(user -> userWrapperList.add(userWrapperBuilder.buildUserWrapper(user)));
+            UserWrapper.UserWrapperConfig userWrapperConfig = new UserWrapper.UserWrapperConfig();
+            users.forEach(user -> userWrapperList.add(userWrapperBuilder.buildUserWrapper(user, userWrapperConfig)));
             result.put("users", userWrapperList);
         }
         return success(result);
@@ -69,7 +70,8 @@ public class IdentityController extends BaseController {
             result.put("groups", Collections.emptyList());
         } else {
             List<GroupWrapper> groupWrapperList = new ArrayList<>();
-            groupList.forEach(group -> groupWrapperList.add(groupWrapperBuilder.buildGroupWrapper(group)));
+            GroupWrapper.GroupWrapperConfig config = new GroupWrapper.GroupWrapperConfig();
+            groupList.forEach(group -> groupWrapperList.add(groupWrapperBuilder.buildGroupWrapper(group, config)));
             result.put("groups", groupWrapperList);
         }
         return success(result);

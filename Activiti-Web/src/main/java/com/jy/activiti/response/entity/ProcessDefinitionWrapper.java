@@ -8,25 +8,25 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProcessDefinitionWrapper extends BaseWrapper {
 
-    @JsonProperty("name")
-    private String name;
+    @JsonProperty("processDefinitionName")
+    private String processDefinitionName;
 
     @JsonProperty("businessKey")
     private String businessKey;
 
     @JsonProperty("startUsers")
-    List<UserWrapper> startUsers;
+    private List<UserWrapper> startUsers;
 
 
     @JsonProperty("startGroups")
-    List<GroupWrapper> startGroups;
+    private List<GroupWrapper> startGroups;
 
-    public String getName() {
-        return name;
+    public String getProcessDefinitionName() {
+        return processDefinitionName;
     }
 
-    public ProcessDefinitionWrapper setName(String name) {
-        this.name = name;
+    public ProcessDefinitionWrapper setProcessDefinitionName(String processDefinitionName) {
+        this.processDefinitionName = processDefinitionName;
         return this;
     }
 
@@ -56,14 +56,47 @@ public class ProcessDefinitionWrapper extends BaseWrapper {
         this.startGroups = startGroups;
         return this;
     }
+    public static class ProcessDefinitionWrapperConfig extends BaseWrapper.Config {
 
-    @Override
-    public String toString() {
-        return "ProcessDefinitionWrapper{" +
-                "name='" + name + '\'' +
-                ", businessKey='" + businessKey + '\'' +
-                ", startUsers=" + startUsers +
-                ", startGroups=" + startGroups +
-                "} " + super.toString();
+        private boolean processDefinitionName;
+        private boolean needBusinessKey;
+        private boolean needStartUsers;
+        private boolean needStartGroups;
+
+        public boolean isProcessDefinitionName() {
+            return processDefinitionName;
+        }
+
+        public ProcessDefinitionWrapperConfig setProcessDefinitionName(boolean processDefinitionName) {
+            this.processDefinitionName = processDefinitionName;
+            return this;
+        }
+
+        public boolean isNeedBusinessKey() {
+            return needBusinessKey;
+        }
+
+        public ProcessDefinitionWrapperConfig setNeedBusinessKey(boolean needBusinessKey) {
+            this.needBusinessKey = needBusinessKey;
+            return this;
+        }
+
+        public boolean isNeedStartUsers() {
+            return needStartUsers;
+        }
+
+        public ProcessDefinitionWrapperConfig setNeedStartUsers(boolean needStartUsers) {
+            this.needStartUsers = needStartUsers;
+            return this;
+        }
+
+        public boolean isNeedStartGroups() {
+            return needStartGroups;
+        }
+
+        public ProcessDefinitionWrapperConfig setNeedStartGroups(boolean needStartGroups) {
+            this.needStartGroups = needStartGroups;
+            return this;
+        }
     }
 }
