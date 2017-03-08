@@ -80,12 +80,12 @@ public class VariableInstanceWrapper extends BaseWrapper{
     
     public static class VariableInstanceWrapperConfig extends BaseWrapper.Config {
         
-        private boolean needName;
-        private boolean needProcessInstanceId;
-        private boolean needExecutionId;
-        private boolean needTaskId;
-        private boolean needValue;
-        private boolean needTypeName;
+        private boolean needName = true;
+        private boolean needProcessInstanceId = true;
+        private boolean needExecutionId = true;
+        private boolean needTaskId = true;
+        private boolean needValue = true;
+        private boolean needTypeName = true;
 
         public boolean isNeedName() {
             return needName;

@@ -27,26 +27,26 @@ function dealAjaxError(response) {
         alert("无权限操作");
     }
     else if (response.code == RESOURCE_NOT_FOUND_EXCEPTION_CODE) {
-        if (result.msg == "user") {
+        if (response.msg == "user") {
             alert("用户不存在");
         }
         else if (response.msg == "group") {
             alert("用户组不存在");
         }
-        else if (result.msg == "processdefinition") {
+        else if (response.msg == "processdefinition") {
             alert("流程定义不存在");
         }
-        else if (result.msg == 'processinstance') {
+        else if (response.msg == 'processinstance') {
             alert("流程实例不存在");
         }
-        else if (result.ms == 'historic_process_instance') {
+        else if (response.ms == 'historic_process_instance') {
             alert("历史流程实例不存在");
         }
-        else if (result.ms == 'user_task') {
+        else if (response.ms == 'user_task') {
             alert("任务不存在");
         }
         else {
-            alert(result.msg);
+            alert(response.msg);
         }
     }
     else {

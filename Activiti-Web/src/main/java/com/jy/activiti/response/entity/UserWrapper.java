@@ -35,8 +35,8 @@ public class UserWrapper extends BaseWrapper {
 
     public static class UserWrapperConfig extends BaseWrapper.Config {
 
-        private boolean needUsername;
-        private boolean needUserGroups;
+        private boolean needUsername = true;
+        private boolean needUserGroups = true;
 
         public boolean isNeedUsername() {
             return needUsername;

@@ -31,8 +31,8 @@ public class GroupWrapper extends BaseWrapper {
     }
 
     public static class GroupWrapperConfig extends BaseWrapper.Config {
-        private boolean needGroupName;
-        private boolean needGroupType;
+        private boolean needGroupName = true;
+        private boolean needGroupType = true;
 
         public boolean isNeedGroupName() {
             return needGroupName;

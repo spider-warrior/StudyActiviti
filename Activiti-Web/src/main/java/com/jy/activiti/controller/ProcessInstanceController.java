@@ -44,15 +44,31 @@ public class ProcessInstanceController extends BaseController {
     private HistoricProcessInstanceWrapperBuilder historicProcessInstanceWrapperBuilder;
 
 
-    @RequestMapping(value = "/user/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/unfinished-list", method = RequestMethod.GET)
     @RequiredLogin
-    public Object userInstanceList() {
+    public Object userUnfinishedProcessInstanceList() {
         User currentUser = contextHelper.getCurrentUser();
         Map<String, Object> result = new HashMap<>();
-        List<HistoricProcessInstance> historicProcessInstanceList = historyService.createHistoricProcessInstanceQuery().startedBy(currentUser.getId()).list();
+        List<HistoricProcessInstance> historicProcessInstanceList = historyService.createHistoricProcessInstanceQuery().startedBy(currentUser.getId()).unfinished().list();
         if (historicProcessInstanceList == null || historicProcessInstanceList.isEmpty()) {
             result.put("processinstances", historicProcessInstanceList);
+        } else {
+            List<HistoricProcessInstanceWrapper> historicProcessInstanceWrapperList = new ArrayList<>(historicProcessInstanceList.size());
+            HistoricProcessInstanceWrapper.HistoricProcessInstanceWrapperConfig config = new HistoricProcessInstanceWrapper.HistoricProcessInstanceWrapperConfig();
+            historicProcessInstanceList.forEach(historicProcessInstance -> historicProcessInstanceWrapperList.add(historicProcessInstanceWrapperBuilder.buildHistoricProcessInstanceWrapper(historicProcessInstance, config)));
+            result.put("processinstances", historicProcessInstanceWrapperList);
+        }
+        return success(result);
+    }
 
+    @RequestMapping(value = "/user/finished-list", method = RequestMethod.GET)
+    @RequiredLogin
+    public Object userFinishedProcessInstanceList() {
+        User currentUser = contextHelper.getCurrentUser();
+        Map<String, Object> result = new HashMap<>();
+        List<HistoricProcessInstance> historicProcessInstanceList = historyService.createHistoricProcessInstanceQuery().startedBy(currentUser.getId()).finished().list();
+        if (historicProcessInstanceList == null || historicProcessInstanceList.isEmpty()) {
+            result.put("processinstances", historicProcessInstanceList);
         } else {
             List<HistoricProcessInstanceWrapper> historicProcessInstanceWrapperList = new ArrayList<>(historicProcessInstanceList.size());
             HistoricProcessInstanceWrapper.HistoricProcessInstanceWrapperConfig config = new HistoricProcessInstanceWrapper.HistoricProcessInstanceWrapperConfig();

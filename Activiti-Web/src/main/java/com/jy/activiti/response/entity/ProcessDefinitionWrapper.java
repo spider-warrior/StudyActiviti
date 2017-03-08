@@ -58,10 +58,10 @@ public class ProcessDefinitionWrapper extends BaseWrapper {
     }
     public static class ProcessDefinitionWrapperConfig extends BaseWrapper.Config {
 
-        private boolean processDefinitionName;
-        private boolean needBusinessKey;
-        private boolean needStartUsers;
-        private boolean needStartGroups;
+        private boolean processDefinitionName = true;
+        private boolean needBusinessKey = true;
+        private boolean needStartUsers = true;
+        private boolean needStartGroups = true;
 
         public boolean isProcessDefinitionName() {
             return processDefinitionName;

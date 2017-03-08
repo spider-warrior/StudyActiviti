@@ -113,13 +113,13 @@ public class ModelWrapper extends BaseWrapper {
     
     public static class ModelWrapperConfig extends BaseWrapper.Config {
 
-        private boolean needName;
-        private boolean needKey;
-        private boolean needCategory;
-        private boolean needCreateTime;
-        private boolean needVersion;
-        private boolean needMetaInfo;
-        private boolean needDeploymentId;
+        private boolean needName = true;
+        private boolean needKey = true;
+        private boolean needCategory = true;
+        private boolean needCreateTime = true;
+        private boolean needVersion = true;
+        private boolean needMetaInfo = true;
+        private boolean needDeploymentId = true;
 
         public boolean isNeedName() {
             return needName;

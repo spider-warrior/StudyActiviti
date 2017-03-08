@@ -191,18 +191,18 @@ public class TaskWrapper extends BaseWrapper {
 
     public static class TaskWrapperConfig extends BaseWrapper.Config {
 
-        private boolean needTaskName;
-        private boolean needTaskDefinitionKey;
-        private boolean needCategory;
-        private boolean needDescription;
-        private boolean needOwner;
-        private boolean needAssignee;
-        private boolean needProcessInstancesId;
-        private boolean needExecutionId;
-        private boolean needProcessDefinitionWrapper;
-        private boolean needCreateTime;
-        private boolean needVariables;
-        private boolean needComments;
+        private boolean needTaskName = true;
+        private boolean needTaskDefinitionKey = true;
+        private boolean needCategory = true;
+        private boolean needDescription = true;
+        private boolean needOwner = true;
+        private boolean needAssignee = true;
+        private boolean needProcessInstancesId = true;
+        private boolean needExecutionId = true;
+        private boolean needProcessDefinitionWrapper = true;
+        private boolean needCreateTime = true;
+        private boolean needVariables = true;
+        private boolean needComments = true;
 
         public boolean isNeedTaskName() {
             return needTaskName;

@@ -68,11 +68,11 @@ public class HistoricProcessInstanceWrapper extends BaseWrapper {
 
     public static class HistoricProcessInstanceWrapperConfig extends BaseWrapper.Config {
 
-        private boolean needBusinessKey;
-        private boolean needProcessDefinitionId;
-        private boolean needStartTime;
-        private boolean needEndTime;
-        private boolean needStarter;
+        private boolean needBusinessKey = true;
+        private boolean needProcessDefinitionId = true;
+        private boolean needStartTime = true;
+        private boolean needEndTime = true;
+        private boolean needStarter = true;
 
         public boolean isNeedBusinessKey() {
             return needBusinessKey;
