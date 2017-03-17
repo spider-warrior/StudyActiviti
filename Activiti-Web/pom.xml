@@ -88,7 +88,11 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>5.4.0.Final</version>
+        </dependency>
         <!-- servlet方式时使用下面三个依赖 -->
         <dependency>
             <groupId>org.java-websocket</groupId>
