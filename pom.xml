@@ -120,4 +120,18 @@
             </build>
         </profile>
     </profiles>
+
+    <!-- 项目deploy时发布到私有仓库 -->
+    <distributionManagement>
+        <repository>
+            <id>nexus-releases</id>
+            <name>Internal Releases</name>
+            <url>http://com.wxsk.vr.shop.nexus:8081/nexus/content/repositories/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>http://com.wxsk.vr.shop.nexus:8081/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
