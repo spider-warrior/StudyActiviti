@@ -118,6 +118,52 @@
                     </plugin>
                 </plugins>
             </build>
+            <repositories>
+                <repository>
+                    <id>nexus</id>
+                    <name>Codehaus Snapshots</name>
+                    <releases>
+                        <!--告诉Maven可以从这个仓库下载releases版本的构件-->
+                        <enabled>true</enabled>
+                        <updatePolicy>always</updatePolicy>
+                        <checksumPolicy>warn</checksumPolicy>
+                    </releases>
+                    <snapshots>
+                        <!--告诉Maven可以从这个仓库下载snapshot版本的构件-->
+                        <enabled>true</enabled>
+                        <updatePolicy>never</updatePolicy>
+                        <checksumPolicy>fail</checksumPolicy>
+                    </snapshots>
+                    <url>http://192.168.14.215:8081/nexus/content/groups/public/</url>
+                    <layout>default</layout>
+                </repository>
+                <repository>
+                    <id>maven-net-cn</id>
+                    <name>Maven China Mirror</name>
+                    <url>http://maven.net.cn/content/groups/public/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <!--禁止从公共仓库下载snapshot构件是推荐的做法-->
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+            <!--配置Maven从什么地方下载插件构件-->
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>maven-net-cn</id>
+                    <name>Maven China Mirror</name>
+                    <url>http://maven.net.cn/content/groups/public/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
         </profile>
     </profiles>
 
